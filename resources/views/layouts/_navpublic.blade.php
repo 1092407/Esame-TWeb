@@ -33,6 +33,17 @@
 
 
 
+        <!--Per motivi di sicurezza il logout va fatto in metodo post piuttosto che in metodo get, quindi non possiamo usare un ancora perchè essa invia in maniera fissa una richiesta al server in metodo GET
+     -->
+
+        <a href="" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red" title="Esci dal sito" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i>Logout</a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+
+            {{ csrf_field() }}
+
+        </form>
+        @endauth
 
 
 
