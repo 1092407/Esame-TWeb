@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class Utente extends Controller
 {
-    //
-}
-public function index(){
+    public function index(){
         return view('homeutente');
     }
+}
+
