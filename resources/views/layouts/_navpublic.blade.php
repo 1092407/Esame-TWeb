@@ -22,7 +22,7 @@
                 @endcan
                 @can('isUtente')
                 <a href="{{route('utente')}}" class="w3-bar-item w3-button w3-hide-small" title="Torna all' home page"><i class="fa fa-home"></i> Home Locatario</a>
-                @include('layouts/_navlutente')
+                @include('layouts/_navutente')
                 @endcan
                 @can('isAdmin')
                 <a href="{{route('admin')}}" class="w3-bar-item w3-button w3-hide-small" title="Torna all' home page"><i class="fa fa-home"></i> Home Admin</a>
