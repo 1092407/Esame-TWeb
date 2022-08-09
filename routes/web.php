@@ -32,7 +32,7 @@ Route::get('/', 'PublicController@showHomepage')->name('home'); // per aprire ho
 //Route::get('/Admin','AdminController@index')->name('admin')->middleware('can:isAdmin');
 //Route::post('/Admin','AdminController@showStatistiche')->name('adminfilter');
 
-Route::view('/Admin','homeadmin')->name('admin');   // porta alla homepage riservata all'admin
+Route::view('/Admin','homeadmin')->name('admin')->middleware('can:isAdmin');   // porta alla homepage riservata all'admin
 Route::view('/statistiche','statistiche')->name('statistiche');  // porta alla view che visualizza le statistiche
 Route::view('/Gestionestaff','gestionestaff')->name('gestiscistaff');// porta alla vista che mi fa gestire i membri dello staff
 
