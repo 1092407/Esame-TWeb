@@ -2,6 +2,11 @@
 
 @section('title', 'utente')
 
+
+@can('isUtente')
+<br>
+@endcan
+
 @section('content')
 <div class="w3-container w3-padding-32" id="catalog" align="center">
 
