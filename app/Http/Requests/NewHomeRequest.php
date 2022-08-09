@@ -29,26 +29,6 @@ class NewHomeRequest extends FormRequest {
      *         $table->bigIncrements('id')->index();
      * @return array
      */
-    public function rules() {
-        return [
-            'titolo' => 'required|string|max:30',
-            'regione' => 'required|string',
-            'citta' => 'required|string',
-            'cap' => 'required|integer',
-            'indirizzo' => 'required|string',
-            'numero' => 'required|integer',
-            'prezzo' => 'required|numeric|min:0',
-            'descrizione' => 'required|string|max:2500',
-            'superficie' => 'required|integer|min:0',
-            'letti_pl' => 'exclude_if:tipologia,0|integer|min:1|max:2',
-            'letti_ap' => 'required|integer|min:0',
-            'n_camere' => 'required|integer|min:0',
-            'tipologia' => 'required|boolean',
-            'foto' => 'sometimes|file|mimes:jpeg,png|max:1024',
-            'periodo_locazione' => 'required|integer|min:3|max:12',
-            'eta_max'=>'sometimes|integer|max:90|min:18'
-        ];
-    }
 
     /**
      * Override: response in formato JSON
