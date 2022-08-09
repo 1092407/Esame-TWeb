@@ -26,19 +26,19 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('isAdmin', function($user){
-            return $user->hasLivello(0);
+            return $user->hasLivello('admin');
         });
 
-        Gate::define('isLocatore',function($user){
-            return $user->hasLivello(1);
+        Gate::define('isUtente',function($user){
+            return $user->hasLivello('utente');
         });
 
-        Gate::define('isLocatario', function($user){
-            return $user->hasLivello(2);
+        Gate::define('isStaff', function($user){
+            return $user->hasLivello('staff');
         });
         Gate::define('isLoggato',function($user){
             return isset($user);
         });
-        
+
     }
 }
