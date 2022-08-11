@@ -50,8 +50,7 @@ Route::view('/Messaggi','messaggi')->name('messaggi');  // porta alla view che v
 
 //ROTTE UTENTE
 
-// Route::view('/Utente','homeutente')->name('utente')->middleware('can:isUtente')->middleware('auth');   // porta alla homepage riservata agli utenti del sito
-Route::view('/Utente','homeutente')->name('utente')->middleware('can:isUtente')->middleware('auth');
+Route::view('/Utente','homeutente')->name('utente')->middleware('can:isUtente')->middleware('auth');  // porta alla homepage riservata agli utenti del sito
 
 Route::view('/messaggi','messaggi')->name('messaggi');  // porta alla view che visualizza la pagina dove vedo i messaggi
  Route::view('/Blog','mioblog')->name('miooblog');// porta alla vista che mi fa vedere i miei blog
