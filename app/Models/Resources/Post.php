@@ -4,15 +4,10 @@ namespace App\Models\Resources;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Alloggi extends Model
+class post extends Model
 {
-    protected $table = 'alloggi';
+    protected $table = 'post';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
     public $timestamps = false;
-
-
-    public function servizi(){
-        return $this->belongsToMany(Incluso::class,'id','alloggi');
-    }
 }
