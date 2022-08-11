@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('guest'); //metodo che ci consente di attivare i gate
+      // $this->middleware('guest'); //metodo che ci consente di attivare i gate
     }
 
     /**
