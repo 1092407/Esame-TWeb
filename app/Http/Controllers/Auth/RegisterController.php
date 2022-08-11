@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+     protected $redirectTo = '/'; //proprietà predefinita che specifica la rotta a cui viene reindirizzato l'utente a fine registrazione
 
     /**
      * Create a new controller instance.
@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+       $this->middleware('guest'); //metodo che ci consente di attivare i gate
     }
 
     /**
@@ -58,8 +58,8 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'unique:users', 'regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/'],
             'username' => ['required', 'string', 'min:8', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            // penso che livello non vada messo perchè non è un campo che compare nella form di registrazione
-            //infatti voglio mettere che livello=utente di default per chi si registra tramite la viwe registrazione
+            // livello non vada messo qui  perchè non è un campo che compare nella form di registrazione
+            //infatti voglio mettere che livello=utente di default per chi si registra tramite la view registrazione
             'descrizione' => ['required ','string','max:2500']
         ]);
     }
@@ -90,7 +90,7 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
             // 'livello' == 'utente',             // lo voglio per default per chi si registra tramite questa pagina: l'admin infatti lo preregistro nel db con i seeds e i membri dello staff li registro tramite la sezione riservata dell'admin
-// non so se la sintassi corretta sia == 0 =>  DA CONTROLLARE
+
             'descrizione' => $data['descrizione']
         ]);
 
