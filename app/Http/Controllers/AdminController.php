@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 
+
+
 use Illuminate\Http\Request;
 use App\Rules\GreaterThan;
 use App\Models\Resources\Users;
 use App\Http\Requests\NewstaffRequest;
 use Illuminate\Support\Facades\Redirect;
+
+//queste due mi servono per la form di registrazione di un membro staff
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
 
 class AdminController extends Controller{
 
@@ -28,11 +35,40 @@ class AdminController extends Controller{
     }
 
 
+// voglio provare a memorizzare i dati con questa funzione e chiamarla in quella dopo
+//per salvare i dati del membro staff
+// a quanto pare o va qui o in usersmodel
+
+ public function memorizzastaff (array $data)
+     {
+
+
+       return User::create([
+            'foto_profilo' => NULL,
+            'name' => $data['name'],
+            'cognome' => $data['cognome'],
+            'sesso' => $data['sesso'],
+            'data_nascita' => $data['data_nascita'],
+            'email' => $data['email'],
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+             'livello' => $data['livello'],
+             'descrizione' => $data['descrizione']
+        ]);
+
+    }
+
+
+
+
+
+////funzionava
 
     public function storestaff(NewstaffRequest $request){      // mi serve per inserire un nuovo membro dello staff
         $staff= new Users;
         $staff->fill($request->validated());
-        $staff->save();
+        $staff->save();  //cosi va bene ma poi non cripta pass e non fa login
+
 
         return redirect()->route('admin')
             ->with('status', 'Membro staff inserito correttamente!');

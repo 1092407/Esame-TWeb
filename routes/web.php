@@ -36,7 +36,7 @@ Route::view('/Admin','homeadmin')->name('admin')->middleware('can:isAdmin');   /
 Route::view('/statistiche','statistiche')->name('statistiche');  // porta alla view che visualizza le statistiche
 Route::view('/Gestionestaff','gestionestaff')->name('gestiscistaff');// porta alla vista che mi fa gestire i membri dello staff
 Route::get('/Admin/Registrastaff','AdminController@mettistaff')->name('registrastaff'); // mi genera la vista per inserire nuovi membri dello staff
-Route::post('/Admin/Registrastaff','AdminController@storestaff')->name('registrastaff_post');
+Route::post('/Admin/Registrastaff','AdminController@storestaff')->name('registrastaff_post');  // va messa nella form nella view corrispondente
 
 
 
