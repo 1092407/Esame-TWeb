@@ -27,7 +27,7 @@
 </p>
 <div class="w3-row-padding ">
   <div class="w3-col l3 m6 w3-margin-bottom w3-grayscale hover-no-filter transition">
-    <img src="{{asset('img/profilo/fil.jpg')}}" alt="Mariuc" style="width:120%" class='thumb'>
+    <img src="{{asset('img/foto_profilo/fil.jpg')}}" alt="Mariuc" style="width:120%" class='thumb'>
     <h3>Filippo Mariucci</h3>
     <p class="w3-opacity">Developer</p>
     <p>Studente di Ingegneria Informatica e dell'Automazione presso l'Università Politecnica delle Marche.</p>
@@ -36,7 +36,7 @@
     </p>
   </div>
   <div class="w3-col l3 m6 w3-margin-bottom w3-grayscale hover-no-filter transition">
-    <img src="{{asset('img/profilo/gio.jpg')}}" alt="Giorgione" style="width:110%" class='thumb'>
+    <img src="{{asset('img/foto_profilo/gio.jpg')}}" alt="Giorgione" style="width:110%" class='thumb'>
     <h3>Giorgio Olivieri</h3>
     <p class="w3-opacity">Developer</p>
     <p>Studente di Ingegneria Informatica e dell'Automazione presso l'Università Politecnica delle Marche.</p>

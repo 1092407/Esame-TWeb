@@ -71,9 +71,9 @@
     </div>
   </div>
   <div id="card-modifica" class="column-card">
-    <h3 style="text-align:center">Ciao <b>{{auth()->user()->name}}</b></h3>
+    <h3 style="text-align:center"> <b>{{auth()->user()->name}}</b></h3>
     <div class="card">
-      <h5>qui puoi ricompilare i campi dei dati che vuoi modificare</h5>
+      <h5>Qui puoi ricompilare i campi dei dati che vuoi modificare</h5>
       {{ Form::open(array('route' => 'aggiornaProfilo', 'method' => 'PUT', 'files' => true)) }}
       <div class="wrap-input  rs1-wrap-input">
         {{ Form::label('','', ['class' => 'fa fa-id-card']) }}
@@ -135,18 +135,9 @@
         </ul>
         @endif
       </div>
-      <div class="wrap-input  rs1-wrap-input">
-        {{ Form::label('','', ['class' => 'fa fa-key']) }}
-        {{ Form::label('password', ' Password', ['class' => 'label-input-card']) }}
-        {{ Form::text('password', auth()->user()->cellulare, ['class' => 'input-card', 'id' => 'password']) }}
-        @if ($errors->first('password'))
-        <ul class="errors">
-          @foreach ($errors->get('password') as $message)
-          <li>{{ $message }}</li>
-          @endforeach
-        </ul>
-        @endif
-      </div>
+
+
+
       <div class="wrap-input  rs1-wrap-input">
         {{ Form::label('','', ['class' => 'fa fa-user-circle ']) }}
         {{ Form::label('foto_profilo', 'Immagine profilo', ['class' => 'label-input-card']) }}

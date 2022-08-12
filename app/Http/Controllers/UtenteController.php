@@ -40,9 +40,11 @@ public function __construct(){
             'sesso' => 'required|string',
             'data_nascita' => 'required|date',
             'email' => 'required|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/',
-            'password' => 'string|min:8|',
+            'password' => 'string|min:8',
             'descrizione' => 'string|max:2500'
         ]);
+
+        //  'string|min:8|'
 
 
         if ($request->hasFile('foto_profilo')) {
