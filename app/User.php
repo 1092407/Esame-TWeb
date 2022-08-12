@@ -16,7 +16,7 @@ class User extends Authenticatable  //Componente che gestisce l'autenticazione
      * @var array
      */
     protected $fillable = [
-        'foto_profilo', 'name', 'cognome', 'sesso', 'data_nascita', 'email', 'username', 'password', 'cellulare', 'livello', 'descrizione'
+        'foto_profilo', 'name', 'cognome', 'sesso', 'data_nascita', 'email', 'username', 'password', 'descrizione'
     ];
 
     /**
@@ -36,10 +36,10 @@ class User extends Authenticatable  //Componente che gestisce l'autenticazione
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
     public function hasLivello($livello){
         $livello = (array)$livello;
         return in_array($this->livello, $livello);
-        
+
     }
 }

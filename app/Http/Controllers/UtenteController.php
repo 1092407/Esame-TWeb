@@ -3,6 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+
+
+use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
+
+
+
 
 class UtenteController extends Controller
 {
@@ -32,7 +40,7 @@ public function __construct(){
             'sesso' => 'required|string',
             'data_nascita' => 'required|date',
             'email' => 'required|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/',
-            'password' => 'required|min:8',
+            'password' => 'string|min:8|',
             'descrizione' => 'string|max:2500'
         ]);
 

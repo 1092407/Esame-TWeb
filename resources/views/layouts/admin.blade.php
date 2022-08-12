@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <title>blo | @yield('title', 'admin')</title>
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,8 +9,21 @@
         <link rel="stylesheet" type="text/css" href= "{{ asset('css/w3-style.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--Da qui prendiamo le icone-->
 
-
-
+<!--questo  aggiunto per fare delle prove, gio -->
+@show
+@section('scripts')
+<script language="JavaScript" type="text/javascript" src="{{ asset('js/script.js') }}"></script>
+<script language="JavaScript" type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+<script language="JavaScript" type="text/javascript" src="{{ asset('js/form_validation.js') }}"></script>
+<script>
+$(function() {
+    $(".alert").show().delay(2000).fadeOut("show");
+  })
+</script>
+@show
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+</style>
 
     </head>
 

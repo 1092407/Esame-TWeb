@@ -2,7 +2,7 @@
 
 @section('title', 'profilo')
 
-//sezione script
+<!--sezione script di seguito-->
 
 @section('scripts')
 
@@ -29,11 +29,7 @@
 
 
 
-//successivamente la sezione con l'effettivo contenuto della pagina
-
-
-
-
+<!--di seguito il vero contenuto della pagina -->
 
 @section('content')
 <br>
