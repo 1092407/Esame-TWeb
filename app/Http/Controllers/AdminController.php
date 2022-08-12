@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
-use App\Models\Catalogo;
+
 use Illuminate\Http\Request;
 use App\Rules\GreaterThan;
-use App\Models\Resources\Faq;
-use App\Http\Requests\NewFaqRequest;
+use App\Models\Resources\Users;
+use App\Http\Requests\NewstaffRequest;
 use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller{
@@ -22,6 +22,22 @@ class AdminController extends Controller{
     public function index(){
         return view('statistiche');
     }
+
+    public function mettistaff(){
+        return view('registrastaff');
+    }
+
+
+
+    public function storestaff(NewstaffRequest $request){      // mi serve per inserire un nuovo membro dello staff
+        $staff= new Users;
+        $staff->fill($request->validated());
+        $staff->save();
+
+        return redirect()->route('admin')
+            ->with('status', 'Membro staff inserito correttamente!');
+    }
+
 
    /* public function showStatistiche(Request $request){
 

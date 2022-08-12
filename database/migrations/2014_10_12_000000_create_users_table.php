@@ -25,8 +25,8 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('livello')->default ('utente');  //mi serve per generare le corrette home private dopo i login
-
-            $table->string('descrizione');
+             $table->string('descrizione')->default ('descrizione nulla');
+           // $table->string('descrizione')->default ('');
             $table->rememberToken();//Definisce nella tabella una colonna per gestire la condizione di remember
             $table->timestamps();// Definisce due colonne che indicano la data di creazione della tupla e di ultima modifica
         });

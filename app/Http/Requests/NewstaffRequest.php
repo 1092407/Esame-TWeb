@@ -11,7 +11,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class NewFaqRequest extends FormRequest {
+class NewstaffRequest extends FormRequest {
 
     /**
      * Determine if the user is authorized to make this request.
@@ -31,8 +31,19 @@ class NewFaqRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'domanda' => 'required|string|max:190',
-            'risposta' => 'required|string|max:190'
+
+         'foto_profilo' => ['sometimes','file', 'mimes:jpeg,png', 'max:5000'],
+            'name' => ['required', 'string', 'max:255'],
+            'cognome' => ['required', 'string', 'max:255'],
+            'sesso' => ['required', 'string'],
+            'data_nascita' => ['required', 'date','before:18 years ago'],
+            'email' => ['required', 'string', 'unique:users', 'regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/'],
+            'username' => ['required', 'string', 'min:8', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+             'livello' => ['required', 'string'],
+              'descrizione' => ['sometimes', 'string']
+
+
         ];
     }
 
