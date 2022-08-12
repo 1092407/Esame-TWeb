@@ -58,11 +58,10 @@ Route::view('/messaggi','messaggi')->name('messaggi');  // porta alla view che v
  Route::view('/Blog','mioblog')->name('miooblog');// porta alla vista che mi fa vedere i miei blog
 Route::view('/Amici','mioamico')->name('amici');   // porta alla homepage riservata agli utenti del sito
 Route::view('/Cercapersone','cercapersone')->name('cerca');  // porta alla view che visualizza la pagina dove cerco potenziali amici
-Route::view('/Profilo','profiloutente')->name('profilo');  // porta alla vista che mi fa vedere tutti i dati relativi al mio profilo
-
-
+Route::get('/Profilo','UtenteController@ShowProfilo')->name('profilo');  // porta alla vista che mi fa vedere tutti i dati relativi al mio profilo
 Route::view('/Blog','mioblog')->name('miooblog');
 
+Route::put('/Utente/UpdateProfilo','UtenteController@updateProfilo')->name('aggiornaProfilo');
 
 //Sottoinsime di Auth::routes()
 Route::get('login','Auth\LoginController@showLoginForm')->name('login'); //Rotta che genera la form GET

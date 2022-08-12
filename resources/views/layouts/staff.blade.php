@@ -7,7 +7,12 @@
         @section('links')
         <link rel="stylesheet" type="text/css" href= "{{ asset('css/w3-style.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--Da qui prendiamo le icone-->
-        @show
+
+    @show
+    @section('scripts')
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/script.js') }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+    @show
 
 
     </head>
