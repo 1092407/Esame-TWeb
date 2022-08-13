@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller{
 
-
+   public $lista;
 
     public function __construct(){
         $this->middleware('can:isAdmin');
@@ -34,7 +34,7 @@ class AdminController extends Controller{
         return view('registrastaff');
     }
 
-////funzionava
+
 
     public function storestaff(NewstaffRequest $request){      // mi serve per inserire un nuovo membro dello staff
         $staff= new Users;
@@ -50,22 +50,31 @@ class AdminController extends Controller{
             ->with('status', 'Membro staff inserito correttamente!');
     }
 
+// fino qui tutto ok
+// qui mi serve per modificare ed eliminare un membro staff
 
-   /* public function showStatistiche(Request $request){
 
-        request()->validate([
-           'fine_intervallo' =>[new GreaterThan($request->inizio_intervallo)]
-        ]);
-        $statistiche= $this->_catalogModel->getStatistiche($request->inizio_intervallo,$request->fine_intervallo,$request->tipo_camera);
-        $filtri[0]=$request->inizio_intervallo;
-        $filtri[1]=$request->fine_intervallo;
-        $filtri[2]=$request->tipo_camera;
-        return view('statistiche')
-            ->with('richieste',[$statistiche[0],$statistiche[1],$statistiche[2]])
-            ->with('locazioni',$statistiche[3])
-            ->with('alloggi',$statistiche[4])
-            ->with('filtri',$filtri);
+
+
+
+
+
+public function showstaff(){ // semplice funzione che mi mostra la view per visualizzare/eliminare/modificare lo staff
+
+
+       $staffs=Users::where("livello","staff")->select("name","cognome","sesso","data_nascita","email","username","descrizione")->get();
+        return view('gestionestaff')->with('staffs',$staffs);
     }
+
+
+
+
+
+
+
+
+   /*
+
 
     public function showFaq(){
         $faqs = $this->_catalogModel->getFaq();
@@ -87,14 +96,7 @@ class AdminController extends Controller{
             ->with('status', 'Faq aggiornata correttamente!');
     }
 
-    public function storeFaq(NewFaqRequest $request){
-        $faq= new Faq;
-        $faq->fill($request->validated());
-        $faq->save();
 
-        return redirect()->route('faqindex')
-            ->with('status', 'Faq inserita correttamente!');
-    }
 
     public function showFaqToUpdate($id){
         $faq = $this->_catalogModel->getThisFaq($id);
