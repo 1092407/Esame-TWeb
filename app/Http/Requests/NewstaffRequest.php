@@ -31,8 +31,6 @@ class NewstaffRequest extends FormRequest {
      */
     public function rules() {
         return [
-
-         'foto_profilo' => ['sometimes','file', 'mimes:jpeg,png', 'max:5000'],
             'name' => ['required', 'string', 'max:255'],
             'cognome' => ['required', 'string', 'max:255'],
             'sesso' => ['required', 'string'],

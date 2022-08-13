@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller{
 
-    protected $_catalogModel;
+
 
     public function __construct(){
         $this->middleware('can:isAdmin');
@@ -34,41 +34,17 @@ class AdminController extends Controller{
         return view('registrastaff');
     }
 
-
-// voglio provare a memorizzare i dati con questa funzione e chiamarla in quella dopo
-//per salvare i dati del membro staff
-// a quanto pare o va qui o in usersmodel
-
- public function memorizzastaff (array $data)
-     {
-
-
-       return User::create([
-            'foto_profilo' => NULL,
-            'name' => $data['name'],
-            'cognome' => $data['cognome'],
-            'sesso' => $data['sesso'],
-            'data_nascita' => $data['data_nascita'],
-            'email' => $data['email'],
-            'username' => $data['username'],
-            'password' => Hash::make($data['password']),
-             'livello' => $data['livello'],
-             'descrizione' => $data['descrizione']
-        ]);
-
-    }
-
-
-
-
-
 ////funzionava
 
     public function storestaff(NewstaffRequest $request){      // mi serve per inserire un nuovo membro dello staff
         $staff= new Users;
         $staff->fill($request->validated());
-        $staff->save();  //cosi va bene ma poi non cripta pass e non fa login
+      //  $staff->save();  //cosi va bene perche lo registra nel db, ma poi non cripta password e il login non ha successo
 
+       $appoggio1=$staff['password'];        // devo utilizzare questo vecchio trucchetto per criptare la
+        $appoggio2=Hash::make($appoggio1);    // password affinchè poi il login abbia successo
+        $staff['password']=$appoggio2;        // per il nuovo membro staff che crea admin
+        $staff->save();
 
         return redirect()->route('admin')
             ->with('status', 'Membro staff inserito correttamente!');

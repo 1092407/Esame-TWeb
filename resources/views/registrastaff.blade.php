@@ -11,18 +11,7 @@
         <div class="wrap-contact1">
             {{ Form::open(array('route' => 'registrastaff_post', 'files' => true, 'class' => 'contact-form')) }}
 
-                <div class="wrap-input">
-                    {{ Form::label('', '', ['class' => 'fa fa-picture-o']) }}
-                    {{ Form::label('foto_profilo', 'Foto profilo', ['class' => 'label-input ']) }}
-                    {{ Form::file('foto_profilo', ['class' => 'input', 'id' => 'foto_profilo']) }}
-                    @if ($errors->first('foto_profilo'))
-                    <ul class="errors">
-                        @foreach ($errors->get('foto_profilo') as $message)
-                        <li>{{ $message }}</li>
-                        @endforeach
-                    </ul>
-                    @endif
-                </div>
+
 
                 <div class="wrap-input">
                     {{ Form::label('', '', ['class' => ' fa fa-id-card-o']) }}
