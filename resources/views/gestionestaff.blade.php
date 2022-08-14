@@ -55,7 +55,13 @@
             <td>{{$staff->descrizione}}</td>
 <-- qui tolto i pulsanti da riprendere su prog ale-->
 
-          </tr>
+<td>
+              <form action="{{ route('staff.delete', $staff->id)}}" method="post">
+                @csrf
+                @method('DELETE')
+                <button class="w3-button w3-red" type="submit" onclick= "return confirm('Sei sicuro di voler eliminare questo membro dello staff?')">Elimina</button>
+              </form>
+            </td>
 
           @endforeach
         </tbody>

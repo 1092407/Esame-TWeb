@@ -19,11 +19,11 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller{
 
-   public $lista;
+   public $lista;   // mi serve per funzioni che gestiscono modifica ed eliminazione dei membri dello staff
 
     public function __construct(){
         $this->middleware('can:isAdmin');
-
+        $this->lista = new Users;
     }
 
     public function index(){
@@ -43,7 +43,7 @@ class AdminController extends Controller{
 
        $appoggio1=$staff['password'];        // devo utilizzare questo vecchio trucchetto per criptare la
         $appoggio2=Hash::make($appoggio1);    // password affinchè poi il login abbia successo
-        $staff['password']=$appoggio2;        // per il nuovo membro staff che crea admin
+        $staff['password']=$appoggio2;        // per il nuovo membro staff che crea admin con questa funzione
         $staff->save();
 
         return redirect()->route('admin')
@@ -54,17 +54,40 @@ class AdminController extends Controller{
 // qui mi serve per modificare ed eliminare un membro staff
 
 
-
-
-
-
-
+/*
 public function showstaff(){ // semplice funzione che mi mostra la view per visualizzare/eliminare/modificare lo staff
 
 
        $staffs=Users::where("livello","staff")->select("name","cognome","sesso","data_nascita","email","username","descrizione")->get();
         return view('gestionestaff')->with('staffs',$staffs);
+    }  // questa va bene perchè mi mostra i dati che mi serve vedere ma non mi aiuta per altre funzioni--> devo cambiare metodo
+*/
+
+// da qui prove
+// mie
+
+
+// questa va bene
+public function showstaff(){
+        $staffs = $this->lista->getstaff();  // funzione definita in Users model e lanciata qui
+        return view('gestionestaff')
+                ->with('staffs',$staffs);
     }
+
+
+
+public function deletestaff($id)
+    {
+        $staff = $this->lista->getThisstaff($id);
+        $staff->delete();
+
+        return  redirect()->route('gestiscistaff')
+            ->with('status', 'membro staff eliminato correttamente!');
+    }
+
+
+///sue
+
 
 
 
