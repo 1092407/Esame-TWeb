@@ -53,9 +53,13 @@
             <td>{{$staff->email}}</td>
             <td>{{$staff->username}} </td>
             <td>{{$staff->descrizione}}</td>
-<-- qui tolto i pulsanti da riprendere su prog ale-->
 
-<td>
+
+              <td>
+              <a href = "{{route('staff.toupdate',$staff->id)}}" class="w3-button w3-blue">Modifica</a>
+            </td>
+
+              <td>
               <form action="{{ route('staff.delete', $staff->id)}}" method="post">
                 @csrf
                 @method('DELETE')

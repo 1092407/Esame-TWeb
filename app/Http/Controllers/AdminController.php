@@ -23,7 +23,7 @@ class AdminController extends Controller{
 
     public function __construct(){
         $this->middleware('can:isAdmin');
-        $this->lista = new Users;
+        $this->lista = new Users;   // creo istanza di users per chiamre delle funzioni piu avanti per gestire staff
     }
 
     public function index(){
@@ -50,8 +50,8 @@ class AdminController extends Controller{
             ->with('status', 'Membro staff inserito correttamente!');
     }
 
-// fino qui tutto ok
-// qui mi serve per modificare ed eliminare un membro staff
+
+
 
 
 /*
@@ -63,8 +63,7 @@ public function showstaff(){ // semplice funzione che mi mostra la view per visu
     }  // questa va bene perchè mi mostra i dati che mi serve vedere ma non mi aiuta per altre funzioni--> devo cambiare metodo
 */
 
-// da qui prove
-// mie
+
 
 
 // questa va bene
@@ -84,6 +83,41 @@ public function deletestaff($id)
         return  redirect()->route('gestiscistaff')
             ->with('status', 'membro staff eliminato correttamente!');
     }
+ // fino qui ok
+
+
+
+
+    public function showStaffToUpdate($id){
+        $staff = $this->lista->getThisstaff($id);
+        return view('modifica_staff')->with('staff',$staff);
+    }
+
+
+
+    public function updatestaff(Request $request,$id)
+    {
+        $data = $request->validate([   // qui da mettere i validatori che li ho anche qaundo li ho creati gli staff nuovi , ovviamente con solo i dati che gli posso far modificare
+            'name' => ['required', 'string', 'max:255'],
+            'cognome' => ['required', 'string', 'max:255'],
+            'sesso' => ['required', 'string'],
+            'data_nascita' => ['required', 'date','before:18 years ago'],
+            'email' => ['required', 'string', 'unique:users', 'regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/'],
+            'username' => ['required', 'string', 'min:8', 'unique:users'],
+
+              'descrizione' => ['sometimes', 'string']
+        ]);
+
+        $staff = $this->lista->getThisstaff($id);
+        $staff->update($data);
+
+        return redirect()->route('gestiscistaff')
+            ->with('status', 'Dati membro staff aggiornati correttamente!');
+    }
+
+
+
+
 
 
 ///sue
@@ -99,11 +133,7 @@ public function deletestaff($id)
    /*
 
 
-    public function showFaq(){
-        $faqs = $this->_catalogModel->getFaq();
-        return view('admin_faq')
-                ->with('faqs',$faqs);
-    }
+
 
     public function updateFaq(Request $request,$id)
     {
@@ -121,19 +151,8 @@ public function deletestaff($id)
 
 
 
-    public function showFaqToUpdate($id){
-        $faq = $this->_catalogModel->getThisFaq($id);
-        return view('modifica_faq')->with('faq', $faq);
-    }
 
-    public function deleteFaq($id)
-    {
-        $faq = $this->_catalogModel->getThisFaq($id);
-        $faq->delete();
 
-        return  redirect()->route('faqindex')
-            ->with('status', 'FAQ eliminata correttamente!');
-    }
   */
 
 }

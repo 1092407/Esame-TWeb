@@ -43,16 +43,18 @@ Route::post('/Admin/Registrastaff','AdminController@storestaff')->name('registra
 // per visualizzare,modificare,eliminare i membri dello staff DA FARE
 Route::put('/Admin/Faq/{faq}','AdminController@updateFaq')->name('faq.update');
 Route::get('/Admin/Faq/{faq}','AdminController@showFaqToUpdate')->name('faq.toupdate');
-Route::delete('/Admin/Faq/{faq}','AdminController@deletefaq')->name('faq.delete');
+
 
 
 
 Route::get('/Gestionestaff','AdminController@showstaff')->name('gestiscistaff'); // porta alla vista che mi fa gestire i membri dello staff
-
+Route::delete('/Admin/Gestionestaff/{staff}','AdminController@deletestaff')->name('staff.delete');
 // queste servono per selezionare quello che voglio modificare e modificare oppure eliminare
+
+
 Route::put('/Admin/Gestionestaff/{staff}','AdminController@updatestaff')->name('staff.update');
 Route::get('/Admin/Gestionestaff/{staff}','AdminController@showStaffToUpdate')->name('staff.toupdate');
-Route::delete('/Admin/Gestionestaff/{staff}','AdminController@deletestaff')->name('staff.delete');
+
 
 
 
