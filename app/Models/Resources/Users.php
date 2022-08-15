@@ -38,11 +38,11 @@ public function getThisstaff($id){  // mi recupera dati su un solo membro dello 
 
 
 
-
+/*
 //INIZIO fne
 public function getThis($id){
 //variabili di appoggio
-  $app1 = Users::where("id",$id)->select( "id")->first();  // se metto get () non riceve id nella form nella view
+  $app1 = Users::where("id",$id)->select( "id")->first();  // se metto get () non riceve id nella form nella view come parametro rotta e non la apre
         $app2 = Users::where("id",$id)->select( "name")->first();   // su questi se metto get o first non cambia per output
         $app3 = Users::where("id",$id)->select( "cognome")->first();
         $app4 = Users::where("id",$id)->select( "sesso")->first();
@@ -51,9 +51,42 @@ public function getThis($id){
         $app7 = Users::where("id",$id)->select( "username")->first();
         $app8 = Users::where("id",$id)->select( "descrizione")->first();
 
+
+
 $staff=[$app1,$app2,$app3,$app4,$app5,$app6,$app7,$app8];
+// questo è un array asscociativo. Ritornare staff cosi non va bene perche poi nella view mi stampa chiave e valore
+// mentre a me interessa solo il valore da mettere a schermo, infatti stampa --->   {"name":"t"} se t è il nome
+
+
+
+        return $staff;
+ } // FINE fne
+
+*/
+
+
+//PROVEEEEEEEEE
+
+
+
+public function getThis($id){
+//variabili di appoggio
+  $app1 = Users::where("id",$id)->select( "id")->first();  // se metto get () non riceve id nella form nella view come parametro rotta e non la apre
+        $app2 = Users::where("id",$id)->select( 'name')->first();   // su questi se metto get o first non cambia per output
+        $app3 = Users::where("id",$id)->select( "cognome")->first();
+        $app4 = Users::where("id",$id)->select( "sesso")->first();
+        $app5 = Users::where("id",$id)->select( "data_nascita")->first();
+        $app6 = Users::where("id",$id)->select( "email")->first();
+        $app7 = Users::where("id",$id)->select( "username")->first();
+        $app8 = Users::where("id",$id)->select( "descrizione")->first();
+
+
+
+$staff=[$app1,$app2,$app3,$app4,$app5,$app6,$app7,$app8];
+
+
 // questo è un array asscociativo e cosi non va bene perche poi nella view mi stampa chiave e valore
-// mentre a me interessa solo il valore da mettere a schermo
+// mentre a me interessa solo il valore da mettere a schermo, infatti stampa --->   {"name":"t"} se t è il nome
 
 
 
@@ -62,11 +95,6 @@ $staff=[$app1,$app2,$app3,$app4,$app5,$app6,$app7,$app8];
 
 
 
-
-
-
-
-//PROVEEEEEEEEE
 
 
 
@@ -109,7 +137,11 @@ extract($staff);
 pezzi prova
 */
 
-// questa sotto funziona
+
+
+
+
+// questa sotto funziona ma mi passa solo id
 /*
 public function getThis($id){
         $staff = Users::where("id",$id)->select( "id")->first();

@@ -39,7 +39,7 @@
               <div class="wrap-input">
                     {{ Form::label('', '', ['class' => ' fa fa-id-card-o']) }}
                     {{ Form::label('name', 'Nome', ['class' => 'label-input']) }}
-                    {{ Form::text('name',  $staff[1] , ['class' => 'input', 'id' => 'name']) }}
+                    {{ Form::text('name',   $staff[1]  , ['class' => 'input', 'id' => 'name']) }}
                     @if ($errors->first('name'))
                     <ul class="errors">
                         @foreach ($errors->get('name') as $message)
