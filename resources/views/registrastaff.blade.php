@@ -25,6 +25,7 @@
                     </ul>
                     @endif
                 </div>
+
                 <div class="wrap-input">
                     {{ Form::label('', '', ['class' => 'fa fa-id-card-o']) }}
                     {{ Form::label('cognome', 'Cognome', ['class' => 'label-input ']) }}

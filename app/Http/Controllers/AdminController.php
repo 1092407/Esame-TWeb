@@ -87,7 +87,7 @@ public function deletestaff($id)
 
 
 
-// prove per farla funzionare
+// prove per farla funzionare- va bene ma non mi recupera tutto
     public function showStaffToUpdate($id){
 
         $staff = $this->lista->getThis($id);
@@ -100,13 +100,13 @@ public function deletestaff($id)
 
     public function updatestaff(Request $request,$id)
     {
-        $data = $request->validate([   // qui da mettere i validatori che li ho anche qaundo li ho creati gli staff nuovi , ovviamente con solo i dati che gli posso far modificare
-            'name' => ['required', 'string', 'max:255'],
-            'cognome' => ['required', 'string', 'max:255'],
-            'sesso' => ['required', 'string'],
-            'data_nascita' => ['required', 'date','before:18 years ago'],
-            'email' => ['required', 'string', 'unique:users', 'regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/'],
-            'username' => ['required', 'string', 'min:8', 'unique:users'],
+        $data = $request->validate([   // qui da mettere i validatori per i dati che inserisco nella form di modifica
+            'name' => [ 'sometimes','string', 'max:255'],
+            'cognome' => ['sometimes', 'string', 'max:255'],
+            'sesso' => [ 'sometimes','string'],
+            'data_nascita' => [ 'sometimes','date','before:18 years ago'],
+            'email' => [ 'sometimes','string',  'regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/'],
+            'username' => ['sometimes', 'string', 'min:8'],  // qui alla fine ho tolto  -->  , 'unique:users' prima di ]
 
               'descrizione' => ['sometimes', 'string']
         ]);

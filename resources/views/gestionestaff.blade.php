@@ -6,7 +6,7 @@
 @section('content')
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:300px">
+<div class="w3-main" style="margin-left:30px">
 
   <!-- Header -->
   <header id="portfolio">

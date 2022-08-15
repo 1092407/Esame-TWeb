@@ -7,7 +7,7 @@
 
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:300px">
+<div class="w3-main" style="margin-left:30px">
 
   <!-- Header -->
   <header id="portfolio">
@@ -34,32 +34,38 @@
         </div>
         <div class="w3-panel" style="padding-bottom:16px;">
             <div align='center'>
-                {{ Form::open(array('route' => ['staff.update',$staff->id ], 'method' => 'PUT', 'id'=>'modificastaff', 'class' => 'animate')) }}
+                {{ Form::open(array('route' => ['staff.update', ($staff[0])], 'method' => 'PUT', 'id'=>'modificastaff', 'class' => 'animate')) }}
 
-              {{ Form::label('name', 'Nome', ['class' => 'label-input-alloggio']) }}
-                {{ Form::text('name',$staff->name, ['class' => 'text-input-alloggio', 'id' => 'name']) }}
-                @if ($errors->first('name'))
-                <ul class="errors">
-                    @foreach ($errors->get('name') as $message)
-                    <li>{{ $message }}</li>
-                    @endforeach
-                </ul>
-                @endif
+              <div class="wrap-input">
+                    {{ Form::label('', '', ['class' => ' fa fa-id-card-o']) }}
+                    {{ Form::label('name', 'Nome', ['class' => 'label-input']) }}
+                    {{ Form::text('name',  ($staff[1]) , ['class' => 'input', 'id' => 'name']) }}
+                    @if ($errors->first('name'))
+                    <ul class="errors">
+                        @foreach ($errors->get('name') as $message)
+                        <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
+                    @endif
+                </div>
 
+<div class="wrap-input">
+                    {{ Form::label('', '', ['class' => 'fa fa-id-card-o']) }}
+                    {{ Form::label('cognome', 'Cognome', ['class' => 'label-input ']) }}
+                    {{ Form::text('cognome', $staff[2], ['class' => 'input', 'id' => 'surname']) }}
+                    @if ($errors->first('cognome'))
+                    <ul class="errors">
+                        @foreach ($errors->get('cognome') as $message)
+                        <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
+                    @endif
+                </div>
 
-
-                {{ Form::label('cognome', 'Cognome', ['class' => 'label-input-alloggio']) }}
-                {{ Form::text('cognome', $staff->cognome, ['class' => 'input', 'id' => 'surname']) }}
-                @if ($errors->first('cognome'))
-                <ul class="errors">
-                    @foreach ($errors->get('cognome') as $message)
-                    <li>{{ $message }}</li>
-                    @endforeach
-                </ul>
-                @endif
-
-                 {{ Form::label('sesso', 'Sesso', ['class' => 'label-input']) }}
-                    {{ Form::select('sesso',['Maschio'=>'Maschio', 'Femmina'=>'Femmina'], $staff->sesso, ['class' => 'input','id' => 'sesso', 'placeholder' => 'Seleziona il tuo sesso']) }}
+ <div class="wrap-input">
+                    {{ Form::label('', '', ['class' => 'fa fa-venus-mars']) }}
+                    {{ Form::label('sesso', 'Sesso', ['class' => 'label-input']) }}
+                    {{ Form::select('sesso',['Maschio'=>'Maschio', 'Femmina'=>'Femmina'], null, ['class' => 'input','id' => 'sesso', 'placeholder' => 'Seleziona il tuo sesso']) }}
                     @if ($errors->first('sesso'))
                     <ul class="errors">
                         @foreach ($errors->get('sesso') as $message)
@@ -67,11 +73,12 @@
                         @endforeach
                     </ul>
                     @endif
+                </div>
 
-
-
-                  {{ Form::label('data_nascita', 'Data di Nascita', ['class' => 'label-input']) }}
-                    {{Form::date('data_nascita', \Carbon\Carbon::now(),$staff->data_nascita ,['class'=>'input']) }}
+<div class="wrap-input">
+                    {{ Form::label('', '', ['class' => 'fa fa-birthday-cake']) }}
+                    {{ Form::label('data_nascita', 'Data di Nascita', ['class' => 'label-input']) }}
+                    {{Form::date('data_nascita', \Carbon\Carbon::now(),['class'=>'input'])}}
 
                     @if ($errors->first('data_nascita'))
                     <ul class="errors">
@@ -80,9 +87,12 @@
                         @endforeach
                     </ul>
                     @endif
+                </div>
 
-                     {{ Form::label('email', 'Email', ['class' => 'label-input']) }}
-                    {{ Form::text('email', $staff->email, ['class' => 'input','id' => 'email']) }}
+<div class="wrap-input">
+                    {{ Form::label('', '', ['class' => 'fa fa-envelope']) }}
+                    {{ Form::label('email', 'Email', ['class' => 'label-input']) }}
+                    {{ Form::text('email', $staff[5], ['class' => 'input','id' => 'email']) }}
                     @if ($errors->first('email'))
                     <ul class="errors">
                         @foreach ($errors->get('email') as $message)
@@ -90,10 +100,12 @@
                         @endforeach
                     </ul>
                     @endif
+                </div>
 
-
-          {{ Form::label('username', 'Username', ['class' => 'label-input']) }}
-                {{ Form::text('username', $staff->username, ['class' => 'input','id' => 'username']) }}
+<div class="wrap-input">
+                {{ Form::label('', '', ['class' => 'fa fa-user']) }}
+                {{ Form::label('username', 'Username', ['class' => 'label-input']) }}
+                {{ Form::text('username', $staff[6], ['class' => 'input','id' => 'username']) }}
                 @if ($errors->first('username'))
                 <ul class="errors">
                     @foreach ($errors->get('username') as $message)
@@ -101,9 +113,11 @@
                     @endforeach
                 </ul>
                 @endif
+            </div>
 
-                  {{ Form::label('descrizione', 'Descrizione', ['class' => 'label-input']) }}
-                {{ Form::textarea('descrizione', $staff->descrizione, ['class' => 'input descrizione', 'id' => 'descrizione']) }}
+<div class="wrap-input">
+                {{ Form::label('descrizione', 'Descrizione', ['class' => 'label-input']) }}
+                {{ Form::textarea('descrizione', $staff[7], ['class' => 'input descrizione', 'id' => 'descrizione']) }}
                 @if ($errors->first('descrizione'))
                 <ul class="errors">
                     @foreach ($errors->get('descrizione') as $message)
@@ -111,7 +125,7 @@
                     @endforeach
                 </ul>
                 @endif
-
+            </div>
 
 
 
