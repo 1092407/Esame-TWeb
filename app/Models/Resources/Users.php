@@ -30,14 +30,20 @@ public function getThisstaff($id){  // mi recupera dati su un solo membro dello 
 
    return $staff;
     }  // NON MODIFICARE
+//FIN QUI TUTTO BENE
 
 
 
 
 
+
+
+
+//INIZIO fne
 public function getThis($id){
+//variabili di appoggio
   $app1 = Users::where("id",$id)->select( "id")->first();  // se metto get () non riceve id nella form nella view
-        $app2 = Users::where("id",$id)->select( "name")->get();
+        $app2 = Users::where("id",$id)->select( "name")->first();   // su questi se metto get o first non cambia per output
         $app3 = Users::where("id",$id)->select( "cognome")->first();
         $app4 = Users::where("id",$id)->select( "sesso")->first();
         $app5 = Users::where("id",$id)->select( "data_nascita")->first();
@@ -45,16 +51,14 @@ public function getThis($id){
         $app7 = Users::where("id",$id)->select( "username")->first();
         $app8 = Users::where("id",$id)->select( "descrizione")->first();
 
-$staff=[$app1,$app2,$app3,$app4,$app5,$app6,$app7,$app8,];
+$staff=[$app1,$app2,$app3,$app4,$app5,$app6,$app7,$app8];
 // questo è un array asscociativo e cosi non va bene perche poi nella view mi stampa chiave e valore
 // mentre a me interessa solo il valore da mettere a schermo
 
 
 
         return $staff;
-
-    }
-
+ } // FINE fne
 
 
 
@@ -62,6 +66,48 @@ $staff=[$app1,$app2,$app3,$app4,$app5,$app6,$app7,$app8,];
 
 
 
+//PROVEEEEEEEEE
+
+
+
+/*
+
+queste sono pezi per provare a estarrre solo i valori
+
+foreach($array as $key => $value)
+{
+   echo $key." is ". $value;
+}
+
+
+$data='IL TUO ARRAY NON DIMENTICARLO';
+$m_data=[];
+$intestazioni=array_keys($data[0]);
+foreach ($data as $k=>$v){
+   foreach ($intestazioni as $items)(!isset($m_data[$items]))?$m_data[$items]=$v[$items]:$m_data[$items].=','.$v[$items];
+}
+extract($m_data);
+
+<?php
+$fruites = array('apple', 'banana', 'orange');
+echo implode(',',$fruites);   // stampa apple,banana,orange
+?>
+
+
+
+ MIA PROVA
+$app=[$app1,$app2,$app3,$app4,$app5,$app6,$app7,$app8,];  // coppie che prende dalle query
+$staff=[];  // array che voglio ritornare e che voglio contenga SOLO i valori di $app
+
+$intestazioni=array_keys($app[]);
+foreach ($app as $k=>$v){
+   foreach ($intestazioni as $items)(!isset($staff[$items]))?$staff[$items]=$v[$items]:$staff[$items].=','.$v[$items];
+}
+extract($staff);
+
+
+pezzi prova
+*/
 
 // questa sotto funziona
 /*

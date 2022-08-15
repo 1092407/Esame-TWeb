@@ -123,7 +123,6 @@ public function deletestaff($id)
 
 
 
-///sue
 
 
 
@@ -133,29 +132,5 @@ public function deletestaff($id)
 
 
 
-   /*
-
-
-
-
-    public function updateFaq(Request $request,$id)
-    {
-        $data = $request->validate([
-            'domanda' => 'required|string|max:190',
-            'risposta' => 'required|string|max:190',
-        ]);
-
-        $faq = $this->_catalogModel->getThisFaq($id);
-        $faq->update($data);
-
-        return redirect()->route('faqindex')
-            ->with('status', 'Faq aggiornata correttamente!');
-    }
-
-
-
-
-
-  */
-
+// questa chiude controller
 }
