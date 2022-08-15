@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller{
 
-   public $lista;   // mi serve per funzioni che gestiscono modifica ed eliminazione dei membri dello staff
-
+   protected $lista;   // mi serve per funzioni che gestiscono modifica ed eliminazione dei membri dello staff
+                        //la chiamo coi perche ho idea di recuperare lista di info su utenti
     public function __construct(){
         $this->middleware('can:isAdmin');
         $this->lista = new Users;   // creo istanza di users per chiamre delle funzioni piu avanti per gestire staff
@@ -87,10 +87,13 @@ public function deletestaff($id)
 
 
 
-
+// prove per farla funzionare
     public function showStaffToUpdate($id){
-        $staff = $this->lista->getThisstaff($id);
-        return view('modifica_staff')->with('staff',$staff);
+
+        $staff = $this->lista->getThis($id);
+        return view('modifica_staff')
+                ->with('staff',$staff);
+
     }
 
 

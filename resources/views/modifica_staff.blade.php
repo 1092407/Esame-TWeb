@@ -36,7 +36,7 @@
                 {{ Form::open(array('route' => ['staff.update',$staff->id ], 'method' => 'PUT', 'id'=>'modificastaff', 'class' => 'animate')) }}
 
               {{ Form::label('name', 'Nome', ['class' => 'label-input-alloggio']) }}
-                {{ Form::text('name', $staff->name, ['class' => 'text-input-alloggio', 'id' => 'name']) }}
+                {{ Form::text('name',$staff->name, ['class' => 'text-input-alloggio', 'id' => 'name']) }}
                 @if ($errors->first('name'))
                 <ul class="errors">
                     @foreach ($errors->get('name') as $message)
@@ -47,7 +47,7 @@
 
 
 
-                {{ Form::label('cognome', 'Cognome', ['class' => 'label-input']) }}
+                {{ Form::label('cognome', 'Cognome', ['class' => 'label-input-alloggio']) }}
                 {{ Form::text('cognome', $staff->cognome, ['class' => 'input', 'id' => 'surname']) }}
                 @if ($errors->first('cognome'))
                 <ul class="errors">
@@ -66,7 +66,7 @@
                         @endforeach
                     </ul>
                     @endif
-// fino a qui ok
+
 
 
                   {{ Form::label('data_nascita', 'Data di Nascita', ['class' => 'label-input']) }}
