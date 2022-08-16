@@ -32,31 +32,24 @@ Route::get('/', 'PublicController@showHomepage')->name('home'); // per aprire ho
 
 
 Route::view('/Admin','homeadmin')->name('admin')->middleware('can:isAdmin');   // porta alla homepage riservata all'admin
-Route::view('/statistiche','statistiche')->name('statistiche');  // porta alla view che visualizza le statistiche
 
+Route::get('/statistiche','AdminController@index')->name('statistiche');   // mi porta all view statistiche
 
  // per registrare un nuovo membro dello staff FUNZIONA NON MODIFICARE
 Route::get('/Admin/Registrastaff','AdminController@mettistaff')->name('registrastaff'); // mi genera la vista per inserire nuovi membri dello staff
 Route::post('/Admin/Registrastaff','AdminController@storestaff')->name('registrastaff_post');  // va messa nella form nella view corrispondente
 
-
-// per visualizzare,modificare,eliminare i membri dello staff DA FARE
-Route::put('/Admin/Faq/{faq}','AdminController@updateFaq')->name('faq.update');
-Route::get('/Admin/Faq/{faq}','AdminController@showFaqToUpdate')->name('faq.toupdate');
-
-
-
-
+////
 Route::get('/Gestionestaff','AdminController@showstaff')->name('gestiscistaff'); // porta alla vista che mi fa gestire i membri dello staff
 Route::delete('/Admin/Gestionestaff/{staff}','AdminController@deletestaff')->name('staff.delete');
 // queste servono per selezionare quello che voglio modificare e modificare oppure eliminare
 
-
 Route::put('/Admin/Gestionestaff/{staff}','AdminController@updatestaff')->name('staff.update');
 Route::get('/Admin/Gestionestaff/{staff}','AdminController@showStaffToUpdate')->name('staff.toupdate');
 
+/////
 
-
+Route::get('/Admin/statistiche/{user}','AdminController@showBlogsOfuser')->name('show_blogs_of_user');// voglio che questa mi porti a una vista con tutti i blogs di un certo utente
 
 
 //ROTTE STAFF

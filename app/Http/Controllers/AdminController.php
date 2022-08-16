@@ -11,6 +11,7 @@ use App\Rules\GreaterThan;
 use App\Models\Resources\Users;
 use App\Http\Requests\NewstaffRequest;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Blog;
 
 //queste due mi servono per la form di registrazione di un membro staff
 use Illuminate\Support\Facades\Hash;
@@ -21,14 +22,43 @@ class AdminController extends Controller{
 
    protected $lista;   // mi serve per funzioni che gestiscono modifica ed eliminazione dei membri dello staff
                         //la chiamo coi perche ho idea di recuperare lista di info su utenti
+
+    protected $blogmodel; // mi serve per ritrovare blogs di un certo utente
+
+
     public function __construct(){
         $this->middleware('can:isAdmin');
-        $this->lista = new Users;   // creo istanza di users per chiamre delle funzioni piu avanti per gestire staff
+        $this->lista = new Users;// creo istanza di users per chiamre delle funzioni piu avanti per gestire staff
+         $this->blogmodel = new Blog;
     }
 
-    public function index(){
-        return view('statistiche');
+//SEZIONE FUNZIONI LEGATE ALLE STATISTICHE
+
+
+    public function index(){              // mi ritorna la view base di statistiche
+         $users = $this->lista->getusers();
+        return view('statistiche')
+                ->with('users',$users);
     }
+
+
+
+// voglio una funzione che per un dato id dell'utente mi porta a una view dove vedo tutti i blogs creati da quell'utente
+ public function showBlogsOfuser($id){
+
+
+        $blogs = $this->blogmodel->getblogsofuser($id);
+        return view('statistiche_blog')
+                ->with('blogs',$blogs);
+
+    }
+//questa sopra  la sto provando
+
+
+
+
+
+//SEZIONE FUNZIONI LEGATE ALLA GESTIONE DELLO STAFF
 
     public function mettistaff(){
         return view('registrastaff');

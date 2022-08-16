@@ -11,7 +11,16 @@ class Users extends Model
     protected $primaryKey = 'id';
 
     // questo mi serve per far inserire all'admin i membri dello staff direttamete dalla sua area riservata
-    protected $fillable = ['name','cognome','sesso','data_nascita','email','username','password','livello','descrizione'];
+ protected $fillable = ['name','cognome','sesso','data_nascita','email','username','password','livello','descrizione'];
+
+
+
+public function getusers(){  // mi recupera info su TUTTI i  gli utenti del sito
+  $users=Users::where("livello","utente")->select( "id","name","cognome","sesso","data_nascita","email","username","descrizione")->get();
+        return $users;
+    }
+
+
 
 
 
@@ -19,8 +28,6 @@ public function getstaff(){  // mi recupera info su TUTTI i  membri dello staff
         $staffs=Users::where("livello","staff")->select( "id","name","cognome","sesso","data_nascita","email","username","descrizione")->get();
         return $staffs;
     }
-
-
 
 // questa va bene per eliminare e modificare  un membro dello staff quindi NON MODIFICARE
 
@@ -101,6 +108,36 @@ $staff=[$app1,$app2,$app3,$app4,$app5,$app6,$app7,$app8];
 /*
 
 queste sono pezi per provare a estarrre solo i valori
+
+
+
+
+public function getThis($id){
+//variabili di appoggio
+  $app1 = Users::where("id",$id)->select( "id")->first();  // se metto get () non riceve id nella form nella view come parametro rotta e non la apre
+        $app2 = Users::where("id",$id)->select( 'name')->first();   // su questi se metto get o first non cambia per output
+        $app3 = Users::where("id",$id)->select( "cognome")->first();
+        $app4 = Users::where("id",$id)->select( "sesso")->first();
+        $app5 = Users::where("id",$id)->select( "data_nascita")->first();
+        $app6 = Users::where("id",$id)->select( "email")->first();
+        $app7 = Users::where("id",$id)->select( "username")->first();
+        $app8 = Users::where("id",$id)->select( "descrizione")->first();
+
+
+
+$staff=[$app1,$app2,$app3,$app4,$app5,$app6,$app7,$app8];
+
+
+// questo è un array asscociativo e cosi non va bene perche poi nella view mi stampa chiave e valore
+// mentre a me interessa solo il valore da mettere a schermo, infatti stampa --->   {"name":"t"} se t è il nome
+
+
+
+        return $staff;
+ } // FINE fne
+
+
+
 
 foreach($array as $key => $value)
 {
