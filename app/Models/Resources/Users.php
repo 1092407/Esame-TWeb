@@ -41,8 +41,18 @@ public function getThisstaff($id){  // mi recupera dati su un solo membro dello 
 //FIN QUI TUTTO BENE
 
 
-// questa voglio che mi recupera nome cognome e username degli amici di un certo utente che passo come parametro con il suo id
 
+
+
+
+
+
+
+
+
+
+// questa voglio che mi recupera nome cognome e username degli amici di un certo utente che passo come parametro con il suo id
+// problema è scrivere la query fatta bene
   public function getamiciofuser($id) {
 
      $amico=Users:: select ("name","cognome","username")->where("id","=" ,function($query)  {

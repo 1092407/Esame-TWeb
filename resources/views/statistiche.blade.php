@@ -64,7 +64,7 @@
             </td>
 
                <td>
-              <a href = "{{route('staff.toupdate',$user->id)}}" class="w3-button w3-blue">(Modifica) è richieste</a>
+              <a href = "{{route('show_richieste_of_user',$user->id)}}" class="w3-button w3-blue">Richieste</a>
             </td>
 
           @endforeach

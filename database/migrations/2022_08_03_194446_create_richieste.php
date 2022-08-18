@@ -18,7 +18,7 @@ class CreateRichieste extends Migration
             $table->date('data_richiesta')->index();
             $table->date('data_risposta')->index()->nullable();
 
-            $table->integer('stato')->index();   // mi serve per capire se viene accettata o negata
+            $table->integer('stato')->index();   // mi serve per capire se viene accettata o negata:considero 0 non accettata e 1 accettata
             $table->integer('richiedente')->references('id')->on('users');  // chi invia ad un altro utente una richiesta di amicizia
             $table->integer('accettante')->references('id')->on('users');    // cho riceve una richista da un richidente e puo decidere se accettare o rifiutare
             $table->timestamps();

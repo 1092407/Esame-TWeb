@@ -13,7 +13,7 @@ use App\Http\Requests\NewstaffRequest;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Blog;
 use App\Models\Amici;
-
+use App\Models\Resources\Richieste;
 
 //queste due mi servono per la form di registrazione di un membro staff
 use Illuminate\Support\Facades\Hash;
@@ -27,13 +27,14 @@ class AdminController extends Controller{
 
     protected $blogmodel; // mi serve per ritrovare blogs di un certo utente
 
-
+    protected $richiestemodel;
       protected $amicimodel;
 
     public function __construct(){
         $this->middleware('can:isAdmin');
         $this->lista = new Users;// creo istanza di users per chiamre delle funzioni piu avanti per gestire staff
          $this->blogmodel = new Blog;
+         $this->richiestemodel = new Richieste;
          $this->amicimodel = new Amici;
     }
 
@@ -54,6 +55,17 @@ class AdminController extends Controller{
         return view('statistiche_blog')
                 ->with('blogs',$blogs);
     }  // funziona non modificare
+
+
+
+// questa per un dato utente,che scelgo dal suo id , mi fa vedere dati sulle richieste a lui pervenute
+ public function showRichiesteOfuser($id){
+         $richieste = $this->richiestemodel->getrichiesteofuser($id);
+        return view('statistiche_richieste')
+                ->with('totali', $richieste[0])
+                ->with('accettate', $richieste[1]);
+    }
+
 
 
 
