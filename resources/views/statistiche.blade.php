@@ -34,11 +34,13 @@
 
             <td><b style="font-size:18px;">username</b></td>
             <td><b style="font-size:18px;">descrizione</b></td>
+               <td><b style="font-size:18px;">id</b></td>
 
 
 
 
-            <td colspan=2><b style="font-size:18px;">Vedi</b></td>
+
+            <td colspan=3><b style="font-size:18px;">Vedi</b></td>
           </tr>
         </thead>
         <tbody>
@@ -49,17 +51,21 @@
 
             <td>{{$user->username}} </td>
             <td>{{$user->descrizione}}</td>
+             <td>{{$user->id}}</td>
 
 
               <td>
-              <a href = "{{route('staff.toupdate',$user->id)}}" class="w3-button w3-blue">Modifica</a>
-            </td>
-
-             <td>
               <a href = "{{route('show_blogs_of_user',$user->id)}}" class="w3-button w3-blue">Blogs</a>
             </td>
 
 
+              <td>
+              <a href = "{{route('show_amici_of_user',$user->id)}}" class="w3-button w3-blue">Amici</a>
+            </td>
+
+               <td>
+              <a href = "{{route('staff.toupdate',$user->id)}}" class="w3-button w3-blue">(Modifica) è richieste</a>
+            </td>
 
           @endforeach
         </tbody>
@@ -69,6 +75,6 @@
 
 
 
-////////// chide la sezione
+
 </div>
 @endsection

@@ -12,6 +12,8 @@ use App\Models\Resources\Users;
 use App\Http\Requests\NewstaffRequest;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Blog;
+use App\Models\Amici;
+
 
 //queste due mi servono per la form di registrazione di un membro staff
 use Illuminate\Support\Facades\Hash;
@@ -26,10 +28,13 @@ class AdminController extends Controller{
     protected $blogmodel; // mi serve per ritrovare blogs di un certo utente
 
 
+      protected $amicimodel;
+
     public function __construct(){
         $this->middleware('can:isAdmin');
         $this->lista = new Users;// creo istanza di users per chiamre delle funzioni piu avanti per gestire staff
          $this->blogmodel = new Blog;
+         $this->amicimodel = new Amici;
     }
 
 //SEZIONE FUNZIONI LEGATE ALLE STATISTICHE
@@ -43,16 +48,27 @@ class AdminController extends Controller{
 
 
 
-// voglio una funzione che per un dato id dell'utente mi porta a una view dove vedo tutti i blogs creati da quell'utente
+//  funzione che per un dato id dell'utente mi serve per avere una view dove vedo tutti i blogs creati da quell'utente
  public function showBlogsOfuser($id){
-
-
-        $blogs = $this->blogmodel->getblogsofuser($id);
+         $blogs = $this->blogmodel->getblogsofuser($id);
         return view('statistiche_blog')
                 ->with('blogs',$blogs);
+    }  // funziona non modificare
 
+
+
+// funzione che dovrebbe portarmi a vedere gli amici di un certo utente che arriva tramite id parametro
+public function showAmiciOfuser($id){
+
+         $amici = $this->lista->getamiciofuser($id);
+
+        return view('statistiche_amici')  // view da creare e creare la route che la deve generare alla chiamata
+                ->with('amici',$amici);
     }
-//questa sopra  la sto provando
+
+
+
+
 
 
 

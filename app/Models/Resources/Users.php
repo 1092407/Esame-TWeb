@@ -3,6 +3,7 @@
 namespace App\Models\Resources;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Amici;
 
 class Users extends Model
 {
@@ -40,7 +41,31 @@ public function getThisstaff($id){  // mi recupera dati su un solo membro dello 
 //FIN QUI TUTTO BENE
 
 
+// questa voglio che mi recupera nome cognome e username degli amici di un certo utente che passo come parametro con il suo id
 
+  public function getamiciofuser($id) {
+
+     $amico=Users:: select ("name","cognome","username")->where("id","=" ,function($query)  {
+
+      $query=Amici::where("utente_riferimento",$id)->select( "amico_utente_riferimento");
+
+      })->get();
+
+
+ return $amico;
+    }
+  /*  in SQL SAREBBE
+
+  SELECT( name,cognome,username)
+  FROM users
+  where id=   (
+                select amico_utente_riferimento
+                from amici
+                where utente_riferimento=$id
+
+             )
+   la devo fare con il query builder di laravel
+  */
 
 
 

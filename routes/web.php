@@ -33,23 +33,31 @@ Route::get('/', 'PublicController@showHomepage')->name('home'); // per aprire ho
 
 Route::view('/Admin','homeadmin')->name('admin')->middleware('can:isAdmin');   // porta alla homepage riservata all'admin
 
-Route::get('/statistiche','AdminController@index')->name('statistiche');   // mi porta all view statistiche
+Route::get('/statistiche','AdminController@index')->name('statistiche');   // mi porta all view statistiche generale
 
  // per registrare un nuovo membro dello staff FUNZIONA NON MODIFICARE
 Route::get('/Admin/Registrastaff','AdminController@mettistaff')->name('registrastaff'); // mi genera la vista per inserire nuovi membri dello staff
 Route::post('/Admin/Registrastaff','AdminController@storestaff')->name('registrastaff_post');  // va messa nella form nella view corrispondente
 
-////
+// per modificare o eliminare un membro dello staff
 Route::get('/Gestionestaff','AdminController@showstaff')->name('gestiscistaff'); // porta alla vista che mi fa gestire i membri dello staff
-Route::delete('/Admin/Gestionestaff/{staff}','AdminController@deletestaff')->name('staff.delete');
-// queste servono per selezionare quello che voglio modificare e modificare oppure eliminare
+Route::delete('/Admin/Gestionestaff/{staff}','AdminController@deletestaff')->name('staff.delete');  // per eliminare
 
-Route::put('/Admin/Gestionestaff/{staff}','AdminController@updatestaff')->name('staff.update');
-Route::get('/Admin/Gestionestaff/{staff}','AdminController@showStaffToUpdate')->name('staff.toupdate');
 
-/////
+Route::put('/Admin/Gestionestaff/{staff}','AdminController@updatestaff')->name('staff.update');// aggiorna dati
+Route::get('/Admin/Gestionestaff/{staff}','AdminController@showStaffToUpdate')->name('staff.toupdate'); // va vedere i dati presenti e che posso modificare
 
-Route::get('/Admin/statistiche/{user}','AdminController@showBlogsOfuser')->name('show_blogs_of_user');// voglio che questa mi porti a una vista con tutti i blogs di un certo utente
+
+
+// per vedere  le varie  statistcihe
+
+
+
+Route::get('/Admin/statistiche/blogs/{user}','AdminController@showBlogsOfuser')->name('show_blogs_of_user');// per vedere blogs di un certo utente
+
+Route::get('/Admin/statistiche/amici/{user}','AdminController@showAmiciOfuser')->name('show_amici_of_user');// per vedere amici di un certo utente
+
+Route::get('/Admin/statistiche/richieste/{user}','AdminController@showrichiesteOfuser')->name('show_richieste_of_user'); // per vedere le richieste di un certo utente
 
 
 //ROTTE STAFF
@@ -75,7 +83,11 @@ Route::view('/Blog','mioblog')->name('miooblog');
 
 Route::put('/Utente/UpdateProfilo','UtenteController@updateProfilo')->name('aggiornaProfilo');
 
-//Sottoinsime di Auth::routes()
+
+
+
+
+//Sottoinsime di Auth::routes()   FINITO E NON MODIFICARE
 Route::get('login','Auth\LoginController@showLoginForm')->name('login'); //Rotta che genera la form GET
 Route::post('login','Auth\LoginController@login');//Usata al submit della form che attiva il processo di autenticazione
 Route::post('logout','Auth\LoginController@logout')->name('logout');
@@ -84,4 +96,4 @@ Route::post('register','Auth\RegisterController@register'); //Rotta che effettiv
 
 //Auth::routes();   // rotte con ui e auth
 
- // Route::get('/home', 'HomeController@index')->name('home'); // rotta ottenuta con auth di ui e che non mi serve
+ // Route::get('/home', 'HomeController@index')->name('home'); // pagina base nuovo progetto
