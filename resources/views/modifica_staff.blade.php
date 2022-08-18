@@ -65,7 +65,7 @@
  <div class="wrap-input">
                     {{ Form::label('', '', ['class' => 'fa fa-venus-mars']) }}
                     {{ Form::label('sesso', 'Sesso', ['class' => 'label-input']) }}
-                    {{ Form::select('sesso',['Maschio'=>'Maschio', 'Femmina'=>'Femmina'], null, ['class' => 'input','id' => 'sesso', 'placeholder' => 'Seleziona il tuo sesso']) }}
+                    {{ Form::select('sesso',['Maschio'=>'Maschio', 'Femmina'=>'Femmina'], $staff[3], ['class' => 'input','id' => 'sesso', 'placeholder' => 'Seleziona il tuo sesso']) }}
                     @if ($errors->first('sesso'))
                     <ul class="errors">
                         @foreach ($errors->get('sesso') as $message)
@@ -78,7 +78,7 @@
 <div class="wrap-input">
                     {{ Form::label('', '', ['class' => 'fa fa-birthday-cake']) }}
                     {{ Form::label('data_nascita', 'Data di Nascita', ['class' => 'label-input']) }}
-                    {{Form::date('data_nascita', \Carbon\Carbon::now(),['class'=>'input'])}}
+                    {{Form::date('data_nascita', $staff[4],['class'=>'input'])}}
 
                     @if ($errors->first('data_nascita'))
                     <ul class="errors">
