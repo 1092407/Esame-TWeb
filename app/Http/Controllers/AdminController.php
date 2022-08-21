@@ -15,15 +15,14 @@ use App\Models\Blog;
 use App\Models\Amici;
 use App\Models\Resources\Richieste;
 
-//queste due mi servono per la form di registrazione di un membro staff
+//queste due mi servono per la registrazione di un membro staff
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 
 class AdminController extends Controller{
 
-   protected $lista;   // mi serve per funzioni che gestiscono modifica ed eliminazione dei membri dello staff
-                        //la chiamo coi perche ho idea di recuperare lista di info su utenti
+   protected $lista;   // sarebbe usermodel ma la chiamo lista perche idea è recuperare info
 
     protected $blogmodel; // mi serve per ritrovare blogs di un certo utente
 
@@ -54,7 +53,7 @@ class AdminController extends Controller{
          $blogs = $this->blogmodel->getblogsofuser($id);
         return view('statistiche_blog')
                 ->with('blogs',$blogs);
-    }  // funziona non modificare
+    }
 
 
 
@@ -68,8 +67,7 @@ class AdminController extends Controller{
 
 
 
-
-// funzione che dovrebbe portarmi a vedere gli amici di un certo utente che arriva tramite id parametro
+//questa per vedere gli amici di un dato utente identificato dal suo id
 public function showAmiciOfuser($id){
 
          $amici = $this->lista->getamiciofuserLEFT($id);
@@ -79,8 +77,6 @@ public function showAmiciOfuser($id){
         return view('statistiche_amici')
                 ->with('amici',$amici)->with('amiciright',$amiciright);
     }
-
-
 
 
 
@@ -110,22 +106,6 @@ public function showAmiciOfuser($id){
             ->with('status', 'Membro staff inserito correttamente!');
     }
 
-
-
-
-
-/*
-public function showstaff(){ // semplice funzione che mi mostra la view per visualizzare/eliminare/modificare lo staff
-
-
-       $staffs=Users::where("livello","staff")->select("name","cognome","sesso","data_nascita","email","username","descrizione")->get();
-        return view('gestionestaff')->with('staffs',$staffs);
-    }  // questa va bene perchè mi mostra i dati che mi serve vedere ma non mi aiuta per altre funzioni--> devo cambiare metodo
-*/
-
-
-
-
 // questa va bene
 public function showstaff(){
         $staffs = $this->lista->getstaff();  // funzione definita in Users model e lanciata qui
@@ -143,11 +123,11 @@ public function deletestaff($id)
         return  redirect()->route('gestiscistaff')
             ->with('status', 'membro staff eliminato correttamente!');
     }
- // fino qui ok
 
 
 
-// prove per farla funzionare- va bene ma non mi recupera tutto
+
+
     public function showStaffToUpdate($id){
 
         $staff = $this->lista->getThis($id);

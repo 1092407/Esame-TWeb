@@ -58,47 +58,7 @@ $staff=[$app1,$app2,$app3,$app4,$app5,$app6,$app7,$app8];
         return $staff;
  }
 
-//FIN QUI TUTTO BENE
 
-
-
-
-
-
-
-
-
-
-/*
-
-// questa voglio che mi recupera nome cognome e username degli amici di un certo utente che passo come parametro con il suo id
-// problema è scrivere la query fatta bene
-  public function getamiciofuser($id) {
-
-     $amico=Users:: select ("name","cognome","username")->where("id","=" ,function($query)  {
-
-      $query=Amici::where("utente_riferimento",$id )->select( "amico_utente_riferimento");
-
-      })->get();
-
-
- return $amico;
-    }
-
-    */
-
-  /*  in SQL SAREBBE
-
-  SELECT( name,cognome,username)
-  FROM users
-  where id=   (
-                select amico_utente_riferimento
-                from amici
-                where utente_riferimento=$id
-
-             )
-   la devo fare con il query builder di laravel
-  */
 
  //mi prende info di un detrminato user
 public function finduserbyid($id){
@@ -106,107 +66,84 @@ $user=Users:: where('id','=',$id)->select( "id","name","cognome","username")->fi
 return $user;
 }
 
+
+
+/*
+ QUESTE DUE FUNZIONI CHE SEGUONO  SERVONO PER AVERE GLI AMICI DI UN DATO UTENTE
+
+USO DUE FUNZIONI, UNA 'LEFT' E UNA 'RIGHT' IN BASE A QUALE COLONNA NELLA TABELLA 'AMICI' DEL DB
+DI TROVA $id CHE PASSO COME PARAMETRO
+
+SEGUE SPIEGAZIONE CON ESMPIO
+VOGLIO TROVARE GLI AMICI DI a E ATTUALMENTE LA TABELLA CHE HO E' LA SEGUENTE
+le lettere a b c d f in questo caso faccio finta siano gli id degli utenti
+
+
+LA TABELLA                  utente_riferimento         amico_utente_riferimento
+                                     a                             b
+                                     a                              c
+                                     a                              d
+                                     f                              a
+
+
+
+     PER LOGICA E COME ANCHE INDICATO NELLE SPECIFICHE GLI AMICI DI a SONO 4 , OVVERO b c d f
+     SE ANDASSI A CERCARE IN UNA SOLA DELLE DUE COLONNE POTREI PERDERMI DEGLI AMICI(IN QUESTO CASO ASSOLUTAMENTE SI, MA IN ALTRI NO) E NON POSSO PERMETTERMI UN ERRORE SIMILE
+
+     CON LA FUNZIONE 'LEFT' DICO CHE IL PARAMETRO è NELLA COLNNA UTENTE RIFERIMENTO
+     CON LA FUNZIONE 'RIGHT ' INVECE NELL'ALTRA
+
+     SOLO FACENDO QUESTA DOPPIA SCANSIONE SONO SICURO AL 100% DI RECUPERARE TUTTI GLI AMICI DI a
+
+*/
+
+
 public function getamiciofuserLEFT($id) {
 
  $idamici= Amici::where('utente_riferimento','=',$id)->select("amico_utente_riferimento")->get()->toArray();
 
+$check=count($idamici);
+
+if($check==0){
+$amico=['   '];   // se è vuota non gli faccio stampare nulla perchè questa è una stringa di tre spazi tra le ''
+}
+
+if(($check!=0)) {
     for($i=0;$i<count($idamici);$i++){
             $app1= Users:: where('id','=',$idamici[$i])->value( "name");
             $app2= Users:: where('id','=',$idamici[$i])->value( "cognome");
             $app3= Users:: where('id','=',$idamici[$i])->value( "username");
              $amico[$i]=[$app1,$app2,$app3];
         }
-
-
-
-    return $amico ;
     }
+           return $amico;
+    }
+
+
 
  public function getamiciofuserRIGHT($id) {
 
  $idamici= Amici::where('amico_utente_riferimento','=',$id)->select("utente_riferimento")->get()->toArray();
 
+
+$check=count($idamici);
+
+if($check==0){
+$amicoright=['   '];   // se è vuota non gli faccio stampare nulla
+}
+
+
+if(($check!=0)) {
     for($i=0;$i<count($idamici);$i++){
             $app1= Users:: where('id','=',$idamici[$i])->value( "name");
             $app2= Users:: where('id','=',$idamici[$i])->value( "cognome");
             $app3= Users:: where('id','=',$idamici[$i])->value( "username");
              $amicoright[$i]=[$app1,$app2,$app3];
         }
-
+}
     return $amicoright ;
     }
-
-
-
-
-/*
-
-
- public function getLocatarioRichieste($id){
-        $richieste= Richieste::where('locatario','=',$id)->get();
-        for($i=0;$i<count($richieste);$i++){
-            $richieste[$i] = Richieste::join('alloggi','richieste.id_alloggio','=','alloggi.id')->where('richieste.id','=',$richieste[$i]->id)->select('richieste.id','richieste.id_alloggio','richieste.data_richiesta','richieste.data_risposta','richieste.stato','alloggi.titolo','alloggi.prezzo','alloggi.tipologia','alloggi.periodo_locazione')->get();
-        }
-        return $richieste;
-
-    }
-
-
-
-
-
- $alloggi = Alloggi::where(function($alloggio) use ($citta){
-            $alloggio->where('citta','LIKE','%'.$citta.'%')
-                    ->oRwhere('regione','LIKE','%'.$citta.'%');
-        });
-
-
-
-public function checkDisponibilityByDate(Request $req)
-{
-    $fecha = $req->fecha;
-
-    $vehiculos= Vehiculo::join('Reservaciones', 'Vehiculos.id', '=', 'Reservaciones.id_vehiculo')
-                ->join('Marcas', 'Vehiculos.id_marca', '=' , 'Marcas.id')
-                ->join('Modelo', 'Vehiculos.id_modelo', '=' , 'Modelo.id')
-                ->select('Marcas.nombre as Marca', 'Modelo.nombre as Modelo', 'Vehiculos.year as Anio', 'Vehiculos.id')
-                ->where('Vehiculos.id_marca', '=' ,$req->id_marca)
-                ->where('Marcas.id_categoria', '=' ,$req->id_categoria)
-                ->whereNotIn('Vehiculos.id', function($query) use ($fecha) {
-                    $query->select('id_vehiculo')
-                          ->from('Reservaciones')
-                          ->where('fecha', '=', $fecha);
-            })
-            ->get();
-    return $vehiculos->toJson();
-
-
-
-
-
-$alloggi_filtri = Alloggi::leftJoin('incluso','incluso.alloggio','=','alloggi.id');
-
-
-
-        $alloggi = Alloggi::where(function($alloggio) use ($citta){
-            $alloggio->where('citta','LIKE','%'.$citta.'%')
-                    ->oRwhere('regione','LIKE','%'.$citta.'%');
-        });
-
-
-     $amico =Users::select ("name","cognome","username")->where("id","=" ,function($query) use ($id){
-
-     $query=Amici::where("utente_riferimento",$id )->select( "amico_utente_riferimento")->get();
-     })->get();
-
-    return $amico ;
-    }
-
-
-
-
-*/
-
+// FIN QUI OK
 
 ///// è la parentesi che chiude estensione del model
 }

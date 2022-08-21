@@ -1,3 +1,4 @@
+
 @extends('layouts.admin')
 
 @section('title', 'statistiche amici')
@@ -13,6 +14,8 @@
   <!-- First Photo Grid-->
   <div style="padding-left: 20px; padding-right: 20px;">
     <div class="col-sm-12">
+
+
       <table class="w3-table-all table-striped">
         <thead>
           <tr>
@@ -27,13 +30,20 @@
         <tbody>
 
 
+
           @foreach($amici as $amico)
           <tr>
+
+
             <td>{{$amico[0]}}</td>
+
+
             <td>{{$amico[1]}}</td>
             <td>{{$amico[2]}}</td>
 
+
           @endforeach
+
 
         </tbody>
 
