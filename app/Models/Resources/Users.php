@@ -106,8 +106,7 @@ $user=Users:: where('id','=',$id)->select( "id","name","cognome","username")->fi
 return $user;
 }
 
-
- public function getamiciofuser($id) {
+public function getamiciofuserLEFT($id) {
 
  $idamici= Amici::where('utente_riferimento','=',$id)->select("amico_utente_riferimento")->get()->toArray();
 
@@ -121,6 +120,20 @@ return $user;
 
 
     return $amico ;
+    }
+
+ public function getamiciofuserRIGHT($id) {
+
+ $idamici= Amici::where('amico_utente_riferimento','=',$id)->select("utente_riferimento")->get()->toArray();
+
+    for($i=0;$i<count($idamici);$i++){
+            $app1= Users:: where('id','=',$idamici[$i])->value( "name");
+            $app2= Users:: where('id','=',$idamici[$i])->value( "cognome");
+            $app3= Users:: where('id','=',$idamici[$i])->value( "username");
+             $amicoright[$i]=[$app1,$app2,$app3];
+        }
+
+    return $amicoright ;
     }
 
 

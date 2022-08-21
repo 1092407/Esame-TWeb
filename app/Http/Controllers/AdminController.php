@@ -72,10 +72,12 @@ class AdminController extends Controller{
 // funzione che dovrebbe portarmi a vedere gli amici di un certo utente che arriva tramite id parametro
 public function showAmiciOfuser($id){
 
-         $amici = $this->lista->getamiciofuser($id);
+         $amici = $this->lista->getamiciofuserLEFT($id);
 
-        return view('statistiche_amici')  // view da creare e creare la route che la deve generare alla chiamata
-                ->with('amici',$amici);
+         $amiciright=$this->lista->getamiciofuserRIGHT($id);
+
+        return view('statistiche_amici')
+                ->with('amici',$amici)->with('amiciright',$amiciright);
     }
 
 

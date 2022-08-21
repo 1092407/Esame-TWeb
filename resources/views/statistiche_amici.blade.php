@@ -33,6 +33,39 @@
             <td>{{$amico[1]}}</td>
             <td>{{$amico[2]}}</td>
 
+          @endforeach
+
+        </tbody>
+
+      </table>
+
+
+
+
+</div>
+
+
+
+       <table class="w3-table-all table-striped">
+        <thead>
+          <tr>
+            <td><b style="font-size:18px;"></b></td>
+            <td><b style="font-size:18px;"></b></td>
+            <td><b style="font-size:18px;"></b></td>
+
+          </tr>
+        </thead>
+
+
+        <tbody>
+
+
+          @foreach($amiciright as $amicoright)
+          <tr>
+            <td>{{$amicoright[0]}}</td>
+            <td>{{$amicoright[1]}}</td>
+            <td>{{$amicoright[2]}}</td>
+
 
 
 
@@ -46,6 +79,8 @@
       </table>
 
 
-</div>
+
+
+
 
 @endsection
