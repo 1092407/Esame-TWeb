@@ -29,9 +29,10 @@
 
           @foreach($amici as $amico)
           <tr>
-            <td>{{$amico->nome}}</td>
-            <td>{{$amico->cognome}}</td>
-            <td>{{$amico->username}}</td>
+            <td>{{$amico[0]}}</td>
+            <td>{{$amico[1]}}</td>
+            <td>{{$amico[2]}}</td>
+
 
 
 
