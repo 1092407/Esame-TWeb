@@ -52,9 +52,13 @@
 
 
 
+
+</div>
 </div>
 
 
+<div style="padding-left: 20px; padding-right: 20px;">
+    <div class="col-sm-12">
 
        <table class="w3-table-all table-striped">
         <thead>
@@ -89,7 +93,8 @@
       </table>
 
 
-
+</div>
+</div>
 
 
 

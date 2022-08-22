@@ -75,13 +75,22 @@ Route::get('/Utente', 'UtenteController@indexutente')->name('utente')->middlewar
 
 
 Route::view('/messaggi','messaggi')->name('messaggi');  // porta alla view che visualizza la pagina dove vedo i messaggi
- Route::view('/Blog','mioblog')->name('miooblog');// porta alla vista che mi fa vedere i miei blog
+ //Route::view('/Blog','mioblog')->name('miooblog');// porta alla vista che mi fa vedere i miei blog
 Route::view('/Amici','mioamico')->name('amici');   // porta alla homepage riservata agli utenti del sito
 Route::view('/Cercapersone','cercapersone')->name('cerca');  // porta alla view che visualizza la pagina dove cerco potenziali amici
-Route::get('/Profilo','UtenteController@ShowProfilo')->name('profilo');  // porta alla vista che mi fa vedere tutti i dati relativi al mio profilo
-Route::view('/Blog','mioblog')->name('miooblog');
 
+//per vedere il mio profilo
+Route::get('/Profilo','UtenteController@ShowProfilo')->name('profilo');  // porta alla vista che mi fa vedere tutti i dati relativi al mio profilo
 Route::put('/Utente/UpdateProfilo','UtenteController@updateProfilo')->name('aggiornaProfilo');
+
+//per vedere ed eliminare  i miei blogs
+Route::get('/Utente/Blogs', 'UtenteController@showmyblogs')->name('mioblog');  // mi fa vedere tutti i miei blog
+Route::delete('/Utente/Blog/{blog}','UtenteController@deletemyblog')->name('blog.delete');  // per eliminare un certo blog
+
+//per creare i miei blog
+Route::get('/Utente/Blog','UtenteController@creablog')->name('creablog'); // mi genera la vista per creare nuovo blog
+Route::post('/Utente/Blog','UtenteController@storeblog')->name('creablog_post');  // va messa nella form nella view corrispondente per creare nuovi blogs
+
 
 
 

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 
+use App\Http\Requests\NewBlogRequest;
+
+use App\Models\Resources\Users;
+use App\Models\Blog;
 
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
@@ -14,8 +18,14 @@ use Carbon\Carbon;
 
 class UtenteController extends Controller
 {
+
+protected $usersmodel;
+protected $blogmodel;
+
 public function __construct(){
         $this->middleware('can:isUtente');
+        $this->usersmodel = new Users;
+         $this->blogsmodel = new Blog;
 
     }
 
@@ -23,6 +33,8 @@ public function __construct(){
     {
         return view('homeutente');  // mi fa aprire home utente
     }
+
+
 
      public function showProfilo()
     {
@@ -66,4 +78,60 @@ public function __construct(){
     }
 
 
-}  // chiude il controller
+//FIN QUI TUTTO BENE
+
+
+public function showmyblogs(){
+
+$id=auth()->user()->id;
+
+   $blogs = $this->usersmodel->getmyblogs($id);
+   return view('mioblog')
+  ->with('blogs',$blogs);
+   } // funziona bene
+
+public function creablog(){  //mi porta alla view con la form per registrare un nuovo blog
+ return view('nuovoblog');
+} //va bene
+
+
+
+
+
+    public function storeblog(NewBlogRequest $request){      // mi serve per creare un nuovo blog
+        $blog= new Blog;
+        $blog->fill($request->validated());
+
+     $utenteproprietario=auth()->user()->id;
+     $blog['utente_proprietario']=$utenteproprietario;
+
+     $amico=5;
+     $blog['amico_proprietario']=$amico; // ora lo metto perche mi serve per test, ma poi devo eliminare dal db questa colonna perche non serve
+
+
+        $blog->save();
+
+        return redirect()->route('mioblog')
+            ->with('status', 'Blog creato correttamente!');
+    }
+
+
+
+
+// c'è un problema perche non elimina e da quel messaggio di errore
+public function deletemyblog($id)
+    {
+
+        $blog= $this->blogmodel->getthisblog($id);  // call to a member function on null
+        $blog->delete();
+
+        return  redirect()->route('mioblog')
+            ->with('status', 'blog eliminato correttamente!');
+    }
+
+
+
+
+
+// chiude il controller
+}

@@ -29,6 +29,7 @@ class NewstaffRequest extends FormRequest {
      *         $table->bigIncrements('id')->index();
      * @return array
      */
+
     public function rules() {
         return [
             'name' => ['required', 'string', 'max:255'],

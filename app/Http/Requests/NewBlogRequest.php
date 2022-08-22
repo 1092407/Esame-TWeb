@@ -11,7 +11,9 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class NewHomeRequest extends FormRequest {
+class NewBlogRequest extends FormRequest {
+
+
 
     /**
      * Determine if the user is authorized to make this request.
@@ -30,12 +32,15 @@ class NewHomeRequest extends FormRequest {
      * @return array
      */
 
-    /**
-     * Override: response in formato JSON
-    */
-    protected function failedValidation(Validator $validator)
-    {                                          //tutti i messaggi di errori    // sarebbe il codice 442
-        throw new HttpResponseException(response($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY));
+    public function rules() {
+        return [
+            'titolo' => ['required', 'string', 'max:30'],
+            'descrizione' => ['required', 'string']
+
+        ];
     }
 
+
+
+//chiude
 }

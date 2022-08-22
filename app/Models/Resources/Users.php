@@ -4,6 +4,8 @@ namespace App\Models\Resources;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Amici;
+use App\Models\Blog;
+
 
 class Users extends Model
 {
@@ -144,6 +146,22 @@ if(($check!=0)) {
     return $amicoright ;
     }
 // FIN QUI OK
+
+
+
+
+
+
+
+
+//serve ad un certo utente per vedere i propri blogs dalla sua area riservata
+public function getmyblogs($id){
+$blogs=Blog::where("utente_proprietario",$id)->select("id","titolo","descrizione")->get();
+return $blogs;
+}
+
+
+
 
 ///// è la parentesi che chiude estensione del model
 }
