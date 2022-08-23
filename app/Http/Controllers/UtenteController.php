@@ -78,21 +78,21 @@ public function __construct(){
     }
 
 
-//FIN QUI TUTTO BENE
 
 
-public function showmyblogs(){
 
-$id=auth()->user()->id;
+     public function showmyblogs(){
 
-   $blogs = $this->usersmodel->getmyblogs($id);
-   return view('mioblog')
-  ->with('blogs',$blogs);
-   } // funziona bene
+     $id=auth()->user()->id;
 
-public function creablog(){  //mi porta alla view con la form per registrare un nuovo blog
- return view('nuovoblog');
-} //va bene
+     $blogs = $this->usersmodel->getmyblogs($id);
+     return view('mioblog')
+    ->with('blogs',$blogs);
+     }
+
+    public function creablog(){  //mi porta alla view con la form per registrare un nuovo blog
+   return view('nuovoblog');
+    }
 
 
 
@@ -118,16 +118,36 @@ public function creablog(){  //mi porta alla view con la form per registrare un 
 
 
 
-// c'è un problema perche non elimina e da quel messaggio di errore
+// per eliminare un blog a scelta dell'utente
 public function deletemyblog($id)
     {
-
-        $blog= $this->blogmodel->getthisblog($id);  // call to a member function on null
+      $blog=Blog::where("id",$id)->first();
         $blog->delete();
 
         return  redirect()->route('mioblog')
             ->with('status', 'blog eliminato correttamente!');
-    }
+    }//funziona non modificare
+
+
+
+//FIN QUI TUTTO BENE
+
+
+     public function showmyfriends(){
+
+     $id=auth()->user()->id;
+
+       $amici = $this->usersmodel->getamiciofuserLEFT($id);
+
+         $amiciright=$this->usersmodel->getamiciofuserRIGHT($id);
+
+        return view('mioamico')
+                ->with('amici',$amici)->with('amiciright',$amiciright);
+
+
+     }
+
+
 
 
 

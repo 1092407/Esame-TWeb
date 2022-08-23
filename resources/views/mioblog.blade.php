@@ -7,6 +7,12 @@
 
     <h4>  Ecco i tuoi blog</h4><br>
 
+      @if (session('status'))
+      <div class="alert success">
+        {{ session('status') }}
+      </div>
+      @endif
+
 <a href = "{{route('creablog')}}" class="w3-button w3-green">Crea nuovo blog</a>
 
  <div style="padding-left: 20px; padding-right: 20px;">

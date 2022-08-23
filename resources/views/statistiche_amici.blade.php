@@ -1,4 +1,3 @@
-
 @extends('layouts.admin')
 
 @section('title', 'statistiche amici')

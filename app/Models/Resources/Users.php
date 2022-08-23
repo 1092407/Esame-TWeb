@@ -145,13 +145,6 @@ if(($check!=0)) {
 }
     return $amicoright ;
     }
-// FIN QUI OK
-
-
-
-
-
-
 
 
 //serve ad un certo utente per vedere i propri blogs dalla sua area riservata
@@ -159,6 +152,66 @@ public function getmyblogs($id){
 $blogs=Blog::where("utente_proprietario",$id)->select("id","titolo","descrizione")->get();
 return $blogs;
 }
+
+// FIN QUI OK NON MODIFICARE
+
+
+
+
+public function getamyfriendLEFT($id) {
+
+$id=auth()->user()->id;
+
+ $idamici= Amici::where('utente_riferimento','=',$id)->select("amico_utente_riferimento")->get()->toArray();
+
+$check=count($idamici);
+
+if($check==0){
+$amico=['   '];   // se è vuota non gli faccio stampare nulla perchè questa è una stringa di tre spazi tra le ''
+}
+
+if(($check!=0)) {
+    for($i=0;$i<count($idamici);$i++){
+            $app1= Users:: where('id','=',$idamici[$i])->value( "name");
+            $app2= Users:: where('id','=',$idamici[$i])->value( "cognome");
+            $app3= Users:: where('id','=',$idamici[$i])->value( "username");
+             $amico[$i]=[$app1,$app2,$app3];
+        }
+    }
+           return $amico;
+    }
+
+
+
+ public function getamyfriendRIGHT($id) {
+
+ $id=auth()->user()->id;
+
+ $idamici= Amici::where('amico_utente_riferimento','=',$id)->select("utente_riferimento")->get()->toArray();
+
+
+$check=count($idamici);
+
+if($check==0){
+$amicoright=['   '];   // se è vuota non gli faccio stampare nulla
+}
+
+
+if(($check!=0)) {
+    for($i=0;$i<count($idamici);$i++){
+            $app1= Users:: where('id','=',$idamici[$i])->value( "name");
+            $app2= Users:: where('id','=',$idamici[$i])->value( "cognome");
+            $app3= Users:: where('id','=',$idamici[$i])->value( "username");
+             $amicoright[$i]=[$app1,$app2,$app3];
+        }
+}
+    return $amicoright ;
+    }
+
+
+
+
+
 
 
 

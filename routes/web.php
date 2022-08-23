@@ -70,29 +70,32 @@ Route::view('/Messaggi','messaggi')->name('messaggi');  // porta alla view che v
 
 //ROTTE UTENTE
 
-//Route::view('/Utente','homeutente')->name('utente')->middleware('can:isUtente')->middleware('auth');  // porta alla homepage riservata agli utenti del sito
-Route::get('/Utente', 'UtenteController@indexutente')->name('utente')->middleware('can:isUtente')->middleware('auth');
+ // porta alla homepage riservata agli utenti del sito
+Route::get('/Utente', 'UtenteController@indexutente')->name('utente')->middleware('can:isUtente')->middleware('auth');  // porta alla homepage riservata agli utenti del sito
 
 
 Route::view('/messaggi','messaggi')->name('messaggi');  // porta alla view che visualizza la pagina dove vedo i messaggi
- //Route::view('/Blog','mioblog')->name('miooblog');// porta alla vista che mi fa vedere i miei blog
-Route::view('/Amici','mioamico')->name('amici');   // porta alla homepage riservata agli utenti del sito
+
+Route::view('/Amici','mioamico')->name('amici');
+
 Route::view('/Cercapersone','cercapersone')->name('cerca');  // porta alla view che visualizza la pagina dove cerco potenziali amici
 
-//per vedere il mio profilo
+//per vedere il mio profilo FUNZIONA
 Route::get('/Profilo','UtenteController@ShowProfilo')->name('profilo');  // porta alla vista che mi fa vedere tutti i dati relativi al mio profilo
 Route::put('/Utente/UpdateProfilo','UtenteController@updateProfilo')->name('aggiornaProfilo');
 
-//per vedere ed eliminare  i miei blogs
+//per vedere ed eliminare  i miei blogs FUNZIONA
 Route::get('/Utente/Blogs', 'UtenteController@showmyblogs')->name('mioblog');  // mi fa vedere tutti i miei blog
 Route::delete('/Utente/Blog/{blog}','UtenteController@deletemyblog')->name('blog.delete');  // per eliminare un certo blog
 
-//per creare i miei blog
+//per creare i miei blog FUNZIONA
 Route::get('/Utente/Blog','UtenteController@creablog')->name('creablog'); // mi genera la vista per creare nuovo blog
 Route::post('/Utente/Blog','UtenteController@storeblog')->name('creablog_post');  // va messa nella form nella view corrispondente per creare nuovi blogs
 
+//gestione degli amici
 
-
+Route::get('/Utente/Amici', 'UtenteController@showmyfriends')->name('amici'); // per vedere tutti i miei amici
+Route::delete('/Utente/Amici/{amico}','UtenteController@deletemyfriend')->name('friend.delete'); // per entrambi o solo per left? da verificare
 
 
 
