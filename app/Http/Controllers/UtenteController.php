@@ -140,19 +140,19 @@ public function deletemyblog($id)
      public function showmyfriends(){
         $id=auth()->user()->id;
         $amici = $this->usersmodel->getmyfriendLEFT($id);
-        $amiciright=$this->usersmodel->getamyfriendRIGHT($id);
+        $amiciright=$this->usersmodel->getmyfriendRIGHT($id);
         return view('mioamico')
                 ->with('amici',$amici)->with('amiciright',$amiciright);
-     }
+     }  // va bene
 
 
    public function deletemyfriend($id)
     {
      $id=auth()->user()->id; // mi serve come riferimento nelle query per eliminare
 
-      $amico= $this->usersmodel->getmyfriendLEFT($id);
 
-      $amicoright=$this->usersmodel->getamyfriendRIGHT($id);
+        $amico= $this->usersmodel->getmyfriendLEFT($id);
+        $amicright=$this->usersmodel->getmyfriendRIGHT($id);
 
       // ora non devo eliminare righe dalla tabella users ma dalla tabella amici dove sono memorizzate le relazioni di amicizia
 

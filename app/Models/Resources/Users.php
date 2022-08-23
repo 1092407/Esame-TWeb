@@ -191,7 +191,7 @@ if(($check!=0)) {
 
 
 
- public function getamyfriendRIGHT($id) {
+ public function getmyfriendRIGHT($id) {
 
  $id=auth()->user()->id;
 
