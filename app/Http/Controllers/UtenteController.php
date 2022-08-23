@@ -146,25 +146,24 @@ public function deletemyblog($id)
      }  // va bene
 
 
-   public function deletemyfriend($id)
+   public function deletemyfriend($id)      // faccio la prova su left e poi analogo su right
     {
      $id=auth()->user()->id; // mi serve come riferimento nelle query per eliminare
 
 
-        $amico= $this->usersmodel->getmyfriendLEFT($id);
+        $amico= $this->usersmodel->getmyfriendLEFT($id);  // questo non va bene cosi perche $amico contiene info di tutti gli amici che trova e non di uno specifico
         $amicright=$this->usersmodel->getmyfriendRIGHT($id);
 
       // ora non devo eliminare righe dalla tabella users ma dalla tabella amici dove sono memorizzate le relazioni di amicizia
 
         $amico=Amici::where("utente_riferimento",$id)->where("amico_utente_riferimento",$amico[3])->first();    //uso first perche la riga deve essere unica
-        $amico->delete();
+        $amico->delete();  // capito errore
 
         $amicoright=Amici::where("utente_riferimento",$amicoright[3])->where("amico_utente_riferimento",$id)->first();    //uso first perche la riga deve essere unica
         $amicoright->delete();
 
         return  redirect()->route('mioamico')
-
-            ->with('status', 'amico eliminato correttamente!');
+                 ->with('status', 'amico eliminato correttamente!');
     }
 
 
