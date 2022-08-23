@@ -10,7 +10,7 @@
 
 <h1> Ecco i tuoi amici </h1>
 
- @if (session('status'))
+      @if (session('status'))
       <div class="alert success">
         {{ session('status') }}
       </div>
@@ -52,13 +52,20 @@
 
 
               <td>
-              <a href = "{{route('utente',)}}" class="w3-button w3-blue">Vedi Blogs</a>
+              <a href = "{{route('utente')}}" class="w3-button w3-blue">Vedi Blogs</a>
             </td>
+
+
+
+
 
                <td>
-              <a href = "{{route('utente')}}" class="w3-button w3-red">Elimina amico</a>
+              <form action="{{ route('friend.delete', $amico[3])}}" method="post">
+                @csrf
+                @method('DELETE')
+                <button class="w3-button w3-red" type="submit" onclick= "return confirm('Sei sicuro di voler eliminare questo amico?')">Elimina amico</button>
+              </form>
             </td>
-
 
 
 

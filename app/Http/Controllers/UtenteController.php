@@ -9,6 +9,7 @@ use App\Http\Requests\NewBlogRequest;
 
 use App\Models\Resources\Users;
 use App\Models\Blog;
+use App\Models\Amici;
 
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
@@ -21,12 +22,13 @@ class UtenteController extends Controller
 
 protected $usersmodel;
 protected $blogmodel;
+protected $amicimodel;
 
 public function __construct(){
         $this->middleware('can:isUtente');
         $this->usersmodel = new Users;
          $this->blogsmodel = new Blog;
-
+          $this->amicimodel = new Amici;
     }
 
     public function indexutente()
@@ -56,7 +58,6 @@ public function __construct(){
             'descrizione' => 'string|max:2500'
         ]);
 
-        //  'string|min:8|'
 
 
         if ($request->hasFile('foto_profilo')) {
@@ -80,7 +81,7 @@ public function __construct(){
 
 
 
-
+   // mi fa vedere i miei blog
      public function showmyblogs(){
 
      $id=auth()->user()->id;
@@ -90,6 +91,8 @@ public function __construct(){
     ->with('blogs',$blogs);
      }
 
+
+
     public function creablog(){  //mi porta alla view con la form per registrare un nuovo blog
    return view('nuovoblog');
     }
@@ -97,19 +100,18 @@ public function __construct(){
 
 
 
-
-    public function storeblog(NewBlogRequest $request){      // mi serve per creare un nuovo blog
+   // mi serve per creare un nuovo blog
+    public function storeblog(NewBlogRequest $request){      // DA MODIFICARE PERCHE CAMBIA POI LA MIGRATION RELATIVA A BLOG
         $blog= new Blog;
         $blog->fill($request->validated());
 
      $utenteproprietario=auth()->user()->id;
      $blog['utente_proprietario']=$utenteproprietario;
 
-     $amico=5;
+     $amico=5;                            // come sotto
      $blog['amico_proprietario']=$amico; // ora lo metto perche mi serve per test, ma poi devo eliminare dal db questa colonna perche non serve
 
-
-        $blog->save();
+     $blog->save();
 
         return redirect()->route('mioblog')
             ->with('status', 'Blog creato correttamente!');
@@ -126,29 +128,44 @@ public function deletemyblog($id)
 
         return  redirect()->route('mioblog')
             ->with('status', 'blog eliminato correttamente!');
-    }//funziona non modificare
+    }
 
 
 
 //FIN QUI TUTTO BENE
 
 
+
+//per vedere i miei amici dalla mia area riservata
      public function showmyfriends(){
-
-     $id=auth()->user()->id;
-
-       $amici = $this->usersmodel->getamiciofuserLEFT($id);
-
-         $amiciright=$this->usersmodel->getamiciofuserRIGHT($id);
-
+        $id=auth()->user()->id;
+        $amici = $this->usersmodel->getmyfriendLEFT($id);
+        $amiciright=$this->usersmodel->getamyfriendRIGHT($id);
         return view('mioamico')
                 ->with('amici',$amici)->with('amiciright',$amiciright);
-
-
      }
 
 
+   public function deletemyfriend($id)
+    {
+     $id=auth()->user()->id; // mi serve come riferimento nelle query per eliminare
 
+      $amico= $this->usersmodel->getmyfriendLEFT($id);
+
+      $amicoright=$this->usersmodel->getamyfriendRIGHT($id);
+
+      // ora non devo eliminare righe dalla tabella users ma dalla tabella amici dove sono memorizzate le relazioni di amicizia
+
+        $amico=Amici::where("utente_riferimento",$id)->where("amico_utente_riferimento",$amico[3])->first();    //uso first perche la riga deve essere unica
+        $amico->delete();
+
+        $amicoright=Amici::where("utente_riferimento",$amicoright[3])->where("amico_utente_riferimento",$id)->first();    //uso first perche la riga deve essere unica
+        $amicoright->delete();
+
+        return  redirect()->route('mioamico')
+
+            ->with('status', 'amico eliminato correttamente!');
+    }
 
 
 

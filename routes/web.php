@@ -35,29 +35,25 @@ Route::view('/Admin','homeadmin')->name('admin')->middleware('can:isAdmin');   /
 
 Route::get('/statistiche','AdminController@index')->name('statistiche');   // mi porta all view statistiche generale
 
- // per registrare un nuovo membro dello staff FUNZIONA NON MODIFICARE
+ // per registrare un nuovo membro dello staff
 Route::get('/Admin/Registrastaff','AdminController@mettistaff')->name('registrastaff'); // mi genera la vista per inserire nuovi membri dello staff
 Route::post('/Admin/Registrastaff','AdminController@storestaff')->name('registrastaff_post');  // va messa nella form nella view corrispondente
 
 // per modificare o eliminare un membro dello staff
 Route::get('/Gestionestaff','AdminController@showstaff')->name('gestiscistaff'); // porta alla vista che mi fa gestire i membri dello staff
 Route::delete('/Admin/Gestionestaff/{staff}','AdminController@deletestaff')->name('staff.delete');  // per eliminare
-
-
 Route::put('/Admin/Gestionestaff/{staff}','AdminController@updatestaff')->name('staff.update');// aggiorna dati
 Route::get('/Admin/Gestionestaff/{staff}','AdminController@showStaffToUpdate')->name('staff.toupdate'); // va vedere i dati presenti e che posso modificare
 
-
-
 // per vedere  le varie  statistcihe
 
-
-
 Route::get('/Admin/statistiche/blogs/{user}','AdminController@showBlogsOfuser')->name('show_blogs_of_user');// per vedere blogs di un certo utente
-
 Route::get('/Admin/statistiche/amici/{user}','AdminController@showAmiciOfuser')->name('show_amici_of_user');// per vedere amici di un certo utente
-
 Route::get('/Admin/statistiche/richieste/{user}','AdminController@showRichiesteOfuser')->name('show_richieste_of_user'); // per vedere le richieste di un certo utente
+
+
+
+
 
 
 //ROTTE STAFF
@@ -70,13 +66,10 @@ Route::view('/Messaggi','messaggi')->name('messaggi');  // porta alla view che v
 
 //ROTTE UTENTE
 
- // porta alla homepage riservata agli utenti del sito
 Route::get('/Utente', 'UtenteController@indexutente')->name('utente')->middleware('can:isUtente')->middleware('auth');  // porta alla homepage riservata agli utenti del sito
 
 
 Route::view('/messaggi','messaggi')->name('messaggi');  // porta alla view che visualizza la pagina dove vedo i messaggi
-
-Route::view('/Amici','mioamico')->name('amici');
 
 Route::view('/Cercapersone','cercapersone')->name('cerca');  // porta alla view che visualizza la pagina dove cerco potenziali amici
 
@@ -96,6 +89,8 @@ Route::post('/Utente/Blog','UtenteController@storeblog')->name('creablog_post');
 
 Route::get('/Utente/Amici', 'UtenteController@showmyfriends')->name('amici'); // per vedere tutti i miei amici
 Route::delete('/Utente/Amici/{amico}','UtenteController@deletemyfriend')->name('friend.delete'); // per entrambi o solo per left? da verificare
+
+
 
 
 

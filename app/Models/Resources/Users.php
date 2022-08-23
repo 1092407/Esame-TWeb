@@ -153,12 +153,19 @@ $blogs=Blog::where("utente_proprietario",$id)->select("id","titolo","descrizione
 return $blogs;
 }
 
+
+
 // FIN QUI OK NON MODIFICARE
 
+/* questedue seguenti  simili a quelle precedenti dove pero sono specifiche per ogni utente quindi serve   $id=auth()->user()->id;
+
+  inoltre con $amico e $amicoright devo recuperare ancche id dell'amico per passarlo alla rotta che me lo elimina
+  perche io voglio eliminare un detrminato mio amico che ovviamente identifico tramite il suo id
+  ma anche per vedere i blog del mio amico (se ne ha )
+*/
 
 
-
-public function getamyfriendLEFT($id) {
+public function getmyfriendLEFT($id) {
 
 $id=auth()->user()->id;
 
@@ -167,7 +174,7 @@ $id=auth()->user()->id;
 $check=count($idamici);
 
 if($check==0){
-$amico=['   '];   // se è vuota non gli faccio stampare nulla perchè questa è una stringa di tre spazi tra le ''
+$amico=['   '];   // se è vuota non gli faccio stampare nulla perchè questa è una stringa di tre spazi tra le '' (infatti stampo tre campi se non è vuota)
 }
 
 if(($check!=0)) {
@@ -175,9 +182,10 @@ if(($check!=0)) {
             $app1= Users:: where('id','=',$idamici[$i])->value( "name");
             $app2= Users:: where('id','=',$idamici[$i])->value( "cognome");
             $app3= Users:: where('id','=',$idamici[$i])->value( "username");
-             $amico[$i]=[$app1,$app2,$app3];
+            $app4= Users:: where('id','=',$idamici[$i])->value( "id");    // questo poi mi serve come parametro da passare alle rotte
+            $amico[$i]=[$app1,$app2,$app3,$app4];
         }
-    }
+    }//chiude if
            return $amico;
     }
 
@@ -202,9 +210,10 @@ if(($check!=0)) {
             $app1= Users:: where('id','=',$idamici[$i])->value( "name");
             $app2= Users:: where('id','=',$idamici[$i])->value( "cognome");
             $app3= Users:: where('id','=',$idamici[$i])->value( "username");
-             $amicoright[$i]=[$app1,$app2,$app3];
+            $app4= Users:: where('id','=',$idamici[$i])->value( "id");        // questo poi mi serve come parametro da passare alle rotte
+             $amicoright[$i]=[$app1,$app2,$app3,$app4];
         }
-}
+}//chiude if
     return $amicoright ;
     }
 
