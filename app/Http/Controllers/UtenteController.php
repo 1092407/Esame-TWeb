@@ -146,27 +146,42 @@ public function deletemyblog($id)
      }  // va bene
 
 
-   public function deletemyfriend($id)      // faccio la prova su left e poi analogo su right
+
+
+
+
+   public function deletemyfriendLEFT($amico)      // faccio la prova su left e poi analogo su right
     {
-     $id=auth()->user()->id; // mi serve come riferimento nelle query per eliminare
-
-
-        $amico= $this->usersmodel->getmyfriendLEFT($id);  // questo non va bene cosi perche $amico contiene info di tutti gli amici che trova e non di uno specifico
-        $amicright=$this->usersmodel->getmyfriendRIGHT($id);
+    $id=auth()->user()->id; // mi serve come riferimento nelle query per eliminare
 
       // ora non devo eliminare righe dalla tabella users ma dalla tabella amici dove sono memorizzate le relazioni di amicizia
 
-        $amico=Amici::where("utente_riferimento",$id)->where("amico_utente_riferimento",$amico[3])->first();    //uso first perche la riga deve essere unica
-        $amico->delete();  // capito errore
+        $amicoeliminato=Amici::where("utente_riferimento",$id)->where("amico_utente_riferimento",$amico)->first();
 
-        $amicoright=Amici::where("utente_riferimento",$amicoright[3])->where("amico_utente_riferimento",$id)->first();    //uso first perche la riga deve essere unica
-        $amicoright->delete();
+        $amicoeliminato->delete();
 
-        return  redirect()->route('mioamico')
+
+        return  redirect()->route('amici')
                  ->with('status', 'amico eliminato correttamente!');
+
+
     }
 
 
+   public function deletemyfriendRIGHT($amicoright)
+    {
+     $id=auth()->user()->id; // mi serve come riferimento nelle query per eliminare
+
+      // ora non devo eliminare righe dalla tabella users ma dalla tabella amici dove sono memorizzate le relazioni di amicizia
+
+        $amicoeliminatoright=Amici::where("amico_utente_riferimento",$id)->where("utente_riferimento",$amicoright)->first();
+
+        $amicoeliminatoright->delete();
+
+
+        return  redirect()->route('amici')
+                 ->with('status', 'amico eliminato correttamente!');
+    }
 
 
 // chiude il controller

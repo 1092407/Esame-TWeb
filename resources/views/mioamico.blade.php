@@ -48,19 +48,12 @@
             <td>{{$amico[1]}}</td>
             <td>{{$amico[2]}}</td>
 
-
-
-
               <td>
               <a href = "{{route('utente')}}" class="w3-button w3-blue">Vedi Blogs</a>
             </td>
 
-
-
-
-
                <td>
-              <form action="{{ route('friend.delete', $amico[3])}}" method="post">
+              <form action="{{ route('friendleft.delete', $amico[3])}}" method="post">
                 @csrf
                 @method('DELETE')
                 <button class="w3-button w3-red" type="submit" onclick= "return confirm('Sei sicuro di voler eliminare questo amico?')">Elimina amico</button>
@@ -116,10 +109,13 @@
               <a href = "{{route('utente',)}}" class="w3-button w3-blue">Vedi Blogs</a>
             </td>
 
-               <td>
-              <a href = "{{route('utente')}}" class="w3-button w3-red">Elimina amico</a>
+              <td>
+              <form action="{{ route('friendright.delete', $amicoright[3])}}" method="post">
+                @csrf
+                @method('DELETE')
+                <button class="w3-button w3-red" type="submit" onclick= "return confirm('Sei sicuro di voler eliminare questo amico?')">Elimina amico</button>
+              </form>
             </td>
-
 
           @endforeach
 

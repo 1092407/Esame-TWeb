@@ -174,7 +174,7 @@ $id=auth()->user()->id;
 $check=count($idamici);
 
 if($check==0){
-$amico=['   '];   // se è vuota non gli faccio stampare nulla perchè questa è una stringa di tre spazi tra le '' (infatti stampo tre campi se non è vuota)
+$amico=['    '];   // se è vuota non gli faccio stampare nulla perchè questa è una stringa di tre spazi tra le '' (infatti stampo tre campi se non è vuota)
 }
 
 if(($check!=0)) {
@@ -201,7 +201,7 @@ if(($check!=0)) {
 $check=count($idamici);
 
 if($check==0){
-$amicoright=['   '];   // se è vuota non gli faccio stampare nulla
+$amicoright=['    '];   // se è vuota non gli faccio stampare nulla
 }
 
 
@@ -219,7 +219,9 @@ if(($check!=0)) {
 
 
 
-
+public function relax() {
+    ;
+    }
 
 
 

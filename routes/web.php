@@ -88,8 +88,8 @@ Route::post('/Utente/Blog','UtenteController@storeblog')->name('creablog_post');
 //gestione degli amici
 
 Route::get('/Utente/Amici', 'UtenteController@showmyfriends')->name('amici'); // per vedere tutti i miei amici
-Route::delete('/Utente/Amici/{amico}','UtenteController@deletemyfriend')->name('friend.delete'); // per entrambi o solo per left? da verificare
-
+Route::delete('/Utente/Amici/{amico}','UtenteController@deletemyfriendLEFT')->name('friendleft.delete'); // per entrambi o solo per left? da verificare
+Route::delete('/Utente/Amiciright/{amicoright}','UtenteController@deletemyfriendRIGHT')->name('friendright.delete');
 
 
 
