@@ -21,9 +21,20 @@
     <div class="col-sm-12">
 
 
+                 @if($amici==['    '])
+
+                     @endif
+
+
+
+
+
+
       <table class="w3-table-all table-striped">
         <thead>
           <tr>
+
+
             <td><b style="font-size:18px;">nome</b></td>
             <td><b style="font-size:18px;">cognome</b></td>
             <td><b style="font-size:18px;">username</b></td>
@@ -33,7 +44,7 @@
           </tr>
         </thead>
 
-
+  @if($amici!=['    '])
         <tbody>
 
 
@@ -71,7 +82,7 @@
 
       </table>
 
-
+@endif
 
 
 
@@ -81,6 +92,13 @@
 
 <div style="padding-left: 20px; padding-right: 20px;">
     <div class="col-sm-12">
+
+
+                 @if($amiciright==['    '])
+
+                     @endif
+
+
 
        <table class="w3-table-all table-striped">
         <thead>
@@ -95,6 +113,11 @@
         </thead>
 
 
+        <tbody>
+
+
+
+  @if($amiciright!=['    '])
         <tbody>
 
 
@@ -125,7 +148,7 @@
 
 
       </table>
-
+@endif
 
 </div>
 </div>

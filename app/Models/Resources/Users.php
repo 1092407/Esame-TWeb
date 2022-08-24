@@ -219,9 +219,6 @@ if(($check!=0)) {
 
 
 
-public function relax() {
-    ;
-    }
 
 
 
