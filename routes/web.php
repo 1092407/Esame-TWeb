@@ -93,6 +93,8 @@ Route::delete('/Utente/Amiciright/{amicoright}','UtenteController@deletemyfriend
 //rotta per vedere un determinato blog
 Route::get('/Utente/Blogs/{id}', 'UtenteController@showthisblog')->name('questoblog');
 
+
+
 //Sottoinsime di Auth::routes()   FINITO E NON MODIFICARE
 Route::get('login','Auth\LoginController@showLoginForm')->name('login'); //Rotta che genera la form GET
 Route::post('login','Auth\LoginController@login');//Usata al submit della form che attiva il processo di autenticazione
