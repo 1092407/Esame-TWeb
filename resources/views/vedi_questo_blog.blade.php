@@ -52,6 +52,15 @@
       <h5>{{$post->data}}</h5>
 
       <p>{{$post->contenuto}}</p>
+
+    @if(auth()->user()->livello=='admin' or auth()->user()->livello=='staff')
+
+     <a href = "{{route('admin')}}" class="w3-button w3-red">elimina questo post</a>
+
+    @endif
+
+
+
     </div>
 
  @endforeach
