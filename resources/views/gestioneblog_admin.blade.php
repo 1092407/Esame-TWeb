@@ -36,7 +36,7 @@
 
 
               <td>
-              <a href = "{{ route('admin')}}" class="w3-button w3-blue">Visualizza</a>
+              <a href = "{{ route('vedi_questo_blog_admin', $blog->id)}}" class="w3-button w3-blue">Visualizza</a>
             </td>
 
 
@@ -68,6 +68,6 @@
 
 
 
-
+//chiude tutto non modificare
 </div>
 @endsection

@@ -53,7 +53,10 @@ Route::get('/Admin/statistiche/richieste/{user}','AdminController@showRichiesteO
 
 
 //per gestire i blogs degli utenti
-Route::get('/GestioneBlogs','AdminController@showallblogs')->name('listablogs');
+Route::get('/Admin/GestioneBlogs','AdminController@showallblogs')->name('listablogs'); // vista con lista di tutti i blogs
+
+Route::get('/Admin/GestioneBlogs/{id}', 'AdminController@showthisblog')->name('vedi_questo_blog_admin');
+
 
 
 //ROTTE STAFF
@@ -90,7 +93,7 @@ Route::get('/Utente/Amici', 'UtenteController@showmyfriends')->name('amici'); //
 Route::delete('/Utente/Amici/{amico}','UtenteController@deletemyfriendLEFT')->name('friendleft.delete'); // per entrambi o solo per left? da verificare
 Route::delete('/Utente/Amiciright/{amicoright}','UtenteController@deletemyfriendRIGHT')->name('friendright.delete');
 
-//rotta per vedere un determinato blog
+//rotta per vedere un determinato mio blog
 Route::get('/Utente/Blogs/{id}', 'UtenteController@showthisblog')->name('questoblog');
 
 

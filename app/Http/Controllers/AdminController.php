@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\Blog;
 use App\Models\Amici;
 use App\Models\Resources\Richieste;
+use App\Models\Resources\Post;
 
 //queste due mi servono per la registrazione di un membro staff
 use Illuminate\Support\Facades\Hash;
@@ -23,18 +24,18 @@ use Illuminate\Support\Facades\Validator;
 class AdminController extends Controller{
 
    protected $lista;   // sarebbe usermodel ma la chiamo lista perche idea è recuperare info
-
-    protected $blogmodel; // mi serve per ritrovare blogs di un certo utente
-
-    protected $richiestemodel;
-      protected $amicimodel;
+   protected $blogmodel;
+   protected $postmodel;
+   protected $richiestemodel;
+   protected $amicimodel;
 
     public function __construct(){
         $this->middleware('can:isAdmin');
         $this->lista = new Users;// creo istanza di users per chiamre delle funzioni piu avanti per gestire staff
-         $this->blogmodel = new Blog;
-         $this->richiestemodel = new Richieste;
-         $this->amicimodel = new Amici;
+        $this->blogmodel = new Blog;
+        $this->richiestemodel = new Richieste;
+        $this->amicimodel = new Amici;
+        $this->postmodel = new Post;
     }
 
 //SEZIONE FUNZIONI LEGATE ALLE STATISTICHE
@@ -163,7 +164,7 @@ public function deletestaff($id)
 //SEZIONE FUNZIONI LEGATE ALLA GESTIONE DEI BLOGS DEGLI UTENTI
 
 
-
+//mi fa vedere la lista di tutti i blogs presenti
 public function showallblogs(){
 
         $blogs = Blog::all();  // funzione definita in Users model e lanciata qui
@@ -173,7 +174,16 @@ public function showallblogs(){
     }
 
 
+ public function showthisblog($id){ // id del blog
 
+     $blog=Blog::where("id",$id)->first();
+
+      $posts=Post::where ("blog",$id)->get();
+
+
+     return view('vedi_questo_blog')
+         ->with('blog',$blog)->with('posts',$posts);
+     }
 
 
 
