@@ -10,6 +10,7 @@ use App\Http\Requests\NewBlogRequest;
 use App\Models\Resources\Users;
 use App\Models\Blog;
 use App\Models\Amici;
+use App\Models\Resources\Post;
 
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
@@ -23,12 +24,14 @@ class UtenteController extends Controller
 protected $usersmodel;
 protected $blogmodel;
 protected $amicimodel;
+protected $postmodel;
 
 public function __construct(){
         $this->middleware('can:isUtente');
         $this->usersmodel = new Users;
          $this->blogsmodel = new Blog;
           $this->amicimodel = new Amici;
+           $this->postmodel = new Post;
     }
 
     public function indexutente()
@@ -182,6 +185,45 @@ public function deletemyblog($id)
         return  redirect()->route('amici')
                  ->with('status', 'amico eliminato correttamente!');
     }
+
+//FIN QUI BENE
+
+ public function storepost(NewBlogRequest $request){      // DA MODIFICARE PERCHE CAMBIA POI LA MIGRATION RELATIVA A BLOG
+        $post= new Post;
+        $post->fill($request->validated());
+
+// devo mettere $post['blog']= all'id del blog su cui posto
+
+
+
+     $idloggato=auth()->user()->id;
+     $post['scrittore']=$idloggato;
+
+     $post->save();
+
+        return redirect()->route('mioblog')
+            ->with('status', 'Blog creato correttamente!');
+    }
+
+
+
+  public function showthisblog($id){ // id del blog
+
+     $blog=Blog::where("id",$id)->first();
+
+      $posts=Post::where ("blog",$id)->get();
+
+
+     return view('vedi_questo_blog')
+         ->with('blog',$blog)->with('posts',$posts);
+     }
+
+
+
+
+
+
+
 
 
 // chiude il controller

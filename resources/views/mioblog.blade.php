@@ -36,7 +36,7 @@
 
 
               <td>
-              <a href = "{{route('utente')}}" class="w3-button w3-blue">Visualizza</a>
+              <a href = "{{ route('questoblog', $blog->id)}}" class="w3-button w3-blue">Visualizza</a>
             </td>
 
 

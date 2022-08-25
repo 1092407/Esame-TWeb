@@ -85,14 +85,13 @@ Route::delete('/Utente/Blog/{blog}','UtenteController@deletemyblog')->name('blog
 Route::get('/Utente/Blog','UtenteController@creablog')->name('creablog'); // mi genera la vista per creare nuovo blog
 Route::post('/Utente/Blog','UtenteController@storeblog')->name('creablog_post');  // va messa nella form nella view corrispondente per creare nuovi blogs
 
-//gestione degli amici
-
+//gestione degli amici: vedi amico elimina amico vedi blogs di un amico
 Route::get('/Utente/Amici', 'UtenteController@showmyfriends')->name('amici'); // per vedere tutti i miei amici
 Route::delete('/Utente/Amici/{amico}','UtenteController@deletemyfriendLEFT')->name('friendleft.delete'); // per entrambi o solo per left? da verificare
 Route::delete('/Utente/Amiciright/{amicoright}','UtenteController@deletemyfriendRIGHT')->name('friendright.delete');
 
-
-
+//rotta per vedere un determinato blog
+Route::get('/Utente/Blogs/{id}', 'UtenteController@showthisblog')->name('questoblog');
 
 //Sottoinsime di Auth::routes()   FINITO E NON MODIFICARE
 Route::get('login','Auth\LoginController@showLoginForm')->name('login'); //Rotta che genera la form GET

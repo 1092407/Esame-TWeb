@@ -18,7 +18,8 @@ class CreatePost extends Migration
 
              $table->integer('blog')->references('id')->on('blogs');  // blog tra tutti i blogs su cui un utente va a postare un messaggio
 
-             $table->integer('scrittore')->references('id')->on('users');  //utente che va a postare  su un blog  //prima era user_scrittore
+         $table->string('scrittore')->references('username')->on('users');
+           //  $table->integer('scrittore')->references('id')->on('users');  //utente che va a postare  su un blog  //prima era user_scrittore
              $table->longText('contenuto');  // contenuto del post che lo scrittore vuole pubblicare
              $table->dateTime('data')->index();  // data in cui lo scrittore posta qualcosa sul blog
 
