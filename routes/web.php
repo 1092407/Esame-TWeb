@@ -52,8 +52,8 @@ Route::get('/Admin/statistiche/amici/{user}','AdminController@showAmiciOfuser')-
 Route::get('/Admin/statistiche/richieste/{user}','AdminController@showRichiesteOfuser')->name('show_richieste_of_user'); // per vedere le richieste di un certo utente
 
 
-
-
+//per gestire i blogs degli utenti
+Route::get('/GestioneBlogs','AdminController@showallblogs')->name('listablogs');
 
 
 //ROTTE STAFF

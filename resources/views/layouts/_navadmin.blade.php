@@ -7,7 +7,7 @@
         <a href="{{route('statistiche')}}" class="w3-bar-item w3-button w3-hide-small" title="vedi informazioni utili"><i class="fa fa-bar-chart"></i> Vedi statistiche </a>
       <a href="{{route('gestiscistaff')}}" class="w3-bar-item w3-button w3-hide-small" title="visualizza i  membri del tuo staff"><i class="fa fa-users"></i> Vedi il tuo  staff</a>
         <a href="{{route('registrastaff')}}" class="w3-bar-item w3-button w3-hide-small" title="aggiungi membri dello staff"><i class="fa fa-line-chart"></i>Incrementa il tuo staff</a>
-
+    <a href="{{route('listablogs')}}" class="w3-bar-item w3-button w3-hide-small" title="controlla il contenuto dei blogs"><i class="fa fa-exclamation-triangle"></i>Controlla Blogs</a>
 
  <div class="w3-dropdown-click w3-right">
             <button  class=" w3-button w3-hide-small profileButton">

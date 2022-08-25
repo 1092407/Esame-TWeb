@@ -111,8 +111,6 @@ public function __construct(){
      $utenteproprietario=auth()->user()->id;
      $blog['utente_proprietario']=$utenteproprietario;
 
-     $amico=5;                            // come sotto
-     $blog['amico_proprietario']=$amico; // ora lo metto perche mi serve per test, ma poi devo eliminare dal db questa colonna perche non serve
 
      $blog->save();
 
@@ -186,6 +184,23 @@ public function deletemyblog($id)
                  ->with('status', 'amico eliminato correttamente!');
     }
 
+
+//questa mi fa vedere un MIO BLOG
+  public function showthisblog($id){ // id del blog
+
+     $blog=Blog::where("id",$id)->first();
+
+      $posts=Post::where ("blog",$id)->get();
+
+
+     return view('vedi_questo_blog')
+         ->with('blog',$blog)->with('posts',$posts);
+     }
+
+
+
+
+
 //FIN QUI BENE
 
  public function storepost(NewBlogRequest $request){      // DA MODIFICARE PERCHE CAMBIA POI LA MIGRATION RELATIVA A BLOG
@@ -207,16 +222,7 @@ public function deletemyblog($id)
 
 
 
-  public function showthisblog($id){ // id del blog
 
-     $blog=Blog::where("id",$id)->first();
-
-      $posts=Post::where ("blog",$id)->get();
-
-
-     return view('vedi_questo_blog')
-         ->with('blog',$blog)->with('posts',$posts);
-     }
 
 
 

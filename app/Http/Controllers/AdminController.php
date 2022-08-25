@@ -160,9 +160,17 @@ public function deletestaff($id)
 
 
 
+//SEZIONE FUNZIONI LEGATE ALLA GESTIONE DEI BLOGS DEGLI UTENTI
 
 
 
+public function showallblogs(){
+
+        $blogs = Blog::all();  // funzione definita in Users model e lanciata qui
+
+        return view('gestioneblog_admin')
+                ->with('blogs',$blogs);
+    }
 
 
 
