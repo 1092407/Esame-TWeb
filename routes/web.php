@@ -54,8 +54,10 @@ Route::get('/Admin/statistiche/richieste/{user}','AdminController@showRichiesteO
 
 //per gestire i blogs degli utenti
 Route::get('/Admin/GestioneBlogs','AdminController@showallblogs')->name('listablogs'); // vista con lista di tutti i blogs
+Route::get('/Admin/GestioneBlogs/{id}', 'AdminController@showthisblog')->name('vedi_questo_blog_admin'); // mi fa vedere un blog specifico
 
-Route::get('/Admin/GestioneBlogs/{id}', 'AdminController@showthisblog')->name('vedi_questo_blog_admin');
+Route::delete('/Admin/GestioneBlogs/elimina/{idpost}','AdminController@deletepost')->name('adminpost.delete');// per eliminare un certo post
+
 
 
 
@@ -76,7 +78,7 @@ Route::view('/messaggi','messaggi')->name('messaggi');  // porta alla view che v
 
 Route::view('/Cercapersone','cercapersone')->name('cerca');  // porta alla view che visualizza la pagina dove cerco potenziali amici
 
-//per vedere il mio profilo FUNZIONA
+//per vedere il mio profilo e modificarlo FUNZIONA
 Route::get('/Profilo','UtenteController@ShowProfilo')->name('profilo');  // porta alla vista che mi fa vedere tutti i dati relativi al mio profilo
 Route::put('/Utente/UpdateProfilo','UtenteController@updateProfilo')->name('aggiornaProfilo');
 
@@ -88,7 +90,7 @@ Route::delete('/Utente/Blog/{blog}','UtenteController@deletemyblog')->name('blog
 Route::get('/Utente/Blog','UtenteController@creablog')->name('creablog'); // mi genera la vista per creare nuovo blog
 Route::post('/Utente/Blog','UtenteController@storeblog')->name('creablog_post');  // va messa nella form nella view corrispondente per creare nuovi blogs
 
-//gestione degli amici: vedi amico elimina amico vedi blogs di un amico
+//gestione degli amici: vedi amico+ elimina amico+ vedi blogs di un amico
 Route::get('/Utente/Amici', 'UtenteController@showmyfriends')->name('amici'); // per vedere tutti i miei amici
 Route::delete('/Utente/Amici/{amico}','UtenteController@deletemyfriendLEFT')->name('friendleft.delete'); // per entrambi o solo per left? da verificare
 Route::delete('/Utente/Amiciright/{amicoright}','UtenteController@deletemyfriendRIGHT')->name('friendright.delete');

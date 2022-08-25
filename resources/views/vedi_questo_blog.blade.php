@@ -13,8 +13,6 @@
 
 <!-- Navbar (sit on top) -->
 
-
-
 @auth
                 @can('isUtente')
 
@@ -33,6 +31,12 @@
         @endauth
 
 
+
+     @if (session('status'))
+      <div class="alert success">
+        {{ session('status') }}
+      </div>
+      @endif
 
 
   <div class="header">
@@ -55,9 +59,17 @@
 
     @if(auth()->user()->livello=='admin' or auth()->user()->livello=='staff')
 
-     <a href = "{{route('admin')}}" class="w3-button w3-red">elimina questo post</a>
+
+    <form action="{{ route('adminpost.delete', $post->id)}}" method="post">
+                @csrf
+                @method('DELETE')
+                <button class="w3-button w3-red" type="submit" onclick= "return confirm('Sei sicuro di voler eliminare questo post?')">Elimina questo post</button>
+              </form>
+
 
     @endif
+
+
 
 
 

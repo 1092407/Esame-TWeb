@@ -16,7 +16,7 @@ use App\Models\Amici;
 use App\Models\Resources\Richieste;
 use App\Models\Resources\Post;
 
-//queste due mi servono per la registrazione di un membro staff
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -183,9 +183,17 @@ public function showallblogs(){
 
      return view('vedi_questo_blog')
          ->with('blog',$blog)->with('posts',$posts);
-     }
+     } //ok
+
+  //questa elimina i dati dal db  ma c'è un problema sul return perche non mi riporta alla view che voglio
+public function deletepost($idpost)
+    {
+        $post=Post:: where("id",$idpost)->first();
+        $post->delete();
 
 
+        return redirect()->route('vedi_questo_blog_admin');
+    }
 
 
 
