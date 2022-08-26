@@ -55,9 +55,8 @@ Route::get('/Admin/statistiche/richieste/{user}','AdminController@showRichiesteO
 //per gestire i blogs degli utenti
 Route::get('/Admin/GestioneBlogs','AdminController@showallblogs')->name('listablogs'); // vista con lista di tutti i blogs
 Route::get('/Admin/GestioneBlogs/{id}', 'AdminController@showthisblog')->name('vedi_questo_blog_admin'); // mi fa vedere un blog specifico
-
 Route::delete('/Admin/GestioneBlogs/elimina/{idpost}','AdminController@deletepost')->name('adminpost.delete');// per eliminare un certo post
-Route::delete('/Admin/GestioneBlogs/{idblog}','AdminController@deletethisblog')->name('adminblog.delete');
+Route::delete('/Admin/GestioneBlogs/{idblog}','AdminController@deletethisblog')->name('adminblog.delete');// per eliminare un blog
 
 
 
@@ -92,11 +91,15 @@ Route::post('/Utente/Blog','UtenteController@storeblog')->name('creablog_post');
 
 //gestione degli amici: vedi amico+ elimina amico+ vedi blogs di un amico
 Route::get('/Utente/Amici', 'UtenteController@showmyfriends')->name('amici'); // per vedere tutti i miei amici
-Route::delete('/Utente/Amici/{amico}','UtenteController@deletemyfriendLEFT')->name('friendleft.delete'); // per entrambi o solo per left? da verificare
-Route::delete('/Utente/Amiciright/{amicoright}','UtenteController@deletemyfriendRIGHT')->name('friendright.delete');
+Route::delete('/Utente/Amici/{amico}','UtenteController@deletemyfriendLEFT')->name('friendleft.delete'); // per left
+Route::delete('/Utente/Amiciright/{amicoright}','UtenteController@deletemyfriendRIGHT')->name('friendright.delete'); //per right
 
 //rotta per vedere un determinato mio blog
 Route::get('/Utente/Blogs/{id}', 'UtenteController@showthisblog')->name('questoblog');
+
+//rotta per creare un post
+// Route::get('/Utente/Blogss','UtenteController@creapost')->name('creapost'); // mi genera la vista per creare nuovo post
+Route::post('/Utente/Blogss/{id}','UtenteController@storepost')->name('creaPOST_post'); // mi salva effettivamente il post
 
 
 

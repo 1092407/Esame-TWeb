@@ -68,6 +68,6 @@
 
 
 
-//chiude tutto non modificare
+
 </div>
 @endsection

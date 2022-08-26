@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 
 use App\Http\Requests\NewBlogRequest;
+use App\Http\Requests\NewPostRequest;
 
 use App\Models\Resources\Users;
 use App\Models\Blog;
@@ -91,7 +92,7 @@ public function __construct(){
 
      $blogs = $this->usersmodel->getmyblogs($id);
      return view('mioblog')
-    ->with('blogs',$blogs);
+       ->with('blogs',$blogs);
      }
 
 
@@ -203,21 +204,23 @@ public function deletemyblog($id)
 
 //FIN QUI BENE
 
- public function storepost(NewBlogRequest $request){      // DA MODIFICARE PERCHE CAMBIA POI LA MIGRATION RELATIVA A BLOG
+ public function storepost(NewPostRequest $request,$id){      // $id è del blog su cui posto
         $post= new Post;
+
         $post->fill($request->validated());
 
-// devo mettere $post['blog']= all'id del blog su cui posto
+         $post['blog']=$id;
+
+        $usernameloggato=auth()->user()->username;
+        $post['scrittore']=$usernameloggato;
+        $post['data']= Carbon::now();
 
 
-
-     $idloggato=auth()->user()->id;
-     $post['scrittore']=$idloggato;
 
      $post->save();
 
-        return redirect()->route('mioblog')
-            ->with('status', 'Blog creato correttamente!');
+        return redirect()->route('questoblog',$id)
+            ->with('status', 'Post aggiunto correttamente!');
     }
 
 

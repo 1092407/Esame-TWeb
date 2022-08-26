@@ -11,7 +11,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class NewBlogRequest extends FormRequest {
+class NewPostRequest extends FormRequest {
 
 
 
@@ -34,7 +34,7 @@ class NewBlogRequest extends FormRequest {
 
     public function rules() {
         return [
-            'contenuto' => ['required', 'longText']
+            'contenuto' => ['required', 'string']
 
         ];
     }

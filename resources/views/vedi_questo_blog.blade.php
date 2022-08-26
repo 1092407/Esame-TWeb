@@ -35,9 +35,47 @@
 
 
   <div class="header">
-  <h2>{{$blog->titolo}}</h2>
-   <h4>{{$blog->descrizione}}</h4>
+  <h2>Titolo: {{$blog->titolo}}</h2>
+   <h4>Descrizione: {{$blog->descrizione}}</h4>
   </div>
+
+
+    @if(auth()->user()->livello=='utente' )
+
+
+            <a href="javascript:void(0)"  style="color :blue" onclick="document.getElementById('messaggio').style.display='block'">Aggiungi post</a>
+            <div style="width:100%">
+
+
+                                <div id="messaggio" class="modal" style="z-index:4">
+                                    <div class="w3-modal-content w3-animate-zoom">
+                                        <div class="w3-container w3-padding w3-blue">
+                                            <h2>scrivi qui il testo del tuo post</h2>
+                                        </div>
+                                        <div class="w3-panel">
+                                            <div align='center'>
+                                                {{ Form::open(array('route' => ['creaPOST_post', $blog->id], 'id'=>'messaggio', 'class' => 'animate')) }}
+
+                                                {{ Form::textarea('contenuto','', ['class' => 'input-app w3-input w3-border', 'id' => 'contenuto', 'placeholder'=>'scrivi qui quello che vuoi pubblicare ']) }}<br>
+                                            </div>
+                                            <div class="w3-section">
+                                                <a class="w3-button w3-red" style="width:150px" onclick="document.getElementById('messaggio').style.display='none'">Annulla <i class="fa fa-remove"></i></a>
+                                                {{ Form::submit('Aggiungi post ', ['class' => 'w3-button w3-right w3-blue' , 'style'=> "width:150px"]) }}
+                                                {{Form::close()}}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+    @endif
+
+
+
+
 
 
      @if (session('status'))
@@ -52,8 +90,8 @@
   @foreach($posts as $post)
 
     <div class="card" style ="margin-top:10px" >
-      <h2>{{$post->scrittore}}</h2>
-      <h5>{{$post->data}}</h5>
+      <h2>Autore: {{$post->scrittore}}</h2>
+      <h5>data: {{$post->data}}</h5>
 
       <p>{{$post->contenuto}}</p>
 
