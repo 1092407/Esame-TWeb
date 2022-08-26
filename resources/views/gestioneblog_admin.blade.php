@@ -41,7 +41,7 @@
 
 
              <td>
-              <form action="{{ route('admin')}}" method="post">
+              <form action="{{ route('adminblog.delete', $blog->id)}}" method="post">
                 @csrf
                 @method('DELETE')
                 <button class="w3-button w3-red" type="submit" onclick= "return confirm('Sei sicuro di voler eliminare questo blog?')">Elimina</button>
@@ -68,6 +68,6 @@
 
 
 
-//chiude tutto non modificare
+
 </div>
 @endsection

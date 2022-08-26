@@ -57,7 +57,7 @@ Route::get('/Admin/GestioneBlogs','AdminController@showallblogs')->name('listabl
 Route::get('/Admin/GestioneBlogs/{id}', 'AdminController@showthisblog')->name('vedi_questo_blog_admin'); // mi fa vedere un blog specifico
 
 Route::delete('/Admin/GestioneBlogs/elimina/{idpost}','AdminController@deletepost')->name('adminpost.delete');// per eliminare un certo post
-
+Route::delete('/Admin/GestioneBlogs/{idblog}','AdminController@deletethisblog')->name('adminblog.delete');
 
 
 

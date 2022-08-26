@@ -32,6 +32,14 @@
 
 
 
+
+
+  <div class="header">
+  <h2>{{$blog->titolo}}</h2>
+   <h4>{{$blog->descrizione}}</h4>
+  </div>
+
+
      @if (session('status'))
       <div class="alert success">
         {{ session('status') }}
@@ -39,19 +47,11 @@
       @endif
 
 
-  <div class="header">
-  <h2>{{$blog->titolo}}</h2>
-   <h4>{{$blog->descrizione}}</h4>
-</div>
-
-
-
-<div class="row">
     <div class="leftcolumn">
 
   @foreach($posts as $post)
 
-    <div class="card">
+    <div class="card" style ="margin-top:10px" >
       <h2>{{$post->scrittore}}</h2>
       <h5>{{$post->data}}</h5>
 
@@ -81,7 +81,6 @@
 
   </div>
 
-</div>
 
 </body>
 

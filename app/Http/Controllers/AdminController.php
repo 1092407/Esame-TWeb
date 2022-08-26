@@ -185,15 +185,30 @@ public function showallblogs(){
          ->with('blog',$blog)->with('posts',$posts);
      } //ok
 
-  //questa elimina i dati dal db  ma c'è un problema sul return perche non mi riporta alla view che voglio
+  //elimina un post e mi riporta a vedere il blog aggiornato senza quel post
 public function deletepost($idpost)
     {
         $post=Post:: where("id",$idpost)->first();
+        $app=Post::where("id",$idpost)->value("blog");    // serve per passarlo alla rotta che mi porta a vedere il blog aggiornato dopo eliminazione
         $post->delete();
 
 
-        return redirect()->route('vedi_questo_blog_admin');
+        return redirect()->route('vedi_questo_blog_admin',$app)
+        ->with('status', 'post eliminato correttamente correttamente!');
     }
+
+//FIN QUI OK
+
+
+public function deletethisblog($idblog)
+    {
+      $blog=Blog::where("id",$idblog)->first();
+        $blog->delete();
+
+        return  redirect()->route('listablogs')
+            ->with('status', 'blog eliminato correttamente!');
+    }
+
 
 
 
