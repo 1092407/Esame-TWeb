@@ -115,7 +115,8 @@ if(($check!=0)) {
             $app1= Users:: where('id','=',$idamici[$i])->value( "name");
             $app2= Users:: where('id','=',$idamici[$i])->value( "cognome");
             $app3= Users:: where('id','=',$idamici[$i])->value( "username");
-             $amico[$i]=[$app1,$app2,$app3];
+
+             $amico[$i]=[$app1,$app2,$app3,];
         }
     }
            return $amico;

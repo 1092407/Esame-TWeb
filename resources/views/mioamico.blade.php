@@ -60,7 +60,74 @@
             <td>{{$amico[2]}}</td>
 
               <td>
-              <a href = "{{route('utente')}}" class="w3-button w3-blue">Vedi Blogs</a>
+               <a href="javascript:void(0)"  class="w3-button w3-blue" onclick="document.getElementById('messaggio').style.display='block'">Vedi suoi blogs</a>
+            <div style="width:100%">
+
+
+                                <div id="messaggio" class="modal" style="z-index:4">
+                                    <div class="w3-modal-content w3-animate-zoom">
+                                              <div class="w3-container w3-padding w3-blue">
+                                                <h2>Ecco i blogs di  {{$amico[2]}} </h2>
+                                                </div>
+                                        <div class="w3-panel">
+
+                                             <table class="w3-table-all table-striped">
+                                                <thead>
+                                                      <tr>
+                                                        <td><b style="font-size:18px;">titolo</b></td>
+                                                         <td><b style="font-size:18px;">descrizione</b></td>
+                                                          <td><b style="font-size:18px;">visualizza</b></td>
+                                                       </tr>
+                                                   </thead>
+
+                                                    <tbody>
+
+
+                                                    @php
+
+                                                    $blogsamicileft=App\Models\Blog::where("utente_proprietario",$amico[3])->get();
+                                                    @endphp
+
+
+                                              @foreach($blogsamicileft as $blogamicoleft)
+                                                  <tr>
+                                                  <td>{{$blogamicoleft->titolo}}</td>
+                                                   <td>{{$blogamicoleft->descrizione }}</td>
+
+                                                             <td>
+                                                       <a href = "{{route('utente')}}" class="w3-button w3-blue">Vai a questo blog</a>
+                                                          </td>
+
+
+
+                                                      @endforeach
+
+
+
+                                                </tbody>
+
+
+                                                </table>
+
+                                                 <div class="w3-section">
+                                                <a class="w3-button w3-red" style="width:150px" onclick="document.getElementById('messaggio').style.display='none'">Annulla <i class="fa fa-remove"></i></a>
+
+                                                </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                </div>
+
+
+
+
+
+
+
+
             </td>
 
                <td>

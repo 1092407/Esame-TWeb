@@ -94,13 +94,15 @@ Route::get('/Utente/Amici', 'UtenteController@showmyfriends')->name('amici'); //
 Route::delete('/Utente/Amici/{amico}','UtenteController@deletemyfriendLEFT')->name('friendleft.delete'); // per left
 Route::delete('/Utente/Amiciright/{amicoright}','UtenteController@deletemyfriendRIGHT')->name('friendright.delete'); //per right
 
-//rotta per vedere un determinato mio blog
+//rotta per vedere un determinato MIO blog
 Route::get('/Utente/Blogs/{id}', 'UtenteController@showthisblog')->name('questoblog');
 
-//rotta per creare un post
-// Route::get('/Utente/Blogss','UtenteController@creapost')->name('creapost'); // mi genera la vista per creare nuovo post
+//rotta per creare un post su un mio blog
 Route::post('/Utente/Blogss/{id}','UtenteController@storepost')->name('creaPOST_post'); // mi salva effettivamente il post
 
+
+//rotta per vedere un determinato  blog di un mio amico
+Route::get('/Utente/Amici/{id}', 'UtenteController@showamicoblog')->name('vediblogamico');
 
 
 //Sottoinsime di Auth::routes()   FINITO E NON MODIFICARE

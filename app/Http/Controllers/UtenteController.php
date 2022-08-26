@@ -141,8 +141,13 @@ public function deletemyblog($id)
 //per vedere i miei amici dalla mia area riservata
      public function showmyfriends(){
         $id=auth()->user()->id;
-        $amici = $this->usersmodel->getmyfriendLEFT($id);
+        $amici = $this->usersmodel->getmyfriendLEFT($id); //left
         $amiciright=$this->usersmodel->getmyfriendRIGHT($id);
+
+
+
+
+
         return view('mioamico')
                 ->with('amici',$amici)->with('amiciright',$amiciright);
      }  // va bene
@@ -202,7 +207,7 @@ public function deletemyblog($id)
 
 
 
-//FIN QUI BENE
+
 
  public function storepost(NewPostRequest $request,$id){      // $id è del blog su cui posto
         $post= new Post;
@@ -224,7 +229,13 @@ public function deletemyblog($id)
     }
 
 
+// fin qui ok
 
+public function showamicoblog($id ){  //$id è id del blog che voglio vedere
+
+ return showthisblog($id);
+
+}
 
 
 
