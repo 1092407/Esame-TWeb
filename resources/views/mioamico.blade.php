@@ -94,9 +94,9 @@
                                                   <td>{{$blogamicoleft->titolo}}</td>
                                                    <td>{{$blogamicoleft->descrizione }}</td>
 
-                                                             <td>
-                                                       <a href = "{{route('utente')}}" class="w3-button w3-blue">Vai a questo blog</a>
-                                                          </td>
+                                                   <td>
+                                                   <a href = "{{route('vediblogamico',$blogamicoleft->id)}}" class="w3-button w3-blue">Vai a questo blog</a>
+                                                    </td>
 
 
 
@@ -163,7 +163,7 @@
 
                  @if($amiciright==['    '])
 
-                     @endif
+                 @endif
 
 
 
@@ -195,9 +195,70 @@
             <td>{{$amicoright[2]}}</td>
 
 
-              <td>
-              <a href = "{{route('utente',)}}" class="w3-button w3-blue">Vedi Blogs</a>
+            <td>
+            <a href="javascript:void(0)"  class="w3-button w3-blue" onclick="document.getElementById('messaggio').style.display='block'">Vedi suoi blogs</a>
+            <div style="width:100%">
+
+
+                                <div id="messaggio" class="modal" style="z-index:4">
+                                    <div class="w3-modal-content w3-animate-zoom">
+                                              <div class="w3-container w3-padding w3-blue">
+                                                <h2>Ecco i blogs di  {{$amicoright[2]}} </h2>
+                                                </div>
+                                        <div class="w3-panel">
+
+                                             <table class="w3-table-all table-striped">
+                                                <thead>
+                                                      <tr>
+                                                        <td><b style="font-size:18px;">titolo</b></td>
+                                                         <td><b style="font-size:18px;">descrizione</b></td>
+                                                          <td><b style="font-size:18px;">visualizza</b></td>
+                                                       </tr>
+                                                   </thead>
+
+                                                    <tbody>
+
+
+                                                    @php
+
+                                                    $blogsamiciright=App\Models\Blog::where("utente_proprietario",$amicoright[3])->get();
+                                                    @endphp
+
+
+                                              @foreach($blogsamiciright as $blogamicoright)
+                                                  <tr>
+                                                  <td>{{$blogamicoright->titolo}}</td>
+                                                   <td>{{$blogamicoright->descrizione }}</td>
+
+                                                    <td>
+                                                    <a href = "{{route('utente')}}" class="w3-button w3-blue">Vai a questo blog</a>
+                                                    </td>
+
+                                              @endforeach
+
+
+
+                                                </tbody>
+
+
+                                                </table>
+
+                                                 <div class="w3-section">
+                                                <a class="w3-button w3-red" style="width:150px" onclick="document.getElementById('messaggio').style.display='none'">Annulla <i class="fa fa-remove"></i></a>
+
+                                                </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                </div>
+
+
             </td>
+
+
 
               <td>
               <form action="{{ route('friendright.delete', $amicoright[3])}}" method="post">

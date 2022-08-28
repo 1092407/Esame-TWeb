@@ -101,9 +101,6 @@ public function __construct(){
    return view('nuovoblog');
     }
 
-
-
-
    // mi serve per creare un nuovo blog
     public function storeblog(NewBlogRequest $request){      // DA MODIFICARE PERCHE CAMBIA POI LA MIGRATION RELATIVA A BLOG
         $blog= new Blog;
@@ -112,14 +109,11 @@ public function __construct(){
      $utenteproprietario=auth()->user()->id;
      $blog['utente_proprietario']=$utenteproprietario;
 
-
      $blog->save();
 
         return redirect()->route('mioblog')
             ->with('status', 'Blog creato correttamente!');
     }
-
-
 
 
 // per eliminare un blog a scelta dell'utente
@@ -133,20 +127,11 @@ public function deletemyblog($id)
     }
 
 
-
-//FIN QUI TUTTO BENE
-
-
-
 //per vedere i miei amici dalla mia area riservata
      public function showmyfriends(){
         $id=auth()->user()->id;
         $amici = $this->usersmodel->getmyfriendLEFT($id); //left
         $amiciright=$this->usersmodel->getmyfriendRIGHT($id);
-
-
-
-
 
         return view('mioamico')
                 ->with('amici',$amici)->with('amiciright',$amiciright);
@@ -166,7 +151,6 @@ public function deletemyblog($id)
         $amicoeliminato=Amici::where("utente_riferimento",$id)->where("amico_utente_riferimento",$amico)->first();
 
         $amicoeliminato->delete();
-
 
         return  redirect()->route('amici')
                  ->with('status', 'amico eliminato correttamente!');
@@ -193,51 +177,40 @@ public function deletemyblog($id)
 
 //questa mi fa vedere un MIO BLOG
   public function showthisblog($id){ // id del blog
-
      $blog=Blog::where("id",$id)->first();
-
       $posts=Post::where ("blog",$id)->get();
-
-
      return view('vedi_questo_blog')
          ->with('blog',$blog)->with('posts',$posts);
      }
 
 
-
-
-
-
-
  public function storepost(NewPostRequest $request,$id){      // $id è del blog su cui posto
         $post= new Post;
-
         $post->fill($request->validated());
-
-         $post['blog']=$id;
+        $post['blog']=$id;
 
         $usernameloggato=auth()->user()->username;
         $post['scrittore']=$usernameloggato;
         $post['data']= Carbon::now();
 
-
-
-     $post->save();
+        $post->save();
 
         return redirect()->route('questoblog',$id)
             ->with('status', 'Post aggiunto correttamente!');
     }
 
 
-// fin qui ok
+
 
 public function showamicoblog($id ){  //$id è id del blog che voglio vedere
-
- return showthisblog($id);
-
+                                         //è come quella per vedere un mio blog
+   $blog=Blog::where("id",$id)->first();
+   $posts=Post::where ("blog",$id)->get();
+   return view('vedi_questo_blog')
+         ->with('blog',$blog)->with('posts',$posts);
 }
 
-
+// fin qui ok
 
 
 
