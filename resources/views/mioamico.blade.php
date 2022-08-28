@@ -114,7 +114,7 @@
                                                 </table>
 
                                                  <div class="w3-section">
-                                                <a class="w3-button w3-red" style="width:150px" onclick="document.getElementById('messaggio').style.display='none'">Annulla <i class="fa fa-remove"></i></a>
+                                                <a class="w3-button w3-red" style="width:150px" onclick="document.getElementById('blogsleft').style.display='none'">Annulla <i class="fa fa-remove"></i></a>
 
                                                 </div>
 
@@ -257,7 +257,7 @@
                                                 </table>
 
                                                  <div class="w3-section">
-                                                <a class="w3-button w3-red" style="width:150px" onclick="document.getElementById('messaggio').style.display='none'">Annulla <i class="fa fa-remove"></i></a>
+                                                <a class="w3-button w3-red" style="width:150px" onclick="document.getElementById('blogsright').style.display='none'">Annulla <i class="fa fa-remove"></i></a>
 
                                                 </div>
 
