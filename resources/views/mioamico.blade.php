@@ -60,11 +60,11 @@
             <td>{{$amico[2]}}</td>
 
               <td>
-               <a href="javascript:void(0)"  class="w3-button w3-blue" onclick="document.getElementById('messaggio').style.display='block'">Vedi suoi blogs</a>
+               <a href="javascript:void(0)"  class="w3-button w3-blue" onclick="document.getElementById('blogsleft').style.display='block'">Vedi suoi blogs</a>
             <div style="width:100%">
 
 
-                                <div id="messaggio" class="modal" style="z-index:4">
+                                <div id="blogsleft" class="modal" style="z-index:4">
                                     <div class="w3-modal-content w3-animate-zoom">
                                               <div class="w3-container w3-padding w3-blue">
                                                 <h2>Ecco i blogs di  {{$amico[2]}} </h2>
@@ -196,11 +196,12 @@
 
 
             <td>
-            <a href="javascript:void(0)"  class="w3-button w3-blue" onclick="document.getElementById('messaggio').style.display='block'">Vedi suoi blogs</a>
+            <a href="javascript:void(0)"  class="w3-button w3-blue" onclick="document.getElementById('blogsright').style.display='block'">Vedi suoi blogs</a>
+
             <div style="width:100%">
 
 
-                                <div id="messaggio" class="modal" style="z-index:4">
+                                <div id="blogsright" class="modal" style="z-index:4">
                                     <div class="w3-modal-content w3-animate-zoom">
                                               <div class="w3-container w3-padding w3-blue">
                                                 <h2>Ecco i blogs di  {{$amicoright[2]}} </h2>
@@ -231,7 +232,7 @@
                                                    <td>{{$blogamicoright->descrizione }}</td>
 
                                                     <td>
-                                                    <a href = "{{route('utente')}}" class="w3-button w3-blue">Vai a questo blog</a>
+                                                    <a href = "{{route('vediblogamico',$blogamicoright->id)}}" class="w3-button w3-blue">Vai a questo blog</a>
                                                     </td>
 
                                               @endforeach
