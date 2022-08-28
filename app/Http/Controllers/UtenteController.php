@@ -135,14 +135,10 @@ public function deletemyblog($id)
 
         return view('mioamico')
                 ->with('amici',$amici)->with('amiciright',$amiciright);
-     }  // va bene
+     }
 
 
-
-
-
-
-   public function deletemyfriendLEFT($amico)      // faccio la prova su left e poi analogo su right
+   public function deletemyfriendLEFT($amico)
     {
     $id=auth()->user()->id; // mi serve come riferimento nelle query per eliminare
 

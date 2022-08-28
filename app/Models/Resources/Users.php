@@ -175,7 +175,7 @@ $id=auth()->user()->id;
 $check=count($idamici);
 
 if($check==0){
-$amico=['    '];   // se è vuota non gli faccio stampare nulla perchè questa è una stringa di tre spazi tra le '' (infatti stampo tre campi se non è vuota)
+$amico=['     '];   // se è vuota non gli faccio stampare nulla perchè questa è una stringa di x spazi tra le '' quante sono le $app seguenti (infatti stampo tre campi se non è vuota)
 }
 
 if(($check!=0)) {
@@ -184,7 +184,8 @@ if(($check!=0)) {
             $app2= Users:: where('id','=',$idamici[$i])->value( "cognome");
             $app3= Users:: where('id','=',$idamici[$i])->value( "username");
             $app4= Users:: where('id','=',$idamici[$i])->value( "id");    // questo poi mi serve come parametro da passare alle rotte
-            $amico[$i]=[$app1,$app2,$app3,$app4];
+             $app5= Users:: where('id','=',$idamici[$i])->value( "foto_profilo");
+            $amico[$i]=[$app1,$app2,$app3,$app4,$app5];
         }
     }//chiude if
            return $amico;
@@ -202,7 +203,7 @@ if(($check!=0)) {
 $check=count($idamici);
 
 if($check==0){
-$amicoright=['    '];   // se è vuota non gli faccio stampare nulla
+$amicoright=['     '];   // se è vuota non gli faccio stampare nulla
 }
 
 
@@ -212,7 +213,8 @@ if(($check!=0)) {
             $app2= Users:: where('id','=',$idamici[$i])->value( "cognome");
             $app3= Users:: where('id','=',$idamici[$i])->value( "username");
             $app4= Users:: where('id','=',$idamici[$i])->value( "id");        // questo poi mi serve come parametro da passare alle rotte
-             $amicoright[$i]=[$app1,$app2,$app3,$app4];
+              $app5= Users:: where('id','=',$idamici[$i])->value( "foto_profilo");
+             $amicoright[$i]=[$app1,$app2,$app3,$app4,$app5];
         }
 }//chiude if
     return $amicoright ;

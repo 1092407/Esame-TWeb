@@ -34,7 +34,7 @@
         <thead>
           <tr>
 
-
+            <td><b style="font-size:18px;">FOTO PROFILO</b></td>
             <td><b style="font-size:18px;">nome</b></td>
             <td><b style="font-size:18px;">cognome</b></td>
             <td><b style="font-size:18px;">username</b></td>
@@ -44,7 +44,7 @@
           </tr>
         </thead>
 
-  @if($amici!=['    '])
+  @if($amici!=['     '])
         <tbody>
 
 
@@ -52,6 +52,10 @@
           @foreach($amici as $amico)
           <tr>
 
+     <td >
+     @include('helpers/profileImage', ['attrs' => '' , 'imgFile'=>$amico[4],'style'=>'width:10%'])
+
+     </td>
 
             <td>{{$amico[0]}}</td>
 
@@ -170,6 +174,7 @@
        <table class="w3-table-all table-striped">
         <thead>
           <tr>
+           <td><b style="font-size:18px;"></b></td>
             <td><b style="font-size:18px;"></b></td>
             <td><b style="font-size:18px;"></b></td>
             <td><b style="font-size:18px;"></b></td>
@@ -184,12 +189,19 @@
 
 
 
-  @if($amiciright!=['    '])
+  @if($amiciright!=['     '])
         <tbody>
 
 
           @foreach($amiciright as $amicoright)
           <tr>
+
+
+      <td >
+     @include('helpers/profileImage', ['attrs' => '' , 'imgFile'=>$amicoright[4],'style'=>'width:10%'])
+     </td>
+
+
             <td>{{$amicoright[0]}}</td>
             <td>{{$amicoright[1]}}</td>
             <td>{{$amicoright[2]}}</td>
