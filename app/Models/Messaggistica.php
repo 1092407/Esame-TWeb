@@ -9,13 +9,15 @@ use App\User;
 
 class Messaggistica extends Model
 {
-    public function getChat($id){       // questa funzione l'ho modificata , giorgio
+    public function getChat($id){       // questa funzione serve per recuperare TUTTE LE CHAT  dell'utente attualmente loggato che è identificato da $id
 
-        //tabella delle chat dove $id é il mittente
-        $chatMittente = Messaggi::where("mittente",$id)->select("destinatario",)->get();
+        //dove $id é il mittente
+        $chatMittente = Messaggi::where("mittente",$id)->select("destinatario")->get(); //prendo i destinatari dei miei messaggi
 
-        //tabella delle chat dove $id è destinatario
-        $chatDestinatario = Messaggi::where("destinatario",$id)->select("mittente",)->get();
+        //dove $id è destinatario
+        $chatDestinatario = Messaggi::where("destinatario",$id)->select("mittente")->get();//prendo i mittenti dei messaggi che mi arrivano
+
+      //è unico modo per recuperare realemnte tutte le chat dove è coinvolto
 
         //unisco le due tabelle in unico array
 
@@ -31,7 +33,8 @@ class Messaggistica extends Model
             }
         }
 
-        $result = [];
+
+    $result = [];
         $i = 1;
         foreach(array_keys($contatti) as $key_user){
             foreach(array_keys($contatti[$key_user]) as $key_alloggio){
@@ -45,12 +48,14 @@ class Messaggistica extends Model
         }
 
         return $result;
+
+
     }
 
 
 
 
-// questa sotto da rivedere , giorgio
+// questa sotto da rivedere
 
 
     /*Destinatario in questo caso è quello che è loggato nel sito, mentre il mittente è colui del quale ci interessa
@@ -58,7 +63,7 @@ class Messaggistica extends Model
     public function getConversazione($destinatario, $mittente){
 
         $messaggi = Messaggi::select("contenuto","data","mittente","destinatario")
-        ->whereIn("destinatario",[$destinatario,$mittente])->whereIn("mittente",[$destinatario,$mittente])
+        ->where("destinatario",$destinatario)->where("mittente",$mittente)
         ->orderBy("data","asc")->get();
         $mittente = User::where("id", $mittente)->get();
 

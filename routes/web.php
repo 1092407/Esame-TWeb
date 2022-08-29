@@ -73,7 +73,7 @@ Route::view('/Messaggi','messaggi')->name('messaggi');  // porta alla view che v
 Route::get('/Utente', 'UtenteController@indexutente')->name('utente')->middleware('can:isUtente')->middleware('auth');  // porta alla homepage riservata agli utenti del sito
 
 
-Route::view('/messaggi','messaggi')->name('messaggi');  // porta alla view che visualizza la pagina dove vedo i messaggi
+//Route::view('/messaggi','messaggi')->name('messaggi');  // porta alla view che visualizza la pagina dove vedo i messaggi
 
 Route::view('/Cercapersone','cercapersone')->name('cerca');  // porta alla view che visualizza la pagina dove cerco potenziali amici
 
@@ -96,13 +96,16 @@ Route::delete('/Utente/Amiciright/{amicoright}','UtenteController@deletemyfriend
 
 //rotta per vedere un determinato MIO blog
 Route::get('/Utente/Blogs/{id}', 'UtenteController@showthisblog')->name('questoblog');
-
 //rotta per creare un post su un mio blog
 Route::post('/Utente/Blogss/{id}','UtenteController@storepost')->name('creaPOST_post'); // mi salva effettivamente il post
-
-
 //rotta per vedere un determinato  blog di un mio amico
 Route::get('/Utente/Amici/{id}', 'UtenteController@showamicoblog')->name('vediblogamico');
+
+
+//prove per messaggi
+
+Route::get('/Messaggi', 'UtenteController@showMessaggi')->name('messaggi')->middleware('auth'); //il loggato vede i suoi messaggi
+Route::get('/Chat/{destinatario}', 'UtenteController@showChat')->name('conversazione')->middleware('auth');  //il loggato vede la conversazione che ha con un certo destinatario
 
 
 //Sottoinsime di Auth::routes()   FINITO E NON MODIFICARE
