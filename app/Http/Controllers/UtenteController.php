@@ -13,6 +13,7 @@ use App\Models\Blog;
 use App\Models\Amici;
 use App\Models\Resources\Post;
 use App\Models\Messaggistica;
+use App\Models\Resources\Messaggi;
 
 
 use Illuminate\Support\Facades\File;
@@ -237,6 +238,34 @@ public function showChat($destinatario)
             ->with('id', auth()->user()->id);
     }
 
+
+
+
+
+ public function rispondiMessaggio(Request $request, $id_destinatario)
+    {
+        $chat = $this->messaggisticamodel->getChat(auth()->user()->id);
+        $messaggi = $this->messaggisticamodel->getConversazione(auth()->user()->id, $id_destinatario);
+
+        $request->validate([
+            'messaggio' => 'required|string|max:2500'
+        ]);
+
+        $messaggio = new Messaggi([
+            'contenuto' => $request->get('messaggio'),
+            'data' => Carbon::now()->addHours(2),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $id_destinatario
+
+        ]);
+
+        $messaggio->save();
+
+        return redirect()->route('conversazione', $id_destinatario)
+            ->with('chat', $chat)
+            ->with('messaggi', $messaggi)
+            ->with('id', auth()->user()->id);
+    }
 
 
 // chiude il controller

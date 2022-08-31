@@ -107,6 +107,7 @@ Route::get('/Utente/Amici/{id}', 'UtenteController@showamicoblog')->name('vedibl
 Route::get('/Messaggi', 'UtenteController@showMessaggi')->name('messaggi')->middleware('auth'); //il loggato vede i suoi messaggi
 Route::get('/Chat/{destinatario}', 'UtenteController@showChat')->name('conversazione')->middleware('auth');  //il loggato vede la conversazione che ha con un certo destinatario
 
+Route::post('/Send/{destinatario}','UtenteController@rispondiMessaggio')->name('messaggio.send');
 
 //Sottoinsime di Auth::routes()   FINITO E NON MODIFICARE
 Route::get('login','Auth\LoginController@showLoginForm')->name('login'); //Rotta che genera la form GET
