@@ -225,9 +225,10 @@ public function showamicoblog($id ){  //$id è id del blog che voglio vedere
 
 
 // mi mostra la conversazione con un certo destinatario
-public function showChat( $destinatario)
+public function showChat($destinatario)
     {
         $chat = $this->messaggisticamodel->getChat(auth()->user()->id);  //mi serve per mantenere a sx la lista delle chat anche se ne apro una a dx
+
         $messaggi = $this->messaggisticamodel->getConversazione(auth()->user()->id, $destinatario);
 
         return view("messaggi")

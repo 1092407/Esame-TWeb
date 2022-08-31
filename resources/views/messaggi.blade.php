@@ -65,11 +65,16 @@
             @foreach($chat as $chatAperta)
             <div class=" w3-animate-left">
                 <!--<a href="javascript:void(0)" style="display:block;" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey" onclick="openMail($destinatario);" id="firstTab">-->
-                <a href="{{route('conversazione',$chatAperta['utente'][0]['id']])}}" style="display:block;" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey" onclick="openMail($destinatario);" id="firstTab">
 
-                    <div>
-                        <div><span class="w3-opacity w3-large"><b>{{$chatAperta["utente"][0]["name"]}} {{$chatAperta["utente"][0]["cognome"]}}</b></span></div>
-                                          // qui metto nome e cognome dell'utente con cui parlo
+                  <a href="{{route('conversazione', $chatAperta[1] ) }}" style="display:block;" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey" onclick="openMail($destinatario);" id="firstTab">
+
+
+                           <div>
+
+                        <div><span class="w3-opacity w3-large"><b>{{ ($chatAperta[0] )}}  </b></span></div>
+
+
+
                     </div>
                 </a>
             </div>
@@ -90,7 +95,7 @@
             </div>
             <div style="padding-top:0px; padding-bottom:0px;">
                 @foreach($messaggi["messaggi"] as $messaggio)
-                @if($messaggio["mittente"]==$id)  // se io che ono loggato scrivo il messaggio allora compare a dx
+                @if($messaggio["mittente"]==$id)  // se io che sono loggato scrivo il messaggio allora compare a dx
 
                 <div style="padding-left: 350px; padding-right: 15px; background-color:beige; padding-top:10px; padding-bottom:10px;">
                     <div>
