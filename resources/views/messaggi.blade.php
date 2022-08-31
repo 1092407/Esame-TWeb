@@ -72,7 +72,7 @@
 
                            <div>
 
-                        <div><span class="w3-opacity w3-large"><b>{{ ($chatAperta[0] )}}  </b></span></div>
+                        <div><span class="w3-opacity w3-large"><b> Username:{{ ($chatAperta[0] )}}  </b></span></div>
 
 
 
@@ -90,7 +90,7 @@
             @if(isset($messaggi))
             <div style="overflow:auto; border: 1px solid rgb(221, 221, 221); background-color:rgb(220, 220, 220); padding-right: 20px; padding-top: 5px ;padding-left: 20px;padding-bottom: 5px; height:150px; float:top; width:100%;">
                 @include('helpers/profileImage', ['attrs' => '  ' ,'style'=>'width:5%', 'imgFile'=>$messaggi['mittente'][0]['foto_profilo']])
-                <h3 style='display:inline;'><b>{{$messaggi["mittente"][0]["name"]." ".$messaggi["mittente"][0]["cognome"]}}</b></h3>
+                <h3 style='display:inline;'><b> Nome e cognome :{{$messaggi["mittente"][0]["name"]." ".$messaggi["mittente"][0]["cognome"]}}</b></h3>
 
 
             </div>

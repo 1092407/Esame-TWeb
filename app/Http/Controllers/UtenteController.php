@@ -153,6 +153,16 @@ public function deletemyblog($id)
 
         $amicoeliminato->delete();
 
+         $messaggio = new Messaggi([
+            'contenuto' => "sei stato eliminato dal mio gruppo di amici ",
+            'data' => Carbon::now()->addHours(2),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $amico
+
+        ]);
+
+        $messaggio->save();
+
         return  redirect()->route('amici')
                  ->with('status', 'amico eliminato correttamente!');
 
@@ -169,6 +179,17 @@ public function deletemyblog($id)
         $amicoeliminatoright=Amici::where("amico_utente_riferimento",$id)->where("utente_riferimento",$amicoright)->first();
 
         $amicoeliminatoright->delete();
+
+    $messaggio = new Messaggi([
+            'contenuto' => "sei stato eliminato dal mio gruppo di amici ",
+            'data' => Carbon::now()->addHours(2),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $amicoright
+
+        ]);
+
+        $messaggio->save();
+
 
 
         return  redirect()->route('amici')

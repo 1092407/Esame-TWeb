@@ -15,7 +15,9 @@ use App\Models\Blog;
 use App\Models\Amici;
 use App\Models\Resources\Richieste;
 use App\Models\Resources\Post;
+use App\Models\Resources\Messaggi;
 
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -190,7 +192,26 @@ public function deletepost($idpost)
     {
         $post=Post:: where("id",$idpost)->first();
         $app=Post::where("id",$idpost)->value("blog");    // serve per passarlo alla rotta che mi porta a vedere il blog aggiornato dopo eliminazione
-        $post->delete();
+
+        $nomeblog=Blog::where("id",$app)->value("titolo");
+        $app2=Blog::where("titolo",$nomeblog)->value("utente_proprietario");
+        $app3=Users::where("id",$app2)->value("username");
+
+        $app4=Post:: where("id",$idpost)->value("scrittore"); //è username di chi scrive il post
+        $app5=Users::where("username",$app4)->value("id");
+
+       $messaggio = new Messaggi([
+            'contenuto' => "il tuo post : (".$post->contenuto.")è stato eliminato dal blog  ".$nomeblog."  di  ".$app3."  perchè non conforme alla nostra politica sui contenuti ",
+            'data' => Carbon::now()->addHours(2),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $app5
+
+        ]);
+
+        $messaggio->save();
+
+
+     $post->delete();
 
 
         return redirect()->route('vedi_questo_blog_admin',$app)
@@ -202,8 +223,24 @@ public function deletepost($idpost)
 
 public function deletethisblog($idblog)
     {
+    $nomeblog=Blog::where("id",$idblog)->value("titolo");
       $blog=Blog::where("id",$idblog)->first();
-        $blog->delete();
+
+
+        $app=Blog:: where("id",$idblog)->value("utente_proprietario");
+
+     $messaggio = new Messaggi([
+            'contenuto' => "il tuo blog ".$nomeblog." è stato eliminato perchè non conforme alla nostra politica sui contenuti ",
+            'data' => Carbon::now()->addHours(2),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $blog->utente_proprietario
+
+        ]);
+
+        $messaggio->save();
+
+     $blog->delete();
+
 
         return  redirect()->route('listablogs')
             ->with('status', 'blog eliminato correttamente!');
@@ -215,3 +252,6 @@ public function deletethisblog($idblog)
 
 // questa chiude controller
 }
+
+
+
