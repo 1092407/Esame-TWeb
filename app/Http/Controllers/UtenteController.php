@@ -206,6 +206,7 @@ public function deletemyblog($id)
      }
 
 
+//oltre a creare il post devo mandare un messaggio a tutti gli amici del proprietario del blog perchè sono tutti quelli che possono vedere il blog su cui sto attualmente postando
  public function storepost(NewPostRequest $request,$id){      // $id è del blog su cui posto
         $post= new Post;
         $post->fill($request->validated());
@@ -214,8 +215,70 @@ public function deletemyblog($id)
         $usernameloggato=auth()->user()->username;
         $post['scrittore']=$usernameloggato;
         $post['data']= Carbon::now();
-
         $post->save();
+
+         $nomeblog=Blog::where("id",$id)->value("titolo");
+
+        //ora cerco di creare i messaggi da mandare
+        $app1=Blog::where("id",$id)->value("utente_proprietario");  //è id del proprietario del blog: a tutti i suoi amici devo mandare messaggio perchè ho postato sul suo blog
+
+        $proprietarioblog=Users::where("id",$app1)->value("username");
+
+        //devo prendere gli id degli amici di $app1 perchè sono i destinatari dei miei messaggi di notifica
+
+        $idamicileft= Amici::where('utente_riferimento','=',$app1)->select("amico_utente_riferimento")->get()->toArray();
+        $idamiciright= Amici::where('amico_utente_riferimento','=',$app1)->select("utente_riferimento")->get()->toArray();
+
+
+        $idleft=[];
+        for($r=0;$r<count($idamicileft);$r++){
+        $app=Users::where("id",$idamicileft[$r])->value("id");
+        $idleft[$r]=$app;
+        }
+
+
+     //messaggi per amicileft
+      for ($i=0;$i<count($idleft);$i++){
+
+       $messaggioleft = new Messaggi([
+            'contenuto' => "Ho appena postato sul blog ".$nomeblog." di ".$proprietarioblog.".Corri a vederlo! ",
+            'data' => Carbon::now()->addHours(2),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $idleft[$i]
+
+        ]);
+
+        $messaggioleft->save();
+            $i++;
+
+      }//fine for
+
+
+        //ora identico ma per amiciright
+
+       $idright=[];
+        for($s=0;$s<count($idamiciright);$s++){
+        $app2=Users::where("id",$idamiciright[$s])->value("id");
+        $idright[$s]=$app2;
+        }
+
+
+
+      for ($j=0;$j<count($idright);$j++){
+
+       $messaggioright = new Messaggi([
+            'contenuto' => "Ho appena postato sul blog ".$nomeblog." di ".$proprietarioblog.".Corri a vederlo! ",
+            'data' => Carbon::now()->addHours(2),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $idright[$j]
+
+        ]);
+
+        $messaggioright->save();
+
+
+      }//fine for
+
 
         return redirect()->route('questoblog',$id)
             ->with('status', 'Post aggiunto correttamente!');
@@ -232,7 +295,7 @@ public function showamicoblog($id ){  //$id è id del blog che voglio vedere
          ->with('blog',$blog)->with('posts',$posts);
 }
 
-// fin qui ok
+// fin qui ok e i messaggi spostati su messaggi controller
 
 
 // chiude il controller
