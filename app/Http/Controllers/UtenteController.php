@@ -249,7 +249,7 @@ public function deletemyblog($id)
         ]);
 
         $messaggioleft->save();
-            $i++;
+
 
       }//fine for
 
