@@ -9,7 +9,7 @@
         <a href="{{route('cerca')}}" class="w3-bar-item w3-button w3-hide-small" title="cerca tra gli utenti nuovi amici"><i class="fa fa-search-plus"></i>Cerca nuovi amici</a>
       <a href="{{route('profilo')}}" class="w3-bar-item w3-button w3-hide-small" title="controlla il tuo profilo"><i class="fa fa-address-card-o"></i>Il tuo profilo</a>
 
-        <a href="mailto:info@blo.it" class="w3-bar-item w3-button w3-hide-small" title="Mandaci un messaggio"><i class="fa fa-envelope"></i> Contattaci</a>
+
 
 
         <div class="w3-dropdown-click w3-right">

@@ -95,8 +95,7 @@
 
       <p>{{$post->contenuto}}</p>
 
-    @if(auth()->user()->livello=='admin' or auth()->user()->livello=='staff')
-
+    @if(auth()->user()->livello=='admin' )
 
     <form action="{{ route('adminpost.delete', $post->id)}}" method="post">
                 @csrf
@@ -104,10 +103,17 @@
                 <button class="w3-button w3-red" type="submit" onclick= "return confirm('Sei sicuro di voler eliminare questo post?')">Elimina questo post</button>
               </form>
 
-
     @endif
 
+   @if( auth()->user()->livello=='staff')
 
+    <form action="{{ route('staffpost.delete', $post->id)}}" method="post">
+                @csrf
+                @method('DELETE')
+                <button class="w3-button w3-red" type="submit" onclick= "return confirm('Sei sicuro di voler eliminare questo post?')">Elimina questo post</button>
+              </form>
+
+    @endif
 
 
 

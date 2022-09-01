@@ -8,6 +8,8 @@
       <a href="{{route('gestiscistaff')}}" class="w3-bar-item w3-button w3-hide-small" title="visualizza i  membri del tuo staff"><i class="fa fa-users"></i> Vedi il tuo  staff</a>
         <a href="{{route('registrastaff')}}" class="w3-bar-item w3-button w3-hide-small" title="aggiungi membri dello staff"><i class="fa fa-line-chart"></i>Incrementa il tuo staff</a>
     <a href="{{route('listablogs')}}" class="w3-bar-item w3-button w3-hide-small" title="controlla il contenuto dei blogs"><i class="fa fa-exclamation-triangle"></i>Controlla Blogs</a>
+    <a href="{{route('messaggi')}}" class="w3-bar-item w3-button w3-hide-small" title="controlla i tuoi messaggi "><i class="fa fa-telegram"></i> I tuoi messaggi  </a>
+
 
  <div class="w3-dropdown-click w3-right">
             <button  class=" w3-button w3-hide-small profileButton">

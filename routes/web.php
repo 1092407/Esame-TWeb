@@ -52,7 +52,7 @@ Route::get('/Admin/statistiche/amici/{user}','AdminController@showAmiciOfuser')-
 Route::get('/Admin/statistiche/richieste/{user}','AdminController@showRichiesteOfuser')->name('show_richieste_of_user'); // per vedere le richieste di un certo utente
 
 
-//per gestire i blogs degli utenti
+//per gestire i blogs e post degli utenti
 Route::get('/Admin/GestioneBlogs','AdminController@showallblogs')->name('listablogs'); // vista con lista di tutti i blogs
 Route::get('/Admin/GestioneBlogs/{id}', 'AdminController@showthisblog')->name('vedi_questo_blog_admin'); // mi fa vedere un blog specifico
 Route::delete('/Admin/GestioneBlogs/elimina/{idpost}','AdminController@deletepost')->name('adminpost.delete');// per eliminare un certo post
@@ -63,17 +63,20 @@ Route::delete('/Admin/GestioneBlogs/{idblog}','AdminController@deletethisblog')-
 //ROTTE STAFF
 
 Route::view('/Staff','homestaff')->name('staff');   // porta alla homepage riservata ai membri dello staff
-Route::view('/Messaggi','messaggi')->name('messaggi');  // porta alla view che visualizza la pagina dove vedo i messaggi
-  Route::view('/Gestioneblog','gestioneblog')->name('gestisciblog');// porta alla vista che mi fa controllare i contenuti dei blog e post degli utenti
+
+// sono le stesse di admin ma con il path e controller dello staff
+Route::get('/Staff/GestioneBlogs','StaffController@showallblogs')->name('listablogs.staff'); // vista con lista di tutti i blogs
+Route::get('/Staff/GestioneBlogs/{id}', 'StaffController@showthisblog')->name('vedi_questo_blog_staff'); // mi fa vedere un blog specifico
+Route::delete('/Staff/GestioneBlogs/elimina/{idpost}','StaffController@deletepost')->name('staffpost.delete');// per eliminare un certo post
+Route::delete('/Staff/GestioneBlogs/{idblog}','StaffController@deletethisblog')->name('staffblog.delete');// per eliminare un blog
+
+
 
 
 
 //ROTTE UTENTE
 
 Route::get('/Utente', 'UtenteController@indexutente')->name('utente')->middleware('can:isUtente')->middleware('auth');  // porta alla homepage riservata agli utenti del sito
-
-
-//Route::view('/messaggi','messaggi')->name('messaggi');  // porta alla view che visualizza la pagina dove vedo i messaggi
 
 Route::view('/Cercapersone','cercapersone')->name('cerca');  // porta alla view che visualizza la pagina dove cerco potenziali amici
 
@@ -102,14 +105,16 @@ Route::post('/Utente/Blogss/{id}','UtenteController@storepost')->name('creaPOST_
 Route::get('/Utente/Amici/{id}', 'UtenteController@showamicoblog')->name('vediblogamico');
 
 
-//prove per messaggi
 
-Route::get('/Messaggi', 'UtenteController@showMessaggi')->name('messaggi')->middleware('auth'); //il loggato vede i suoi messaggi
-Route::get('/Chat/{destinatario}', 'UtenteController@showChat')->name('conversazione')->middleware('auth');  //il loggato vede la conversazione che ha con un certo destinatario
 
-Route::post('/Send/{destinatario}','UtenteController@rispondiMessaggio')->name('messaggio.send');
+//ROTTE PER MESSAGGI : le usano tutti (utenti,staff e admin) e le funzioni chiamate sono nel MessaggiController
+Route::get('/Messaggi', 'MessaggiController@showMessaggi')->name('messaggi')->middleware('auth'); //il loggato vede i suoi messaggi
+Route::get('/Chat/{destinatario}', 'MessaggiController@showChat')->name('conversazione')->middleware('auth');  //il loggato vede la conversazione che ha con un certo destinatario
+Route::post('/Send/{destinatario}','MessaggiController@rispondiMessaggio')->name('messaggio.send')->middleware('auth'); //serve,una volta aperta la conversazione con un certo destinatario, a rispondergli
 
-//Sottoinsime di Auth::routes()   FINITO E NON MODIFICARE
+
+
+//Sottoinsime di Auth::routes()
 Route::get('login','Auth\LoginController@showLoginForm')->name('login'); //Rotta che genera la form GET
 Route::post('login','Auth\LoginController@login');//Usata al submit della form che attiva il processo di autenticazione
 Route::post('logout','Auth\LoginController@logout')->name('logout');

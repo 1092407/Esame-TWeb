@@ -71,8 +71,8 @@
 
 
                            <div>
-
-                        <div><span class="w3-opacity w3-large"><b> Username:{{ ($chatAperta[0] )}}  </b></span></div>
+                                                                      Username
+                        <div><span class="w3-opacity w3-large"><b> {{ ($chatAperta[0] )}}  </b></span></div>
 
 
 
