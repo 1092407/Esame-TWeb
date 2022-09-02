@@ -14,6 +14,7 @@ use App\Models\Amici;
 use App\Models\Resources\Post;
 use App\Models\Messaggistica;
 use App\Models\Resources\Messaggi;
+use App\Models\Resources\Richieste;
 
 
 use Illuminate\Support\Facades\File;
@@ -30,6 +31,7 @@ protected $blogmodel;
 protected $amicimodel;
 protected $postmodel;
 protected $messaggisticamodel;
+protected $richiestemodel;
 
 public function __construct(){
         $this->middleware('can:isUtente');
@@ -38,6 +40,7 @@ public function __construct(){
           $this->amicimodel = new Amici;
            $this->postmodel = new Post;
             $this->messaggisticamodel = new Messaggistica;
+            $this->richiestemodel= new Richieste;
     }
 
     public function indexutente()
@@ -296,6 +299,74 @@ public function showamicoblog($id ){  //$id è id del blog che voglio vedere
 }
 
 // fin qui ok e i messaggi spostati su messaggi controller
+
+//parte per le richieste
+
+ public function showmieRichieste (){   // mi mostra solo quelle in attesa di una risposta, poi nei messaggi rimane memorizzato quando ho risposto a chi mi ha chiesto
+  $$richieste_amicizia=$this->richiestemodel->getAmiciziaRichieste();
+
+  return view('richieste')
+   ->with('$richieste_amicizia',$richieste_amicizia);
+ }
+
+
+ public function richiestaRisposta($id, $risposta)
+    {
+
+        $richiesta = $this->richiestemodel->getRichiesta($id);
+        $richiesta->data_risposta = Carbon::now();
+        $richiesta->stato = $risposta;
+        $richiesta->update();
+
+        //questo ora li uso per i messaggi di notifica e registrare amicizia se è stata accettata
+        $richidente=Richieste::where("id",$id)->value("richiedente");
+
+
+          // se accetto devo notificare all'interessato che ora siamo amici tramite messaggio
+          //poi DEVO anche creare una riga nella tabella amici dove di fatto registro il fatto che effettivamente siamo amici
+        if ($risposta == 2) {
+
+            //qui creo il messaggio automatico di notifica
+            $messaggio = new Messaggi([
+            'contenuto' => "Ho appena accettato la tua richiesta di amicizia,benvenuto nel mio gruppo di amici! ",
+            'data' => Carbon::now(),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $richiedente
+            ]);
+            $messaggio->save();
+
+            //qui memorizzo nel db la nuova relazione di amicizia
+
+            $amicizia = new Amici([
+             'utente_riferimento' => auth()->user()->id,
+            'amico_utente_riferimento' => $richiedente
+            ]);
+            $amicizia->save();
+
+            }
+
+
+
+
+
+        } elseif ($risposta == 0) {  //con un messaggio devo notificare che non ho accettato
+
+         $messaggio = new Messaggi([
+            'contenuto' => "Ho appena rifiutato la tua richiesta di amicizia ",
+            'data' => Carbon::now(),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $richiedente
+            ]);
+            $messaggio->save();
+            }
+
+
+            //torno alla rotta richieste :se ci sono altre a cui rispondere le vedrò, se ho già risposto a tutte le mie richieste allora non le vedrò
+            return redirect()->route('richieste')
+            ->with('status', 'Operazione effettuata correttamente!');
+
+   }//chiude funzione
+
 
 
 // chiude il controller

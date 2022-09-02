@@ -104,7 +104,9 @@ Route::post('/Utente/Blogss/{id}','UtenteController@storepost')->name('creaPOST_
 //rotta per vedere un determinato  blog di un mio amico
 Route::get('/Utente/Amici/{id}', 'UtenteController@showamicoblog')->name('vediblogamico');
 
-
+//rotte per le richieste
+Route::get('/Utente/Richieste', 'UtenteController@ showmieRichieste')->name('richieste')->middleware('can:isUtente'); //per vedere le mie richieste
+Route::put('/Utente/Richieste/{richiesta}/{risposta}', 'UtenteController@richiestaRisposta')->name('richiestaRisposta')->middleware('can:isUtente'); //per rispondere cioe per acceattere o rifiutare      lo stato è 2 accettata     1 in attesa    0 rifiutata
 
 
 //ROTTE PER MESSAGGI : le usano tutti (utenti,staff e admin) e le funzioni chiamate sono nel MessaggiController

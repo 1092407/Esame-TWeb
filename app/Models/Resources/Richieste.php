@@ -22,7 +22,41 @@ $accettate=Richieste::where("accettante",$id)->where("stato","1")->count();   //
  return [$totali,$accettate];  // cosi faccio in modo che mi torni un array, altrimenti puo dare problemi e dirmi che lavoro con oggetti o collezioni mentre vorrei un array sulle operazioni che faccio su admin controller e view statistiche richieste
     }
 
+    //fin qui ok
 
+   public function getRichiesta($id){
+        $richiesta= Richieste::find($id);
+        return $richiesta;
+    }
+
+
+
+//questa funzione permette all'utente loggato di vedere le richieste che puo accettatre o rifiutare
+
+public function getAmiciziaRichieste(){
+      $id=auth()->user()->id;
+
+        $richieste_amicizia = Richieste::join('users','richieste.richiedente','=','users.id')
+            ->where('richieste.accettante', $id)
+            ->where('stato','=',1)   //cioè quelle in attesa
+            ->select('richieste.id','richieste.data_richiesta','richieste.stato','richieste.richiedente','richieste.accettante','users.name','users.cognome','users.username','users.descrizione','users.foto_profilo','users.cellulare')
+            ->get();
+        return $richieste_amicizia;
+    }
+
+
+
+/*
+public function getAlloggioRichieste($id_alloggio){
+        $richieste_alloggio = Richieste::join('users','richieste.locatario','=','users.id')
+            ->where('richieste.id_alloggio', $id_alloggio)
+            ->where('stato','=',1)
+            ->select('richieste.id','richieste.data_richiesta','richieste.stato','richieste.locatario','richieste.id_alloggio','users.name','users.cognome','users.sesso','users.data_nascita','users.email','users.cellulare')
+            ->get();
+        return $richieste_alloggio;
+    }
+
+*/
 
 // questa chiude l'estensione del model
 }
