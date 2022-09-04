@@ -1,3 +1,5 @@
+
+
 @extends('layouts.utente')
 
 @section('title', 'miei amici')
@@ -23,7 +25,7 @@
 
                  @if($amici==['    '])
 
-                     @endif
+                 @endif
 
 
 
@@ -52,6 +54,9 @@
           @foreach($amici as $amico)
           <tr>
 
+
+
+
      <td >
      @include('helpers/profileImage', ['attrs' => '' , 'imgFile'=>$amico[4],'style'=>'width:10%'])
 
@@ -62,6 +67,9 @@
 
             <td>{{$amico[1]}}</td>
             <td>{{$amico[2]}}</td>
+
+
+
 
               <td>
                <a href="javascript:void(0)"  class="w3-button w3-blue" onclick="document.getElementById('blogsleft').style.display='block'">Vedi suoi blogs</a>
@@ -87,13 +95,14 @@
                                                     <tbody>
 
 
-                                                    @php
-
-                                                    $blogsamicileft=App\Models\Blog::where("utente_proprietario",$amico[3])->get();
-                                                    @endphp
+                                       @php
+                                      $blogsamicileft=App\Models\Blog::where("utente_proprietario",$amico[3])->get();
+                                      @endphp
 
 
                                               @foreach($blogsamicileft as $blogamicoleft)
+
+
                                                   <tr>
                                                   <td>{{$blogamicoleft->titolo}}</td>
                                                    <td>{{$blogamicoleft->descrizione }}</td>
@@ -104,7 +113,7 @@
 
 
 
-                                                      @endforeach
+                                               @endforeach
 
 
 

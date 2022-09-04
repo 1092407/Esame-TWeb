@@ -12,7 +12,7 @@ class Amici extends Model
 {
     protected $table = 'amici';
     protected $primaryKey = 'id';
-    protected $fillable = ['utente_riferimento','amico_utente_riferimento'];
+    protected $fillable = ['utente_riferimento','amico_utente_riferimento']; // mi serve perche in utente controller se accetto amicizia devo creare nel db la relazione di amicizia
 
 
 /*  potrebbe non servirmi qui

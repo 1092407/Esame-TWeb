@@ -20,11 +20,55 @@ class Messaggistica extends Model
         $idlist2 = Messaggi::where("destinatario",$id)->select("mittente")->distinct()->get()->toArray();//prendo i mittenti dei messaggi che mi arrivano
 
       //ora li unisco
-      $idunici=array_merge($idlist1,$idlist2);
+      $idunici=array_merge($idlist1,$idlist2); //funziona
+
+      for($i=0;$i<count($idunici);$i++){
+            $app1= Users:: where('id','=',$idunici[$i])->value( "name");
+            $amico[$i]=[$app1];
+        }  // teoricamente ora amico è un array con indici numerici
 
 
 
-  $result=[];
+/*
+ for($i=0;$i<count($idunici);$i++){
+            $app1= Users:: where('id','=',$idunici[$i])->value( "name");
+            $amico[$i]=[$app1];
+        }  // teoricamente ora amico è un array con indici numerici
+
+
+// questo mi fa eliminare i doppioni
+
+$ridotto=[];
+$numero=0; // numero di valori che rimangono non doppiati
+
+         for($a=0;$a<count($amico);$a++){
+
+               $trovato=0;
+
+               for($b=0;$a<$numero && $trovato==0;$b++){
+
+               if($ridotto[$j]==$amico[$a]){
+                  $trovato=1;
+                  }
+
+               }
+
+                   if($trovato==0){
+                     $ridotto[$numero]=$amico[$a];
+                     $numero=$numero+1;
+                   }
+
+
+
+         }// for esterno
+
+
+ // $idunici=$ridotto;  questa riga non mi fa andare bene
+
+*/
+
+
+    $result=[];
      for($y=0;$y<count($idunici);$y++){
             $app1= Users:: where('id','=',$idunici[$y])->value( "username");
             $app2= Users:: where('id','=',$idunici[$y])->value( "id");
@@ -34,7 +78,34 @@ class Messaggistica extends Model
 
 
 
-   return $result;
+
+$ridotto=[];
+$numero=0; // numero di valori che rimangono non doppiati
+
+         for($a=0;$a<count($result);$a++){
+
+               $trovato=0;
+
+               for($b=0;$b<$numero && $trovato==0;$b++){
+
+               if($ridotto[$b]==$result[$a]){
+                  $trovato=1;
+                  }
+
+               }
+
+                   if($trovato==0){
+                     $ridotto[$numero]=$result[$a];
+                     $numero=$numero+1;
+                   }
+
+
+
+         }// for esterno
+
+
+
+   return $ridotto;
     }
 
 

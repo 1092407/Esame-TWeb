@@ -43,7 +43,8 @@
     @if(auth()->user()->livello=='utente' )
 
 
-            <a href="javascript:void(0)"  style="color:blue;" onclick="document.getElementById('messaggio').style.display='block'">Aggiungi post</a>
+            <a href="javascript:void(0)"  style="color:blue; float:right; margin-top:80px;" onclick="document.getElementById('messaggio').style.display='block'">Aggiungi post</a>
+
             <div style="width:100%">
 
 
