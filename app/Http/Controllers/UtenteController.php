@@ -354,7 +354,7 @@ public function showamicoblog($id ){  //$id è id del blog che voglio vedere
         $richiesta->update();
 
         //questo ora li uso per i messaggi di notifica e registrare amicizia se è stata accettata
-        $richidente=Richieste::where("id",$id)->value("richiedente");
+        $richiedente=Richieste::where("id",$id)->value("richiedente");
 
 
           // se accetto devo notificare all'interessato che ora siamo amici tramite messaggio
@@ -366,7 +366,7 @@ public function showamicoblog($id ){  //$id è id del blog che voglio vedere
             'contenuto' => "Ho appena accettato la tua richiesta di amicizia,benvenuto nel mio gruppo di amici! ",
             'data' => Carbon::now(),
             'mittente' => auth()->user()->id,
-            'destinatario' => $richiedente
+            'destinatario' =>$richiedente
             ]);
             $messaggio->save();
 
@@ -374,7 +374,7 @@ public function showamicoblog($id ){  //$id è id del blog che voglio vedere
 
             $amicizia = new Amici([
              'utente_riferimento' => auth()->user()->id,
-            'amico_utente_riferimento' => $richiedente
+            'amico_utente_riferimento' =>$richiedente
             ]);
             $amicizia->save();
 
@@ -394,7 +394,7 @@ public function showamicoblog($id ){  //$id è id del blog che voglio vedere
 
 
             //torno alla rotta richieste :se ci sono altre a cui rispondere le vedrò, se ho già risposto a tutte le mie richieste allora non le vedrò
-            return redirect()->route('richieste')
+            return redirect()->route('vedirichieste')
             ->with('status', 'Operazione effettuata correttamente!');
 
    }//chiude funzione

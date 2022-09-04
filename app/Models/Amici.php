@@ -12,6 +12,7 @@ class Amici extends Model
 {
     protected $table = 'amici';
     protected $primaryKey = 'id';
+    protected $fillable = ['utente_riferimento','amico_utente_riferimento'];
 
 
 /*  potrebbe non servirmi qui
