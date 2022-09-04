@@ -18,8 +18,8 @@ class Richieste extends Model {     // moficiata, fare attenzione a accettante e
 
 public function getrichiesteofuser($id){
  $totali=Richieste::where("accettante",$id)->count();  // mi conta TUTTE le richieste arrivate
-$accettate=Richieste::where("accettante",$id)->where("stato","1")->count();   //mi conta solo  quelle accetate,cioè con stato settato=1. Scritto anche nella migration richieste che descrive la struttura dati
- return [$totali,$accettate];  // cosi faccio in modo che mi torni un array, altrimenti puo dare problemi e dirmi che lavoro con oggetti o collezioni mentre vorrei un array sulle operazioni che faccio su admin controller e view statistiche richieste
+$accettate=Richieste::where("accettante",$id)->where("stato","2")->count();   //mi conta solo  quelle accetate,cioè con stato settato=2. Scritto anche nella migration richieste che descrive la struttura dati
+ return [$totali,$accettate];
     }
 
     //fin qui ok
@@ -39,7 +39,7 @@ public function getAmiciziaRichieste(){
         $richieste_amicizia = Richieste::join('users','richieste.richiedente','=','users.id')
             ->where('richieste.accettante', $id)
             ->where('stato','=',1)   //cioè quelle in attesa
-            ->select('richieste.id','richieste.data_richiesta','richieste.stato','richieste.richiedente','richieste.accettante','users.name','users.cognome','users.username','users.descrizione','users.foto_profilo','users.cellulare')
+            ->select('richieste.id','richieste.data_richiesta','richieste.stato','richieste.richiedente','richieste.accettante','users.name','users.cognome','users.username','users.descrizione','users.foto_profilo')
             ->get();
         return $richieste_amicizia;
     }

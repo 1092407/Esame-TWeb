@@ -218,30 +218,24 @@ public function deletepost($idpost)
         ->with('status', 'post eliminato correttamente correttamente!');
     }
 
-//FIN QUI OK
+
 
 
 public function deletethisblog($idblog)
     {
     $nomeblog=Blog::where("id",$idblog)->value("titolo");
-      $blog=Blog::where("id",$idblog)->first();
-
-
-        $app=Blog:: where("id",$idblog)->value("utente_proprietario");
+     $blog=Blog::where("id",$idblog)->first();
+      $app=Blog:: where("id",$idblog)->value("utente_proprietario");
 
      $messaggio = new Messaggi([
             'contenuto' => "il tuo blog ".$nomeblog." è stato eliminato perchè non conforme alla nostra politica sui contenuti ",
             'data' => Carbon::now()->addHours(2),
             'mittente' => auth()->user()->id,
             'destinatario' => $blog->utente_proprietario
-
         ]);
-
         $messaggio->save();
 
-     $blog->delete();
-
-
+         $blog->delete();
         return  redirect()->route('listablogs')
             ->with('status', 'blog eliminato correttamente!');
     }

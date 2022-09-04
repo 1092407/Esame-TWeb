@@ -110,14 +110,49 @@ public function __construct(){
     }
 
    // mi serve per creare un nuovo blog
-    public function storeblog(NewBlogRequest $request){      // DA MODIFICARE PERCHE CAMBIA POI LA MIGRATION RELATIVA A BLOG
+    public function storeblog(NewBlogRequest $request){
         $blog= new Blog;
         $blog->fill($request->validated());
 
      $utenteproprietario=auth()->user()->id;
      $blog['utente_proprietario']=$utenteproprietario;
-
+     $nome=$blog['titolo'];
      $blog->save();
+
+     //ora notifico in automatico a tutti i miei amici che ho creato questo blog
+     $idamicileft= Amici::where('utente_riferimento','=',$utenteproprietario)->select("amico_utente_riferimento")->get()->toArray();
+     $idamiciright= Amici::where('amico_utente_riferimento','=',$utenteproprietario)->select("utente_riferimento")->get()->toArray();
+
+        $idleft=[];
+        for($r=0;$r<count($idamicileft);$r++){
+        $app=Users::where("id",$idamicileft[$r])->value("id");
+        $idleft[$r]=$app;
+        }
+     //messaggi per amicileft
+      for ($i=0;$i<count($idleft);$i++){
+       $messaggioleft = new Messaggi([
+            'contenuto' => "Ho appena creato il seguente blog: ".$nome.".Corri a vederlo! ",
+            'data' => Carbon::now()->addHours(2),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $idleft[$i]
+        ]);
+        $messaggioleft->save();
+       }//fine for
+        $idright=[];
+        for($s=0;$s<count($idamiciright);$s++){
+        $app2=Users::where("id",$idamiciright[$s])->value("id");
+        $idright[$s]=$app2;
+        }
+
+      for ($j=0;$j<count($idright);$j++){
+       $messaggioright = new Messaggi([
+            'contenuto' => "Ho appena creato il seguente blog: ".$nome.".Corri a vederlo! ",
+            'data' => Carbon::now()->addHours(2),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $idright[$j]
+        ]);
+        $messaggioright->save();
+        }//fine for
 
         return redirect()->route('mioblog')
             ->with('status', 'Blog creato correttamente!');
@@ -302,11 +337,11 @@ public function showamicoblog($id ){  //$id è id del blog che voglio vedere
 
 //parte per le richieste
 
- public function showmieRichieste (){   // mi mostra solo quelle in attesa di una risposta, poi nei messaggi rimane memorizzato quando ho risposto a chi mi ha chiesto
-  $$richieste_amicizia=$this->richiestemodel->getAmiciziaRichieste();
+ public function mostraRichieste(){   // mi mostra solo quelle in attesa di una risposta, poi nei messaggi rimane memorizzato quando ho risposto a chi mi ha chiesto
+  $richieste_amicizia=$this->richiestemodel->getAmiciziaRichieste();
 
   return view('richieste')
-   ->with('$richieste_amicizia',$richieste_amicizia);
+   ->with('richieste_amicizia',$richieste_amicizia);
  }
 
 
@@ -346,10 +381,7 @@ public function showamicoblog($id ){  //$id è id del blog che voglio vedere
             }
 
 
-
-
-
-        } elseif ($risposta == 0) {  //con un messaggio devo notificare che non ho accettato
+         if ($risposta == 0) {  //con un messaggio devo notificare che non ho accettato
 
          $messaggio = new Messaggi([
             'contenuto' => "Ho appena rifiutato la tua richiesta di amicizia ",

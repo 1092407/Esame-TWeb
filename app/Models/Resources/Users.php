@@ -175,8 +175,8 @@ $id=auth()->user()->id;
 $check=count($idamici);
 
 if($check==0){
-$amico=['     '];   // se è vuota non gli faccio stampare nulla perchè questa è una stringa di x spazi tra le '' quante sono le $app seguenti (infatti stampo tre campi se non è vuota)
-}
+$amico=['     '];   // se è vuota non gli faccio stampare nulla perchè questa è una stringa di x
+}                   // spazi tra le '' quante sono le $app seguenti (infatti stampo tre campi se non è vuota)
 
 if(($check!=0)) {
     for($i=0;$i<count($idamici);$i++){
