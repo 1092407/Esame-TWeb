@@ -97,16 +97,30 @@ Route::get('/Utente/Amici', 'UtenteController@showmyfriends')->name('amici'); //
 Route::delete('/Utente/Amici/{amico}','UtenteController@deletemyfriendLEFT')->name('friendleft.delete'); // per left
 Route::delete('/Utente/Amiciright/{amicoright}','UtenteController@deletemyfriendRIGHT')->name('friendright.delete'); //per right
 
+Route::get('/Utente/Amici/{idamico}', 'UtenteController@listablogamico')->name('vedilistablogamico'); //per un certo amico mi fa vedere la lista dei suoi blogs e poi posso scegliere quale vedere
+
+
 //rotta per vedere un determinato MIO blog
 Route::get('/Utente/Blogs/{id}', 'UtenteController@showthisblog')->name('questoblog');
 //rotta per creare un post su un mio blog
 Route::post('/Utente/Blogss/{id}','UtenteController@storepost')->name('creaPOST_post'); // mi salva effettivamente il post
-//rotta per vedere un determinato  blog di un mio amico
-Route::get('/Utente/Amici/{id}', 'UtenteController@showamicoblog')->name('vediblogamico');
+
+
+
+//rotta per  vedere un determinato  blog di un mio amico  TERORICAMENTE DA ELIMINARE
+//Route::get('/Utente/Amici/{id}', 'UtenteController@showamicoblog')->name('vediblogamico');
+
+
+
+
+
 
 //rotte per le richieste
 Route::get('/Utente/Richieste', 'UtenteController@mostraRichieste')->name('vedirichieste')->middleware('can:isUtente'); //per vedere le mie richieste
 Route::put('/Utente/Richieste/{richiesta}/{risposta}', 'UtenteController@richiestaRisposta')->name('richiestaRisposta')->middleware('can:isUtente'); //per rispondere cioe per acceattere o rifiutare      lo stato è 2 accettata     1 in attesa    0 rifiutata
+
+
+
 
 
 //ROTTE PER MESSAGGI : le usano tutti (utenti,staff e admin) e le funzioni chiamate sono nel MessaggiController

@@ -2,6 +2,20 @@
 
 @section('title', 'miei blog')
 
+
+
+
+@section('scripts')
+@parent
+<script language="JavaScript" type="text/javascript">
+
+  $(function() {
+    $(".alert").show().delay(2000).fadeOut("show");
+  })
+</script>
+@endsection
+
+
 @section('content')
 <div class="w3-container w3-padding-32" id="catalog" align="center">
 
@@ -55,12 +69,18 @@
       </table>
 
 
+                </div>
 
 
 
 
-</div>
 
+
+
+
+
+
+        </div>
 
 
 

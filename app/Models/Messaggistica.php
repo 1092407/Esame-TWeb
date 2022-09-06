@@ -29,6 +29,8 @@ class Messaggistica extends Model
 
 
 
+
+
 /*
  for($i=0;$i<count($idunici);$i++){
             $app1= Users:: where('id','=',$idunici[$i])->value( "name");

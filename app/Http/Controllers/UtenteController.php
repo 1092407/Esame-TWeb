@@ -97,8 +97,14 @@ public function __construct(){
      public function showmyblogs(){
 
      $id=auth()->user()->id;
-
      $blogs = $this->usersmodel->getmyblogs($id);
+
+
+
+
+
+
+
      return view('mioblog')
        ->with('blogs',$blogs);
      }
@@ -324,8 +330,8 @@ public function deletemyblog($id)
 
 
 
-
-public function showamicoblog($id ){  //$id è id del blog che voglio vedere
+//mi fa vedere un blog una volta che lo seleziono
+public function showamicoblog($id){  //$id è id del blog che voglio vedere
                                          //è come quella per vedere un mio blog
    $blog=Blog::where("id",$id)->first();
    $posts=Post::where ("blog",$id)->get();
@@ -334,6 +340,19 @@ public function showamicoblog($id ){  //$id è id del blog che voglio vedere
 }
 
 // fin qui ok e i messaggi spostati su messaggi controller
+
+//sistemazione blog amico
+public function listablogamico($idamico){  //è id amico
+  $username=Users:: where ("id",$idamico)->value("username");
+
+  $blogsamico=Blog::where("utente_proprietario",$idamico)->get();
+ return view('lista_blogs_amico')
+         ->with('blogsamico',$blogsamico)->with('username',$username);
+
+   }
+
+
+
 
 //parte per le richieste
 

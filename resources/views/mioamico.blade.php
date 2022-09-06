@@ -1,8 +1,24 @@
 
-
 @extends('layouts.utente')
 
 @section('title', 'miei amici')
+
+
+
+
+@section('scripts')
+@parent
+<script language="JavaScript" type="text/javascript">
+
+  $(function() {
+    $(".alert").show().delay(2000).fadeOut("show");
+  })
+</script>
+@endsection
+
+
+
+
 
 @section('content')
 <div class="w3-container w3-padding-32" id="catalog" align="center">
@@ -25,7 +41,7 @@
 
                  @if($amici==['    '])
 
-                 @endif
+                     @endif
 
 
 
@@ -54,9 +70,6 @@
           @foreach($amici as $amico)
           <tr>
 
-
-
-
      <td >
      @include('helpers/profileImage', ['attrs' => '' , 'imgFile'=>$amico[4],'style'=>'width:10%'])
 
@@ -69,77 +82,9 @@
             <td>{{$amico[2]}}</td>
 
 
-
-
               <td>
-               <a href="javascript:void(0)"  class="w3-button w3-blue" onclick="document.getElementById('blogsleft').style.display='block'">Vedi suoi blogs</a>
-            <div style="width:100%">
 
-
-                                <div id="blogsleft" class="modal" style="z-index:4">
-                                    <div class="w3-modal-content w3-animate-zoom">
-                                              <div class="w3-container w3-padding w3-blue">
-                                                <h2>Ecco i blogs di  {{$amico[2]}} </h2>
-                                                </div>
-                                        <div class="w3-panel">
-
-                                             <table class="w3-table-all table-striped">
-                                                <thead>
-                                                      <tr>
-                                                        <td><b style="font-size:18px;">titolo</b></td>
-                                                         <td><b style="font-size:18px;">descrizione</b></td>
-                                                          <td><b style="font-size:18px;">visualizza</b></td>
-                                                       </tr>
-                                                   </thead>
-
-                                                    <tbody>
-
-
-                                       @php
-                                      $blogsamicileft=App\Models\Blog::where("utente_proprietario",$amico[3])->get();
-                                      @endphp
-
-
-                                              @foreach($blogsamicileft as $blogamicoleft)
-
-
-                                                  <tr>
-                                                  <td>{{$blogamicoleft->titolo}}</td>
-                                                   <td>{{$blogamicoleft->descrizione }}</td>
-
-                                                   <td>
-                                                   <a href = "{{route('vediblogamico',$blogamicoleft->id)}}" class="w3-button w3-blue">Vai a questo blog</a>
-                                                    </td>
-
-
-
-                                               @endforeach
-
-
-
-                                                </tbody>
-
-
-                                                </table>
-
-                                                 <div class="w3-section">
-                                                <a class="w3-button w3-red" style="width:150px" onclick="document.getElementById('blogsleft').style.display='none'">Annulla <i class="fa fa-remove"></i></a>
-
-                                                </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                </div>
-
-
-
-
-
-
-
+              <a href = "{{ route('vedilistablogamico',$amico[3])}}" class="w3-button w3-blue">Visualizza i suoi blogs</a>
 
             </td>
 
@@ -217,67 +162,7 @@
 
 
             <td>
-            <a href="javascript:void(0)"  class="w3-button w3-blue" onclick="document.getElementById('blogsright').style.display='block'">Vedi suoi blogs</a>
-
-            <div style="width:100%">
-
-
-                                <div id="blogsright" class="modal" style="z-index:4">
-                                    <div class="w3-modal-content w3-animate-zoom">
-                                              <div class="w3-container w3-padding w3-blue">
-                                                <h2>Ecco i blogs di  {{$amicoright[2]}} </h2>
-                                                </div>
-                                        <div class="w3-panel">
-
-                                             <table class="w3-table-all table-striped">
-                                                <thead>
-                                                      <tr>
-                                                        <td><b style="font-size:18px;">titolo</b></td>
-                                                         <td><b style="font-size:18px;">descrizione</b></td>
-                                                          <td><b style="font-size:18px;">visualizza</b></td>
-                                                       </tr>
-                                                   </thead>
-
-                                                    <tbody>
-
-
-                                                    @php
-
-                                                    $blogsamiciright=App\Models\Blog::where("utente_proprietario",$amicoright[3])->get();
-                                                    @endphp
-
-
-                                              @foreach($blogsamiciright as $blogamicoright)
-                                                  <tr>
-                                                  <td>{{$blogamicoright->titolo}}</td>
-                                                   <td>{{$blogamicoright->descrizione }}</td>
-
-                                                    <td>
-                                                    <a href = "{{route('vediblogamico',$blogamicoright->id)}}" class="w3-button w3-blue">Vai a questo blog</a>
-                                                    </td>
-
-                                              @endforeach
-
-
-
-                                                </tbody>
-
-
-                                                </table>
-
-                                                 <div class="w3-section">
-                                                <a class="w3-button w3-red" style="width:150px" onclick="document.getElementById('blogsright').style.display='none'">Annulla <i class="fa fa-remove"></i></a>
-
-                                                </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                </div>
-
-
+            <a href = "{{ route('vedilistablogamico',$amicoright[3])}}" class="w3-button w3-blue">Visualizza i suoi blogs</a>
             </td>
 
 

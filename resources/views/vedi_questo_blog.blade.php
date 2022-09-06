@@ -4,6 +4,7 @@
 
 
 
+
  @section('links')
   <link rel="stylesheet" type="text/css" href= "{{ asset('css/blogpost.css') }}">
     <link rel="stylesheet" type="text/css" href= "{{ asset('css/w3-style.css') }}">
@@ -80,7 +81,7 @@
 
 
      @if (session('status'))
-      <div class="alert success">
+      <div class="alert success" style="position:fixed; margin-top:200px;">
         {{ session('status') }}
       </div>
       @endif
