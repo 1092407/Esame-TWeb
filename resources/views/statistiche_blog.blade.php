@@ -12,7 +12,7 @@
 
   <!-- First Photo Grid-->
   <div style="padding-left: 20px; padding-right: 20px;">
-    <div class="col-sm-12">
+    <div class="col-sm-12"style="overflow: scroll">
       <table class="w3-table-all table-striped">
         <thead>
           <tr>
