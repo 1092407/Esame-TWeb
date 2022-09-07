@@ -48,14 +48,10 @@ public function __construct(){
         return view('homeutente');  // mi fa aprire home utente
     }
 
-
-
      public function showProfilo()
     {
         return view('profiloutente');    // mi apre il profilo utente
     }
-
-
 
      public function updateProfilo(Request $request)
     {
@@ -70,8 +66,6 @@ public function __construct(){
             'visibilita' => 'string',
             'descrizione' => 'string|max:2500'
         ]);
-
-
 
         if ($request->hasFile('foto_profilo')) {
             $image = $request->file('foto_profilo');
@@ -91,21 +85,11 @@ public function __construct(){
             ->with('status', 'Profilo aggiornato correttamente!');
     }
 
-
-
-
    // mi fa vedere i miei blog
      public function showmyblogs(){
 
      $id=auth()->user()->id;
      $blogs = $this->usersmodel->getmyblogs($id);
-
-
-
-
-
-
-
      return view('mioblog')
        ->with('blogs',$blogs);
      }
@@ -207,11 +191,8 @@ public function deletemyblog($id)
         ]);
 
         $messaggio->save();
-
         return  redirect()->route('amici')
                  ->with('status', 'amico eliminato correttamente!');
-
-
     }
 
 
@@ -234,9 +215,6 @@ public function deletemyblog($id)
         ]);
 
         $messaggio->save();
-
-
-
         return  redirect()->route('amici')
                  ->with('status', 'amico eliminato correttamente!');
     }
@@ -249,7 +227,6 @@ public function deletemyblog($id)
      return view('vedi_questo_blog')
          ->with('blog',$blog)->with('posts',$posts);
      }
-
 
 //oltre a creare il post devo mandare un messaggio a tutti gli amici del proprietario del blog perchè sono tutti quelli che possono vedere il blog su cui sto attualmente postando
  public function storepost(NewPostRequest $request,$id){      // $id è del blog su cui posto
@@ -274,40 +251,29 @@ public function deletemyblog($id)
         $idamicileft= Amici::where('utente_riferimento','=',$app1)->select("amico_utente_riferimento")->get()->toArray();
         $idamiciright= Amici::where('amico_utente_riferimento','=',$app1)->select("utente_riferimento")->get()->toArray();
 
-
         $idleft=[];
         for($r=0;$r<count($idamicileft);$r++){
         $app=Users::where("id",$idamicileft[$r])->value("id");
         $idleft[$r]=$app;
         }
 
-
      //messaggi per amicileft
       for ($i=0;$i<count($idleft);$i++){
-
        $messaggioleft = new Messaggi([
             'contenuto' => "Ho appena postato sul blog ".$nomeblog." di ".$proprietarioblog.".Corri a vederlo! ",
             'data' => Carbon::now()->addHours(2),
             'mittente' => auth()->user()->id,
             'destinatario' => $idleft[$i]
-
         ]);
-
         $messaggioleft->save();
-
-
       }//fine for
 
-
         //ora identico ma per amiciright
-
        $idright=[];
         for($s=0;$s<count($idamiciright);$s++){
         $app2=Users::where("id",$idamiciright[$s])->value("id");
         $idright[$s]=$app2;
         }
-
-
 
       for ($j=0;$j<count($idright);$j++){
 
@@ -316,14 +282,9 @@ public function deletemyblog($id)
             'data' => Carbon::now()->addHours(2),
             'mittente' => auth()->user()->id,
             'destinatario' => $idright[$j]
-
         ]);
-
         $messaggioright->save();
-
-
       }//fine for
-
 
         return redirect()->route('questoblog',$id)
             ->with('status', 'Post aggiunto correttamente!');
@@ -351,9 +312,6 @@ public function listablogamico($idamico){  //è id amico
          ->with('blogsamico',$blogsamico)->with('username',$username);
 
    }
-
-
-
 
 //parte per le richieste
 
@@ -389,18 +347,13 @@ public function listablogamico($idamico){  //è id amico
             'destinatario' =>$richiedente
             ]);
             $messaggio->save();
-
             //qui memorizzo nel db la nuova relazione di amicizia
-
             $amicizia = new Amici([
              'utente_riferimento' => auth()->user()->id,
             'amico_utente_riferimento' =>$richiedente
             ]);
             $amicizia->save();
-
             }
-
-
          if ($risposta == 0) {  //con un messaggio devo notificare che non ho accettato
 
          $messaggio = new Messaggi([
@@ -412,14 +365,54 @@ public function listablogamico($idamico){  //è id amico
             $messaggio->save();
             }
 
-
             //torno alla rotta richieste :se ci sono altre a cui rispondere le vedrò, se ho già risposto a tutte le mie richieste allora non le vedrò
             return redirect()->route('vedirichieste')
             ->with('status', 'Operazione effettuata correttamente!');
 
    }//chiude funzione
 
+//fin qui ok
+//ora iniia parte per cercare le persone
 
+
+ public function cercautenti(Request $ricerca)
+    {
+
+    $nomeinserito=$ricerca->name; //prendo il nome che ho inserito per confrontarlo
+
+//so che ho inserito una  STRINGA e quindi la posso trattare come un particolare array di caratteri
+
+    //voglio capire se ho usato il jolly * , in modo eventualmente da toglierlo poi nella query di ricerca
+    $lunghezza=count($nomeinserito);
+
+    if($stringa[$lunghezza-1]=='*'){
+
+       for($i=0;$i<$lunghezza-1;$i++){
+       $nomesenzajolly[$i]=$nomeinserito[$i];
+       }
+            $nomeinserito=$nomesenzajolly;
+    } //in questo modo elimino il carattere jolly come ultimo carattere se inserito dall'utente che vuole cercare
+
+    $nomeinserito= strtoupper($nomeinserito);  // la metto tutta in maiuscolo
+
+   //ora estraggo i nomi di tutti gli utenti nel sito per poi confrontarli
+
+   $nomi=Users::where("livello","utente ")->select("name")->get()->toArray();
+   //per confrontarli li voglio mettere tutti in maiuscolo
+    foreach($nomi as $nome){
+      $nome=strtoupper($nome);
+    }
+
+    $trovati=[];
+
+
+
+
+
+
+        return view('cercapersone')
+            ;
+    }
 
 // chiude il controller
 }

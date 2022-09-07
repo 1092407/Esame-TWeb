@@ -112,13 +112,13 @@ Route::post('/Utente/Blogss/{id}','UtenteController@storepost')->name('creaPOST_
 
 
 
-
-
-
-//rotte per le richieste
+//rotte per le richieste:le vedo e rispondo
 Route::get('/Utente/Richieste', 'UtenteController@mostraRichieste')->name('vedirichieste')->middleware('can:isUtente'); //per vedere le mie richieste
 Route::put('/Utente/Richieste/{richiesta}/{risposta}', 'UtenteController@richiestaRisposta')->name('richiestaRisposta')->middleware('can:isUtente'); //per rispondere cioe per acceattere o rifiutare      lo stato è 2 accettata     1 in attesa    0 rifiutata
 
+
+//per cercare utenti
+Route::get('/Search','UtenteController@cercautenti')->name('search')->middleware('can:isUtente');
 
 
 
