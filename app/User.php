@@ -16,7 +16,7 @@ class User extends Authenticatable  //Componente che gestisce l'autenticazione
      * @var array
      */
     protected $fillable = [
-        'foto_profilo', 'name', 'cognome', 'sesso', 'data_nascita', 'email', 'username', 'password', 'descrizione'
+        'foto_profilo', 'name', 'cognome', 'sesso', 'data_nascita', 'email', 'username', 'password', 'descrizione','visibilita'
     ];
 
     /**

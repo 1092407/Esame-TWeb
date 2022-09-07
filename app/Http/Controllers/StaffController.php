@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Rules\GreaterThan;
+
 use App\Models\Resources\Users;
 use App\Http\Requests\NewstaffRequest;
 use Illuminate\Support\Facades\Redirect;

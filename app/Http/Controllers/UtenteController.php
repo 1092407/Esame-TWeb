@@ -67,6 +67,7 @@ public function __construct(){
             'data_nascita' => 'required|date',
             'email' => 'required|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/',
             'password' => 'string|min:8',
+            'visibilita' => 'string',
             'descrizione' => 'string|max:2500'
         ]);
 

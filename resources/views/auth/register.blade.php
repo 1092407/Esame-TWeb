@@ -123,6 +123,24 @@
             </div>
 
 
+      <div class="wrap-input">
+                {{ Form::label('', '', ['class' => 'fa fa-cog']) }}
+                {{ Form::label('visibilita', 'Come vuoi rendere il tuo profilo?', ['class' => 'label-input']) }}<br>
+                <ul class='my-filter ruolo'>
+                    <li>{{ Form::radio('visibilita','privato', false ,['class' => 'input', 'id' => 'privato']) }} {{ Form::label('visibilita', 'privato ', ['class' => 'label-input']) }}</li>
+                    <li>{{ Form::radio('visibilita','pubblico', false ,['class' => 'input', 'id' => 'pubblico']) }} {{ Form::label('visibilita', 'pubblico', ['class' => 'label-input']) }}</li>
+                </ul>
+                @if ($errors->first('visibilita'))
+                <ul class="errors">
+                    @foreach ($errors->get('visibilita') as $message)
+                    <li>{{ $message }}</li>
+                    @endforeach
+                </ul>
+                @endif
+            </div>
+
+
+
 
 
 
