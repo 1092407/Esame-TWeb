@@ -27,10 +27,10 @@
       </div>
       @endif
 
-<a href = "{{route('creablog')}}" class="w3-button w3-green">Crea nuovo blog</a>
+<a href = "{{route('creablog')}}" class="w3-button w3-green" >Crea nuovo blog</a>
 
- <div style="padding-left: 20px; padding-right: 20px;">
-    <div class="col-sm-12">
+ <div style="padding-left: 20px; padding-right: 20px; margin-top:10px">
+    <div class="col-sm-12" style="overflow: scroll">
       <table class="w3-table-all table-striped">
         <thead>
           <tr>

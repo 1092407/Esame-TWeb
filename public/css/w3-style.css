@@ -2454,3 +2454,16 @@ div.pagination div a.activetor {
 }
 
 div.pagination div a:hover:not(.activetor) {background-color: rgb(167, 167, 167);}
+
+
+div.headerBlog{
+    overflow-wrap: break-word;
+    padding-top:50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: sticky;
+    top: 0;
+  background-color: #e9faff;
+    border-style: outset;
+    border-color: #ffe497;
+}

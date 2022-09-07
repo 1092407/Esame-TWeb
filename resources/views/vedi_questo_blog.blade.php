@@ -35,16 +35,19 @@
 
 
 
-  <div class="header">
+  <div class="headerBlog">
+
   <h2>Titolo: {{$blog->titolo}}</h2>
-   <h4>Descrizione: {{$blog->descrizione}}</h4>
+   <h4 > Descrizione: {{$blog->descrizione}} </h4>
+   <br>
+<a href="javascript:void(0)"  style="color:blue" onclick="document.getElementById('messaggio').style.display='block'">Aggiungi post</a>
   </div>
 
 
     @if(auth()->user()->livello=='utente' )
 
 
-            <a href="javascript:void(0)"  style="color:blue; float:right; margin-top:80px;" onclick="document.getElementById('messaggio').style.display='block'">Aggiungi post</a>
+
 
             <div style="width:100%">
 
@@ -91,7 +94,7 @@
 
   @foreach($posts as $post)
 
-    <div class="card" style ="margin-top:10px" >
+    <div class="card" style ="margin-top:10px; overflow-wrap: break-word" >
       <h2>Autore: {{$post->scrittore}}</h2>
       <h5>data: {{$post->data}}</h5>
 
