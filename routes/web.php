@@ -115,11 +115,12 @@ Route::post('/Utente/Blogss/{id}','UtenteController@storepost')->name('creaPOST_
 //rotte per le richieste:le vedo e rispondo
 Route::get('/Utente/Richieste', 'UtenteController@mostraRichieste')->name('vedirichieste')->middleware('can:isUtente'); //per vedere le mie richieste
 Route::put('/Utente/Richieste/{richiesta}/{risposta}', 'UtenteController@richiestaRisposta')->name('richiestaRisposta')->middleware('can:isUtente'); //per rispondere cioe per acceattere o rifiutare      lo stato è 2 accettata     1 in attesa    0 rifiutata
+//ok
 
-
-//per cercare utenti
+//per cercare utenti: da verificare bene
 Route::get('/Search','UtenteController@cercautenti')->name('search')->middleware('can:isUtente');
 
+Route::put('/Utente/Chiediamicizia/{user}', 'UtenteController@inviarichista')->name('inviarichista'); //per mandare richiesta : crea nel db la richiesta e il messaggio di notifica
 
 
 
@@ -127,8 +128,6 @@ Route::get('/Search','UtenteController@cercautenti')->name('search')->middleware
 Route::get('/Messaggi', 'MessaggiController@showMessaggi')->name('messaggi')->middleware('auth'); //il loggato vede i suoi messaggi
 Route::get('/Chat/{destinatario}', 'MessaggiController@showChat')->name('conversazione')->middleware('auth');  //il loggato vede la conversazione che ha con un certo destinatario
 Route::post('/Send/{destinatario}','MessaggiController@rispondiMessaggio')->name('messaggio.send')->middleware('auth'); //serve,una volta aperta la conversazione con un certo destinatario, a rispondergli
-
-
 
 //Sottoinsime di Auth::routes()
 Route::get('login','Auth\LoginController@showLoginForm')->name('login'); //Rotta che genera la form GET

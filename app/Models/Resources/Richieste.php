@@ -46,17 +46,6 @@ public function getAmiciziaRichieste(){
 
 
 
-/*
-public function getAlloggioRichieste($id_alloggio){
-        $richieste_alloggio = Richieste::join('users','richieste.locatario','=','users.id')
-            ->where('richieste.id_alloggio', $id_alloggio)
-            ->where('stato','=',1)
-            ->select('richieste.id','richieste.data_richiesta','richieste.stato','richieste.locatario','richieste.id_alloggio','users.name','users.cognome','users.sesso','users.data_nascita','users.email','users.cellulare')
-            ->get();
-        return $richieste_alloggio;
-    }
-
-*/
 
 // questa chiude l'estensione del model
 }

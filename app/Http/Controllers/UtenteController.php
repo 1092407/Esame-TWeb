@@ -372,18 +372,49 @@ public function listablogamico($idamico){  //è id amico
    }//chiude funzione
 
 //fin qui ok
-//ora iniia parte per cercare le persone
 
+//per inviare richiesta e di amicizia
+
+
+// devo creare la richiesta nel db e poi devo anche crare il messaggio di notifica
+
+public function inviarichista($user){  //parametro è id dell0utente a cui chiuedo amicizia
+
+    $richiesta = new Richieste([
+             'richiedente' => auth()->user()->id,
+            'accettante' =>$user,
+            'data_richiesta' => Carbon::now(),
+           'stato' => 1
+            ]);
+            $richiesta->save();
+
+ $messaggio = new Messaggi([
+            'contenuto' => "Ti ho appena inviato una richiesta di amicizia,corri a vederla ",
+            'data' => Carbon::now(),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $user
+            ]);
+            $messaggio->save();
+//poi voglio che mi riporta sulla pagina di ricerca con i risultati di prima senza quello che ho appena scelto
+//questa parte da finire
+
+}
+
+
+
+//ora iniia parte per cercare le persone  PARTE FINALE
 
  public function cercautenti(Request $ricerca)
     {
+    $loggato=auth()->user()->id;  //mi serve per controlli in query successive
 
-    $nomeinserito=$ricerca->name; //prendo il nome che ho inserito per confrontarlo
+    $nomeinserito=strtoupper($ricerca->name); //prendo il nome che ho inserito per confrontarlo con quelli nel db
+                                               // e lo metto subito in maiuscolo
 
-//so che ho inserito una  STRINGA e quindi la posso trattare come un particolare array di caratteri
-
-    //voglio capire se ho usato il jolly * , in modo eventualmente da toglierlo poi nella query di ricerca
+     //so che ho inserito una  STRINGA e quindi la posso trattare come un particolare array di caratteri
+    //voglio SUBITO  capire se ho usato il jolly * , in modo eventualmente da toglierlo poi nella query di ricerca
     $lunghezza=count($nomeinserito);
+    $nomesenzajolly=[];
 
     if($stringa[$lunghezza-1]=='*'){
 
@@ -391,28 +422,107 @@ public function listablogamico($idamico){  //è id amico
        $nomesenzajolly[$i]=$nomeinserito[$i];
        }
             $nomeinserito=$nomesenzajolly;
-    } //in questo modo elimino il carattere jolly come ultimo carattere se inserito dall'utente che vuole cercare
+    } //in questo modo elimino il carattere jolly come ultimo carattere (mi resta tutto l'altro) se inserito dall'utente che vuole cercare
 
-    $nomeinserito= strtoupper($nomeinserito);  // la metto tutta in maiuscolo
 
-   //ora estraggo i nomi di tutti gli utenti nel sito per poi confrontarli
+   //ora estraggo i nomi di tutti gli utenti nel sito per poi confrontarli con quello che utente ha inserito nella barra di ricerca
+   //prendo anche id perchè poi mi serve per recuperare le altre info, anche perche se ho messo tutto in maiuscolo poi ricercare è complicato
 
-   $nomi=Users::where("livello","utente ")->select("name")->get()->toArray();
-   //per confrontarli li voglio mettere tutti in maiuscolo
-    foreach($nomi as $nome){
-      $nome=strtoupper($nome);
+   //prova
+   $nomi=Users::where("livello","utente ")->select("name","id")->get()-toArray();   //prendo id e nome di tutti gli utenti
+                                                                     //offset 0 è "name"
+                                                                     //offset 1 è "id"
+
+   foreach($nomi as $nome){   //ora i nomi li metto tutti  in maiuscolo
+   $nome[0]=strtoupper($nome[0]);
+   }
+
+  // $j=0;  non so se serve
+   $idtrovati=[];//ci voglio mettere id degli utenti che corrispondono alla ricerca
+
+// IF QUI DENTRO POTREBBE ESSERE UN PROBLEMA perche potrebbe servire altro ciclo o sistemare meglio il codice
+   foreach ($nomi as $nome) {  //lo uso cosi lavoro su TUTTI i valori si $nomi
+
+           for($i=0;$i<count($nomeinserito);$i++){  //conto i caratteri inseriti dall'utente e vedo se il singolo nome preso dal db coincide
+                                                    // carattere per carattere dal primo fino all'ultimo con il nome che ha messo nella ricerca
+                                                    // es: se metto 'lu' cerco tutti quei nomi dove le prime count('lu')=2 lettere
+                                                    //sono esattamente l ed u
+
+
+               if($nomeinserito[$i]==$nome[0][$i]){    // se coincidono tutti allora significa che devo selezionare quell'utente e mi salvo il suo id
+               $app=Users::where("id",$nome[1])->value("id");
+               $idtrovati[$j]=$app ;
+               }// fine if
+
+           }//fine for
+
+    }//fine for each
+
+//dopo dovrebbe essere tutto ok. bisogna controllare questa parte :probabilmente c'è una funzione apposita che lo fa bene ma devo trovarla
+
+
+// se tutto scritto bene ora in $idtrovati ho tutti gli id degli utenti che corrispondono alla ricerca
+//alcuni potrebbero però già essere miei amici, quindi devo trovare gli id dei miei amici e toglierli da questo vettore
+//perchè voglio che dalla ricerca escano fuori solo  gli utenti che attualmente non sono  miei amici
+
+$app1=Amici::where("utente_riferimento",$loggato)->select("amico_utente_riferimento")->toArray();
+$app2=Amici::where("amico_utente_riferimento",$loggato)->select("utente_riferimento")->toArray();
+$uniti1=array_merge($app1,$app2);  // cosi ho tutti gli id dei miei amici
+
+     for($i=0;$i<count($uniti1);$i++){
+            $app3= Users:: where('id','=',$uniti1[$i])->value( "id");
+            $idamico[$i]=[$app3];
+        }
+$uniti2=array_merge($idtrovati,$idamico);  //unisco id trovati dalla ricerca con il nome con quelli degli amici ed elimino i doppioni
+                                           //quindi mi restano id degli utenti NON amici e con il nome che corrisponde alla ricerca
+
+
+      // ora uso esattamente lo stesso metodo che si trova in messaggistica model
+
+   $ridotto=[];
+     $numero=0; // numero di valori che rimangono non doppiati
+
+         for($a=0;$a<count($uniti2);$a++){
+
+               $trovato=0;
+
+               for($b=0;$b<$numero && $trovato==0;$b++){
+
+               if($ridotto[$b]==$uniti2[$a]){
+                  $trovato=1;
+                  }
+
+               }
+
+                   if($trovato==0){
+                     $ridotto[$numero]=$uniti2[$a];
+                     $numero=$numero+1;
+                   }
+
+         }// for esterno
+    // fine meccanismo usato nel model messaggistica e qui riportato
+
+    $trovati=[]; // vettore in cui salvo info dei soli utenti che corrisponodono ai requisiti della ricerca e che quindi voglio far comparire
+                 //nella view come risultati della ricerca
+    for($r=0;$r<count($ridotto);$r++){
+     $off0= Users:: where('id','=',$ridotto[$r])->value( "name");
+     $off1= Users:: where('id','=',$ridotto[$r])->value( "cognome");
+     $off2= Users:: where('id','=',$ridotto[$r])->value( "username");
+     $off3= Users:: where('id','=',$ridotto[$r])->value( "sesso");
+     $off4= Users:: where('id','=',$ridotto[$r])->value( "data_nascita");
+     $off5= Users:: where('id','=',$ridotto[$r])->value( "foto_profilo");
+     $off6= Users:: where('id','=',$ridotto[$r])->value( "descrizione");
+     $off7= Users:: where('id','=',$ridotto[$r])->value( "id");
+     $off8= Users:: where('id','=',$ridotto[$r])->value( "visibilita");  // mi serve per capire se mostro tutto o no
+
+     $trovati[$r]=[$off0,$off1,$off2,$off3,$off4,$off5,$off6,$off7,$off8];
     }
-
-    $trovati=[];
-
-
-
-
-
 
         return view('cercapersone')
-            ;
-    }
+           ->with('trovati',$trovati) ;
+    }//chiude funzione di ricerca utenti
+
+
 
 // chiude il controller
 }
