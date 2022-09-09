@@ -2,6 +2,16 @@
 
 @section('title', 'cerca amici')
 
+@section('scripts')
+@parent
+<script language="JavaScript" type="text/javascript">
+
+  $(function() {
+    $(".alert").show().delay(2000).fadeOut("show");
+  })
+</script>
+@endsection
+
 @section('content')
 <div class="w3-container w3-padding-32" id="catalog" align="center">
 
@@ -26,11 +36,14 @@ tutti gli utenti il cui nome iniza per "Lu" come  "Luigi","Luca","Lucrezia"...
     <hr>
      </div>
 
+      @if (session('status'))
+      <div class="alert success">
+        {{ session('status') }}
+      </div>
+      @endif
 
-///
 
 @isset($trovati)
-
 
 
 <p class="w3-margin" style='padding-left:1%; padding-right:1%;'>Utenti trovati</b></p>
@@ -43,7 +56,7 @@ tutti gli utenti il cui nome iniza per "Lu" come  "Luigi","Luca","Lucrezia"...
 
 <div class="w3-row-padding" style='padding-left:1%;padding-right:1%;'>
 
-//
+
 <div class="col-sm-12">
       <table class="w3-table-all table-striped">
         <thead>
@@ -69,7 +82,9 @@ tutti gli utenti il cui nome iniza per "Lu" come  "Luigi","Luca","Lucrezia"...
             <td>{{$trovato[2]}}</td>
             <td>{{$trovato[3]}}</td>
             <td>{{$trovato[4]}}</td>
-            <td>{{$trovato[5]}}</td>
+            <td >
+            @include('helpers/profileImage', ['attrs' => '' , 'imgFile'=>$trovato[5],'style'=>'width:10%'])
+            </td>
              <td>{{$trovato[6]}}</td>
         @endif
 
@@ -83,9 +98,19 @@ tutti gli utenti il cui nome iniza per "Lu" come  "Luigi","Luca","Lucrezia"...
            <td>{{'non disponibile'}}</td>
         @endif
 
+
+
+             @if($trovato[9]==0)
               <td>
               <a href = "{{route('inviarichista',$trovato[7])}}" class="w3-button w3-blue">Invia richiesta</a>
             </td>
+             @endif
+
+             @if($trovato[9]>0)
+              <td>
+             {{'richiesta già inviata a questo utente:attendi una sua risposta'}}
+            </td>
+             @endif
 
 
 
@@ -97,14 +122,14 @@ tutti gli utenti il cui nome iniza per "Lu" come  "Luigi","Luca","Lucrezia"...
 
    </div>
 
-     //
+
 
 </div>
 
 
 @endisset
 
-///
+
 
 </div>
 @endsection

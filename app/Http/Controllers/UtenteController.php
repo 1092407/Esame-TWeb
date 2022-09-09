@@ -395,8 +395,14 @@ public function inviarichista($user){  //parametro è id dell0utente a cui chiue
             'destinatario' => $user
             ]);
             $messaggio->save();
+
 //poi voglio che mi riporta sulla pagina di ricerca con i risultati di prima senza quello che ho appena scelto
 //questa parte da finire
+
+// <a href="{{ url()->previous() }}">Back</a> meccanismo da usare nel return
+
+//potrebbe anche funzionare questa , ma è da provare
+return redirect()->back()->with('status', 'richiesta effettuata correttamente!');
 
 }
 
@@ -409,21 +415,25 @@ public function inviarichista($user){  //parametro è id dell0utente a cui chiue
     $loggato=auth()->user()->id;  //mi serve per controlli in query successive
 
     $nomeinserito=strtoupper($ricerca->name); //prendo il nome che ho inserito per confrontarlo con quelli nel db
-                                               // e lo metto subito in maiuscolo
+                                               //lo metto subito in maiuscolo
 
      //so che ho inserito una  STRINGA e quindi la posso trattare come un particolare array di caratteri
     //voglio SUBITO  capire se ho usato il jolly * , in modo eventualmente da toglierlo poi nella query di ricerca
-    $lunghezza=count($nomeinserito);
+
+    $lunghezza=strlen($nomeinserito);
+   // $lunghezza=count($nomeinserito); potrei anche usare questo perche è un array di caratteri
     $nomesenzajolly=[];
 
-    if($stringa[$lunghezza-1]=='*'){
+    if($nomeinserito[$lunghezza-1]=='*'){  //vedo se ultimo carattere inserito è il jolly
 
        for($i=0;$i<$lunghezza-1;$i++){
        $nomesenzajolly[$i]=$nomeinserito[$i];
        }
-            $nomeinserito=$nomesenzajolly;
-    } //in questo modo elimino il carattere jolly come ultimo carattere (mi resta tutto l'altro) se inserito dall'utente che vuole cercare
+            $nomeinserito=$nomesenzajolly;  //salvo valore senza jolly
 
+            $lunghezza=strlen($nomeinserito);  //aggiorno lunghezza perche ho eliminato il jolly
+
+    } //in questo modo elimino il carattere jolly (se era stato messo) come ultimo carattere (mi resta tutto l'altro)
 
    //ora estraggo i nomi di tutti gli utenti nel sito per poi confrontarli con quello che utente ha inserito nella barra di ricerca
    //prendo anche id perchè poi mi serve per recuperare le altre info, anche perche se ho messo tutto in maiuscolo poi ricercare è complicato
@@ -433,74 +443,50 @@ public function inviarichista($user){  //parametro è id dell0utente a cui chiue
                                                                      //offset 0 è "name"
                                                                      //offset 1 è "id"
 
-   foreach($nomi as $nome){   //ora i nomi li metto tutti  in maiuscolo
-   $nome[0]=strtoupper($nome[0]);
-   }
+//    substr($stringa, 0, $lunghezza);   questa è una funzione base per gestire le stringhe
+//mi prendo per ogni $stringa di nomi che passo  i primi $lunghezza caratteri in modo da confrontarli con  il campo messo dall'utente con
+//un'altra funzione apposita
 
-  // $j=0;  non so se serve
+//strpos($stringa,$sottostringa) mi serve per sapere se la sottostringa è presente in stringa
+// se è vero mi restituisce offset di $stringa dove inizia la sottostringa,altrimenti false
+// a me basta sapere se è contenuta, percio che risultato sia diverso da false
+   $j=0;
    $idtrovati=[];//ci voglio mettere id degli utenti che corrispondono alla ricerca
 
-// IF QUI DENTRO POTREBBE ESSERE UN PROBLEMA perche potrebbe servire altro ciclo o sistemare meglio il codice
    foreach ($nomi as $nome) {  //lo uso cosi lavoro su TUTTI i valori si $nomi
 
-           for($i=0;$i<count($nomeinserito);$i++){  //conto i caratteri inseriti dall'utente e vedo se il singolo nome preso dal db coincide
-                                                    // carattere per carattere dal primo fino all'ultimo con il nome che ha messo nella ricerca
-                                                    // es: se metto 'lu' cerco tutti quei nomi dove le prime count('lu')=2 lettere
-                                                    //sono esattamente l ed u
+             $nome[0]=strtoupper($nome[0]);  //lo metto in maiuscolo cosi sono nello stasso 'case' dei caratteri di $nomeinserito
 
-
-               if($nomeinserito[$i]==$nome[0][$i]){    // se coincidono tutti allora significa che devo selezionare quell'utente e mi salvo il suo id
-               $app=Users::where("id",$nome[1])->value("id");
+               if( strpos($nome[0],$nomeinserito)!= false  ){    // se è diverso da false significa che $nomeinserito è contenuto in $nome[0]
+               $app=Users::where("id",$nome[1])->value("id");    // e quindi id  del corrispondente utente va selezionato
                $idtrovati[$j]=$app ;
+               $j++;     //salvo a partire da offset j=0 e poi lo aggiorno cosi se ci sono altri mi salva in offset magggiorato
                }// fine if
 
            }//fine for
 
     }//fine for each
 
-//dopo dovrebbe essere tutto ok. bisogna controllare questa parte :probabilmente c'è una funzione apposita che lo fa bene ma devo trovarla
-
-
 // se tutto scritto bene ora in $idtrovati ho tutti gli id degli utenti che corrispondono alla ricerca
+
 //alcuni potrebbero però già essere miei amici, quindi devo trovare gli id dei miei amici e toglierli da questo vettore
 //perchè voglio che dalla ricerca escano fuori solo  gli utenti che attualmente non sono  miei amici
 
-$app1=Amici::where("utente_riferimento",$loggato)->select("amico_utente_riferimento")->toArray();
-$app2=Amici::where("amico_utente_riferimento",$loggato)->select("utente_riferimento")->toArray();
+$app1=Amici::where("utente_riferimento",$loggato)->select("amico_utente_riferimento")->toArray();  //amici left
+$app2=Amici::where("amico_utente_riferimento",$loggato)->select("utente_riferimento")->toArray();   //amici right
 $uniti1=array_merge($app1,$app2);  // cosi ho tutti gli id dei miei amici
 
      for($i=0;$i<count($uniti1);$i++){
             $app3= Users:: where('id','=',$uniti1[$i])->value( "id");
             $idamico[$i]=[$app3];
-        }
-$uniti2=array_merge($idtrovati,$idamico);  //unisco id trovati dalla ricerca con il nome con quelli degli amici ed elimino i doppioni
-                                           //quindi mi restano id degli utenti NON amici e con il nome che corrisponde alla ricerca
+        }  //ho recupaerato tutti i valori degli id dei miei amici
 
+ //adesso da $idtrovati[] devo eliminiare gli id che sono presenti in $idamico
+ // posso usare array_diff($a1,$a2) che per rirultato darà i valori di a1 che non compaiono in a2
 
-      // ora uso esattamente lo stesso metodo che si trova in messaggistica model
+$ridotto=[];
+$ridotto=array_diff($idtrovati,$idamico);
 
-   $ridotto=[];
-     $numero=0; // numero di valori che rimangono non doppiati
-
-         for($a=0;$a<count($uniti2);$a++){
-
-               $trovato=0;
-
-               for($b=0;$b<$numero && $trovato==0;$b++){
-
-               if($ridotto[$b]==$uniti2[$a]){
-                  $trovato=1;
-                  }
-
-               }
-
-                   if($trovato==0){
-                     $ridotto[$numero]=$uniti2[$a];
-                     $numero=$numero+1;
-                   }
-
-         }// for esterno
-    // fine meccanismo usato nel model messaggistica e qui riportato
 
     $trovati=[]; // vettore in cui salvo info dei soli utenti che corrisponodono ai requisiti della ricerca e che quindi voglio far comparire
                  //nella view come risultati della ricerca
@@ -514,9 +500,13 @@ $uniti2=array_merge($idtrovati,$idamico);  //unisco id trovati dalla ricerca con
      $off6= Users:: where('id','=',$ridotto[$r])->value( "descrizione");
      $off7= Users:: where('id','=',$ridotto[$r])->value( "id");
      $off8= Users:: where('id','=',$ridotto[$r])->value( "visibilita");  // mi serve per capire se mostro tutto o no
+     $off9=Richieste::where("richiedente",$loggato)->where("accettante",$ridotto[$r])->where("stato",1)->count(); //mi serve per controllo nella view
+             // se c'è gia una richiesta in stato di attesa tra me e lui ,per cui risultato sarà >0, non devo inviare ancora richiesta
 
-     $trovati[$r]=[$off0,$off1,$off2,$off3,$off4,$off5,$off6,$off7,$off8];
+     $trovati[$r]=[$off0,$off1,$off2,$off3,$off4,$off5,$off6,$off7,$off8,$off9];
     }
+
+
 
         return view('cercapersone')
            ->with('trovati',$trovati) ;
