@@ -5,7 +5,7 @@
 @section('content')
 <div class="static w3-center">
     <h2><b>Registrazione</b></h2>
-    <p>Utilizza questa form per registrarti nella nostra comunità online .</p>
+    <p>Utilizza questa form per registrarti nella nostra comunità online.Se la registrazione avrà successo tronerai nella home pubblica </p>
     <hr>
     <div class="container-contact">
         <div class="wrap-contact1">

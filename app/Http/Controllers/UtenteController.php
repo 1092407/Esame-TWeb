@@ -410,8 +410,8 @@ return redirect()->back()->with('status', 'richiesta effettuata correttamente!')
 
 //ora iniia parte per cercare le persone  PARTE FINALE
 
- public function cercautenti(Request $ricerca)
-    {
+ public function cercautenti(Request $ricerca)  {
+
     $loggato=auth()->user()->id;  //mi serve per controlli in query successive
 
     $nomeinserito=strtoupper($ricerca->name); //prendo il nome che ho inserito per confrontarlo con quelli nel db
@@ -457,24 +457,24 @@ return redirect()->back()->with('status', 'richiesta effettuata correttamente!')
 
              $nome[0]=strtoupper($nome[0]);  //lo metto in maiuscolo cosi sono nello stasso 'case' dei caratteri di $nomeinserito
 
-               if( strpos($nome[0],$nomeinserito)!= false  ){    // se è diverso da false significa che $nomeinserito è contenuto in $nome[0]
+               if( strpos($nome[0],$nomeinserito)!= false ){    // se è diverso da false significa che $nomeinserito è contenuto in $nome[0]
                $app=Users::where("id",$nome[1])->value("id");    // e quindi id  del corrispondente utente va selezionato
                $idtrovati[$j]=$app ;
                $j++;     //salvo a partire da offset j=0 e poi lo aggiorno cosi se ci sono altri mi salva in offset magggiorato
                }// fine if
 
-           }//fine for
 
-    }//fine for each
+
+      }//fine for each
 
 // se tutto scritto bene ora in $idtrovati ho tutti gli id degli utenti che corrispondono alla ricerca
 
 //alcuni potrebbero però già essere miei amici, quindi devo trovare gli id dei miei amici e toglierli da questo vettore
 //perchè voglio che dalla ricerca escano fuori solo  gli utenti che attualmente non sono  miei amici
 
-$app1=Amici::where("utente_riferimento",$loggato)->select("amico_utente_riferimento")->toArray();  //amici left
-$app2=Amici::where("amico_utente_riferimento",$loggato)->select("utente_riferimento")->toArray();   //amici right
-$uniti1=array_merge($app1,$app2);  // cosi ho tutti gli id dei miei amici
+  $app1=Amici::where("utente_riferimento",$loggato)->select("amico_utente_riferimento")->toArray();  //amici left
+  $app2=Amici::where("amico_utente_riferimento",$loggato)->select("utente_riferimento")->toArray();   //amici right
+  $uniti1=array_merge($app1,$app2);  // cosi ho tutti gli id dei miei amici
 
      for($i=0;$i<count($uniti1);$i++){
             $app3= Users:: where('id','=',$uniti1[$i])->value( "id");
@@ -502,7 +502,6 @@ $ridotto=array_diff($idtrovati,$idamico);
      $off8= Users:: where('id','=',$ridotto[$r])->value( "visibilita");  // mi serve per capire se mostro tutto o no
      $off9=Richieste::where("richiedente",$loggato)->where("accettante",$ridotto[$r])->where("stato",1)->count(); //mi serve per controllo nella view
              // se c'è gia una richiesta in stato di attesa tra me e lui ,per cui risultato sarà >0, non devo inviare ancora richiesta
-
      $trovati[$r]=[$off0,$off1,$off2,$off3,$off4,$off5,$off6,$off7,$off8,$off9];
     }
 
@@ -513,6 +512,6 @@ $ridotto=array_diff($idtrovati,$idamico);
     }//chiude funzione di ricerca utenti
 
 
-
-// chiude il controller
 }
+// chiude il controller
+
