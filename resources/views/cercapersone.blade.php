@@ -18,7 +18,7 @@
 <h2>Qui puoi cercare altri membri della comunità e inviare richieste di amicizia </h2><br>
 
 <h4>Scrivi un nome nella barra di ricerca e per gli utenti con quel nome vedrai tutte le informazioni se il profilo è  pubblico,
- il solo nome e cognome se il profilo è privato. In ogni caso potrai inviare a chiunque una richiesta di amicicizia.
+ il solo nome e cognome se il profilo è privato. In ogni caso potrai inviare a chiunque una richiesta di amicicizia se non lo hai già fatto.
 Nella ricerca puoi usare come ultimo carattere '*' che funge da wild card.
  Esempio: scrivendo "Lu*" in automatico avrai come risultato
 tutti gli utenti il cui nome iniza per "Lu" come  "Luigi","Luca","Lucrezia"...
@@ -28,8 +28,9 @@ tutti gli utenti il cui nome iniza per "Lu" come  "Luigi","Luca","Lucrezia"...
     <div class="w3-container" style="padding-top:10px">
     <h4>Effettua qui sotto la ricerca  di altri utenti tramite nome</h4>
 
-    //qui per provare mettere la rotta per la ricerca : 'search'
-    {!! Form::open(array('route'=>'utente','method'=>'GET','id'=>'ricerca')) !!}
+
+
+    {!! Form::open(array('route'=>'search','method'=>'GET','id'=>'ricerca')) !!}
     {{ Form::text('name',isset($request) ? $request->name : false,array('id'=>'my-searchbar','placeholder'=>'inserisci qui il nome che intendi cercare')) }}
     {{ Form::submit('Cerca',array('class'=>'w3-button'))}}
     {!! Form::close() !!}
@@ -46,13 +47,9 @@ tutti gli utenti il cui nome iniza per "Lu" come  "Luigi","Luca","Lucrezia"...
 @isset($trovati)
 
 
-<p class="w3-margin" style='padding-left:1%; padding-right:1%;'>Utenti trovati</b></p>
+<p class="w3-margin" style='padding-left:1%; padding-right:1%;'>Ecco gli utenti trovati</b></p>
 
-@if (session('status'))
-<div class="alert success">
-    {{ session('status') }}
-</div>
-@endif
+
 
 <div class="w3-row-padding" style='padding-left:1%;padding-right:1%;'>
 
@@ -66,7 +63,8 @@ tutti gli utenti il cui nome iniza per "Lu" come  "Luigi","Luca","Lucrezia"...
             <td><b style="font-size:18px;">Username</b></td>
              <td><b style="font-size:18px;">Sesso</b></td>
             <td><b style="font-size:18px;">Data di nascita</b></td>
-            <td><b style="font-size:18px;"></b>Foto profilo</td>
+             <td><b style="font-size:18px;">Foto profilo</b></td>
+
             <td><b style="font-size:18px;">Descrizione</b></td>
 
             <td colspan=1><b style="font-size:18px;">Azione</b></td>
@@ -91,24 +89,30 @@ tutti gli utenti il cui nome iniza per "Lu" come  "Luigi","Luca","Lucrezia"...
         @if($trovato[8]=='privato')
             <td>{{$trovato[0]}}</td>
             <td>{{$trovato[1]}}</td>
-            <td>{{'non disponibile'}}</td>
-           <td>{{'non disponibile'}}</td>
-           <td>{{'non disponibile'}}</td>
-           <td>{{'non disponibile'}}</td>
-           <td>{{'non disponibile'}}</td>
+            <td>non disponibile</td>
+            <td>non disponibile</td>
+            <td>non disponibile</td>
+            <td>non disponibile</td>
+           <td>non disponibile</td>
         @endif
 
 
 
-             @if($trovato[9]==0)
+             @if($trovato[9]==0 and $trovato[10]==0)
               <td>
               <a href = "{{route('inviarichista',$trovato[7])}}" class="w3-button w3-blue">Invia richiesta</a>
             </td>
              @endif
 
-             @if($trovato[9]>0)
+             @if($trovato[9]>0 and $trovato[10]==0)
               <td>
-             {{'richiesta già inviata a questo utente:attendi una sua risposta'}}
+             {{'esiste già una richiesta tra di voi'}}
+            </td>
+             @endif
+
+              @if($trovato[10]!=0)
+              <td>
+             {{'siete già amici'}}
             </td>
              @endif
 

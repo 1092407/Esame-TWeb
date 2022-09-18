@@ -120,7 +120,7 @@ Route::put('/Utente/Richieste/{richiesta}/{risposta}', 'UtenteController@richies
 //per cercare utenti: da verificare bene
 Route::get('/Search','UtenteController@cercautenti')->name('search')->middleware('can:isUtente');
 
-Route::post('/Utente/Chiediamicizia/{user}', 'UtenteController@inviarichista')->name('inviarichista'); //per mandare richiesta : crea nel db la richiesta e il messaggio di notifica
+Route::get ('/Utente/Chiediamicizia/{user}', 'UtenteController@inviarichista')->name('inviarichista'); //per mandare richiesta : crea nel db la richiesta e il messaggio di notifica
 
 
 

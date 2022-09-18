@@ -414,79 +414,14 @@ return redirect()->back()->with('status', 'richiesta effettuata correttamente!')
 
     $loggato=auth()->user()->id;  //mi serve per controlli in query successive
 
-    $nomeinserito=strtoupper($ricerca->name); //prendo il nome che ho inserito per confrontarlo con quelli nel db
-                                               //lo metto subito in maiuscolo
+    $nomeinserito=$ricerca->name; //prendo il nome che ho inserito per poi  confrontarlo con quelli nel db
 
-     //so che ho inserito una  STRINGA e quindi la posso trattare come un particolare array di caratteri
-    //voglio SUBITO  capire se ho usato il jolly * , in modo eventualmente da toglierlo poi nella query di ricerca
+// estraggo da tutti gli utenti che corrispondono alla ricerca
+$idutenti = Users::where(function($nome) use ($nomeinserito){
+            $nome->where('name','LIKE', $nomeinserito.'%');
+        })->select("id")->get()->toArray();
 
-    $lunghezza=strlen($nomeinserito);
-   // $lunghezza=count($nomeinserito); potrei anche usare questo perche è un array di caratteri
-    $nomesenzajolly=[];
-
-    if($nomeinserito[$lunghezza-1]=='*'){  //vedo se ultimo carattere inserito è il jolly
-
-       for($i=0;$i<$lunghezza-1;$i++){
-       $nomesenzajolly[$i]=$nomeinserito[$i];
-       }
-            $nomeinserito=$nomesenzajolly;  //salvo valore senza jolly
-
-            $lunghezza=strlen($nomeinserito);  //aggiorno lunghezza perche ho eliminato il jolly
-
-    } //in questo modo elimino il carattere jolly (se era stato messo) come ultimo carattere (mi resta tutto l'altro)
-
-   //ora estraggo i nomi di tutti gli utenti nel sito per poi confrontarli con quello che utente ha inserito nella barra di ricerca
-   //prendo anche id perchè poi mi serve per recuperare le altre info, anche perche se ho messo tutto in maiuscolo poi ricercare è complicato
-
-   //prova
-   $nomi=Users::where("livello","utente ")->select("name","id")->get()-toArray();   //prendo id e nome di tutti gli utenti
-                                                                     //offset 0 è "name"
-                                                                     //offset 1 è "id"
-
-//    substr($stringa, 0, $lunghezza);   questa è una funzione base per gestire le stringhe
-//mi prendo per ogni $stringa di nomi che passo  i primi $lunghezza caratteri in modo da confrontarli con  il campo messo dall'utente con
-//un'altra funzione apposita
-
-//strpos($stringa,$sottostringa) mi serve per sapere se la sottostringa è presente in stringa
-// se è vero mi restituisce offset di $stringa dove inizia la sottostringa,altrimenti false
-// a me basta sapere se è contenuta, percio che risultato sia diverso da false
-   $j=0;
-   $idtrovati=[];//ci voglio mettere id degli utenti che corrispondono alla ricerca
-
-   foreach ($nomi as $nome) {  //lo uso cosi lavoro su TUTTI i valori si $nomi
-
-             $nome[0]=strtoupper($nome[0]);  //lo metto in maiuscolo cosi sono nello stasso 'case' dei caratteri di $nomeinserito
-
-               if( strpos($nome[0],$nomeinserito)!= false ){    // se è diverso da false significa che $nomeinserito è contenuto in $nome[0]
-               $app=Users::where("id",$nome[1])->value("id");    // e quindi id  del corrispondente utente va selezionato
-               $idtrovati[$j]=$app ;
-               $j++;     //salvo a partire da offset j=0 e poi lo aggiorno cosi se ci sono altri mi salva in offset magggiorato
-               }// fine if
-
-
-
-      }//fine for each
-
-// se tutto scritto bene ora in $idtrovati ho tutti gli id degli utenti che corrispondono alla ricerca
-
-//alcuni potrebbero però già essere miei amici, quindi devo trovare gli id dei miei amici e toglierli da questo vettore
-//perchè voglio che dalla ricerca escano fuori solo  gli utenti che attualmente non sono  miei amici
-
-  $app1=Amici::where("utente_riferimento",$loggato)->select("amico_utente_riferimento")->toArray();  //amici left
-  $app2=Amici::where("amico_utente_riferimento",$loggato)->select("utente_riferimento")->toArray();   //amici right
-  $uniti1=array_merge($app1,$app2);  // cosi ho tutti gli id dei miei amici
-
-     for($i=0;$i<count($uniti1);$i++){
-            $app3= Users:: where('id','=',$uniti1[$i])->value( "id");
-            $idamico[$i]=[$app3];
-        }  //ho recupaerato tutti i valori degli id dei miei amici
-
- //adesso da $idtrovati[] devo eliminiare gli id che sono presenti in $idamico
- // posso usare array_diff($a1,$a2) che per rirultato darà i valori di a1 che non compaiono in a2
-
-$ridotto=[];
-$ridotto=array_diff($idtrovati,$idamico);
-
+$ridotto=$idutenti;
 
     $trovati=[]; // vettore in cui salvo info dei soli utenti che corrisponodono ai requisiti della ricerca e che quindi voglio far comparire
                  //nella view come risultati della ricerca
@@ -500,15 +435,22 @@ $ridotto=array_diff($idtrovati,$idamico);
      $off6= Users:: where('id','=',$ridotto[$r])->value( "descrizione");
      $off7= Users:: where('id','=',$ridotto[$r])->value( "id");
      $off8= Users:: where('id','=',$ridotto[$r])->value( "visibilita");  // mi serve per capire se mostro tutto o no
-     $off9=Richieste::where("richiedente",$loggato)->where("accettante",$ridotto[$r])->where("stato",1)->count(); //mi serve per controllo nella view
-             // se c'è gia una richiesta in stato di attesa tra me e lui ,per cui risultato sarà >0, non devo inviare ancora richiesta
-     $trovati[$r]=[$off0,$off1,$off2,$off3,$off4,$off5,$off6,$off7,$off8,$off9];
+
+     //questi dopo mi servono per dei controlli nella view
+     $app3=Richieste::where("richiedente",$loggato)->where("accettante",$ridotto[$r])->where("stato",1)->count();
+     $app4=Richieste::where("accettante",$loggato)->where("richiedente",$ridotto[$r])->where("stato",1)->count();
+     $off9=$app3+$app4;  // se c'è gia una richiesta in stato di attesa tra me e lui ,per cui risultato sarà >0, non devo inviare ancora richiesta
+
+     $app1=Amici::where("utente_riferimento",$loggato)->where("amico_utente_riferimento",$ridotto[$r])->count();
+     $app2=Amici::where("utente_riferimento",$ridotto[$r])->where("amico_utente_riferimento",$loggato)->count();
+     $off10=$app1+$app2; // se è >0 significa che il loggato è gia amico con  utente che ha id=$ridotto[$r]
+
+     $trovati[$r]=[$off0,$off1,$off2,$off3,$off4,$off5,$off6,$off7,$off8,$off9,$off10];
     }
-
-
 
         return view('cercapersone')
            ->with('trovati',$trovati) ;
+
     }//chiude funzione di ricerca utenti
 
 
