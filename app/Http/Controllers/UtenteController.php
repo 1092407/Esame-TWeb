@@ -373,12 +373,9 @@ public function listablogamico($idamico){  //è id amico
 
 //fin qui ok
 
-//per inviare richiesta e di amicizia
-
-
 // devo creare la richiesta nel db e poi devo anche crare il messaggio di notifica
 
-public function inviarichista($user){  //parametro è id dell0utente a cui chiuedo amicizia
+public function inviarichista($user){  //parametro è id dell'utente a cui chiuedo amicizia
 
     $richiesta = new Richieste([
              'richiedente' => auth()->user()->id,
@@ -396,24 +393,15 @@ public function inviarichista($user){  //parametro è id dell0utente a cui chiue
             ]);
             $messaggio->save();
 
-//poi voglio che mi riporta sulla pagina di ricerca con i risultati di prima senza quello che ho appena scelto
-//questa parte da finire
-
-// <a href="{{ url()->previous() }}">Back</a> meccanismo da usare nel return
-
 //potrebbe anche funzionare questa , ma è da provare
 return redirect()->back()->with('status', 'richiesta effettuata correttamente!');
 
 }
 
 
-
-//ora iniia parte per cercare le persone  PARTE FINALE
-
  public function cercautenti(Request $ricerca)  {
 
     $loggato=auth()->user()->id;  //mi serve per controlli in query successive
-
     $nomeinserito=$ricerca->name; //prendo il nome che ho inserito per poi  confrontarlo con quelli nel db
 
 // estraggo da tutti gli utenti che corrispondono alla ricerca
@@ -421,28 +409,26 @@ $idutenti = Users::where(function($nome) use ($nomeinserito){
             $nome->where('name','LIKE', $nomeinserito.'%');
         })->select("id")->get()->toArray();
 
-$ridotto=$idutenti;
-
     $trovati=[]; // vettore in cui salvo info dei soli utenti che corrisponodono ai requisiti della ricerca e che quindi voglio far comparire
                  //nella view come risultati della ricerca
-    for($r=0;$r<count($ridotto);$r++){
-     $off0= Users:: where('id','=',$ridotto[$r])->value( "name");
-     $off1= Users:: where('id','=',$ridotto[$r])->value( "cognome");
-     $off2= Users:: where('id','=',$ridotto[$r])->value( "username");
-     $off3= Users:: where('id','=',$ridotto[$r])->value( "sesso");
-     $off4= Users:: where('id','=',$ridotto[$r])->value( "data_nascita");
-     $off5= Users:: where('id','=',$ridotto[$r])->value( "foto_profilo");
-     $off6= Users:: where('id','=',$ridotto[$r])->value( "descrizione");
-     $off7= Users:: where('id','=',$ridotto[$r])->value( "id");
-     $off8= Users:: where('id','=',$ridotto[$r])->value( "visibilita");  // mi serve per capire se mostro tutto o no
+    for($r=0;$r<count($idutenti);$r++){
+     $off0= Users:: where('id','=',$idutenti[$r])->value( "name");
+     $off1= Users:: where('id','=',$idutenti[$r])->value( "cognome");
+     $off2= Users:: where('id','=',$idutenti[$r])->value( "username");
+     $off3= Users:: where('id','=',$idutenti[$r])->value( "sesso");
+     $off4= Users:: where('id','=',$idutenti[$r])->value( "data_nascita");
+     $off5= Users:: where('id','=',$idutenti[$r])->value( "foto_profilo");
+     $off6= Users:: where('id','=',$idutenti[$r])->value( "descrizione");
+     $off7= Users:: where('id','=',$idutenti[$r])->value( "id");
+     $off8= Users:: where('id','=',$idutenti[$r])->value( "visibilita");  // mi serve per capire se mostro tutto o no
 
      //questi dopo mi servono per dei controlli nella view
-     $app3=Richieste::where("richiedente",$loggato)->where("accettante",$ridotto[$r])->where("stato",1)->count();
-     $app4=Richieste::where("accettante",$loggato)->where("richiedente",$ridotto[$r])->where("stato",1)->count();
+     $app3=Richieste::where("richiedente",$loggato)->where("accettante",$idutenti[$r])->where("stato",1)->count();
+     $app4=Richieste::where("accettante",$loggato)->where("richiedente",$idutenti[$r])->where("stato",1)->count();
      $off9=$app3+$app4;  // se c'è gia una richiesta in stato di attesa tra me e lui ,per cui risultato sarà >0, non devo inviare ancora richiesta
 
-     $app1=Amici::where("utente_riferimento",$loggato)->where("amico_utente_riferimento",$ridotto[$r])->count();
-     $app2=Amici::where("utente_riferimento",$ridotto[$r])->where("amico_utente_riferimento",$loggato)->count();
+     $app1=Amici::where("utente_riferimento",$loggato)->where("amico_utente_riferimento",$idutenti[$r])->count();
+     $app2=Amici::where("utente_riferimento",$idutenti[$r])->where("amico_utente_riferimento",$loggato)->count();
      $off10=$app1+$app2; // se è >0 significa che il loggato è gia amico con  utente che ha id=$ridotto[$r]
 
      $trovati[$r]=[$off0,$off1,$off2,$off3,$off4,$off5,$off6,$off7,$off8,$off9,$off10];
