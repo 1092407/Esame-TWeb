@@ -9,7 +9,5 @@
      <h5>Corri a registrarti o se lo hai già fatto clicca su "Accedi" per effettuare il login </h5><br>
 
 
-
-
 </div>
 @endsection
