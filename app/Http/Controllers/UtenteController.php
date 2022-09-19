@@ -327,7 +327,7 @@ public function listablogamico($idamico){  //è id amico
     {
 
         $richiesta = $this->richiestemodel->getRichiesta($id);
-        $richiesta->data_risposta = Carbon::now();
+        $richiesta->data_risposta = Carbon::now()->addHours(2);
         $richiesta->stato = $risposta;
         $richiesta->update();
 
@@ -342,11 +342,12 @@ public function listablogamico($idamico){  //è id amico
             //qui creo il messaggio automatico di notifica
             $messaggio = new Messaggi([
             'contenuto' => "Ho appena accettato la tua richiesta di amicizia,benvenuto nel mio gruppo di amici! ",
-            'data' => Carbon::now(),
+            'data' => Carbon::now()->addHours(2),
             'mittente' => auth()->user()->id,
             'destinatario' =>$richiedente
             ]);
             $messaggio->save();
+
             //qui memorizzo nel db la nuova relazione di amicizia
             $amicizia = new Amici([
              'utente_riferimento' => auth()->user()->id,
@@ -354,6 +355,7 @@ public function listablogamico($idamico){  //è id amico
             ]);
             $amicizia->save();
             }
+
          if ($risposta == 0) {  //con un messaggio devo notificare che non ho accettato
 
          $messaggio = new Messaggi([
@@ -403,6 +405,10 @@ return redirect()->back()->with('status', 'richiesta effettuata correttamente!')
 
     $loggato=auth()->user()->id;  //mi serve per controlli in query successive
     $nomeinserito=$ricerca->name; //prendo il nome che ho inserito per poi  confrontarlo con quelli nel db
+
+    if ( strpos($nomeinserito,"*") !== false) {        //se c'è il carattere jolly lo tolgo per fare confronto con dati presenti nel db
+    $nomeinserito=str_replace("*", "", $nomeinserito);
+    }
 
 // estraggo da tutti gli utenti che corrispondono alla ricerca
 $idutenti = Users::where(function($nome) use ($nomeinserito){
