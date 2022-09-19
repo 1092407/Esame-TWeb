@@ -75,14 +75,19 @@ tutti gli utenti il cui nome iniza per "Lu" come  "Luigi","Luca","Lucrezia"...
           <tr>
 
         @if($trovato[8]=='pubblico' or ($trovato[8]=='privato' and $trovato[10]!=0 ))
+
+
+
             <td>{{$trovato[0]}}</td>
             <td>{{$trovato[1]}}</td>
             <td>{{$trovato[2]}}</td>
             <td>{{$trovato[3]}}</td>
             <td>{{$trovato[4]}}</td>
-            <td >
+
+           <td >
             @include('helpers/profileImage', ['attrs' => '' , 'imgFile'=>$trovato[5],'style'=>'width:10%'])
             </td>
+
              <td>{{$trovato[6]}}</td>
         @endif
 

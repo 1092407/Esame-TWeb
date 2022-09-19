@@ -122,11 +122,5 @@ class StaffController extends Controller
             ->with('status', 'blog eliminato correttamente!');
     }
 
-
-
-
-
-
-
-
+//chiude controller
 }

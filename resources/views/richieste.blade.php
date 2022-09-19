@@ -39,7 +39,7 @@
           <tr>
 
            <td >
-           @include('helpers/profileImage', ['attrs' => '' , 'imgFile'=>$richiesta->foto_profilo,'style'=>'width:10%'])
+           @include('helpers/profileImage', ['attrs' => '' , 'imgFile'=>$richiesta->foto_profilo,'style'=>'width:100%'])
            </td>
 
             <td>{{$richiesta->name}}</td>

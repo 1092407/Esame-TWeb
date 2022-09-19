@@ -236,7 +236,7 @@ public function deletemyblog($id)
 
         $usernameloggato=auth()->user()->username;
         $post['scrittore']=$usernameloggato;
-        $post['data']= Carbon::now();
+        $post['data']= Carbon::now()->addHours(2);
         $post->save();
 
          $nomeblog=Blog::where("id",$id)->value("titolo");
@@ -358,7 +358,7 @@ public function listablogamico($idamico){  //è id amico
 
          $messaggio = new Messaggi([
             'contenuto' => "Ho appena rifiutato la tua richiesta di amicizia ",
-            'data' => Carbon::now(),
+            'data' => Carbon::now()->addHours(2),
             'mittente' => auth()->user()->id,
             'destinatario' => $richiedente
             ]);
@@ -380,14 +380,14 @@ public function inviarichista($user){  //parametro è id dell'utente a cui chiue
     $richiesta = new Richieste([
              'richiedente' => auth()->user()->id,
             'accettante' =>$user,
-            'data_richiesta' => Carbon::now(),
+            'data_richiesta' => Carbon::now()->addHours(2),
            'stato' => 1
             ]);
             $richiesta->save();
 
  $messaggio = new Messaggi([
             'contenuto' => "Ti ho appena inviato una richiesta di amicizia,corri a vederla ",
-            'data' => Carbon::now(),
+            'data' => Carbon::now()->addHours(2),
             'mittente' => auth()->user()->id,
             'destinatario' => $user
             ]);
