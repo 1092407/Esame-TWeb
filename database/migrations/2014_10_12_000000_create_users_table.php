@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('username')->unique();
             $table->string('password');
-             $table->string('visibilita'); //mi serve per sapere se è pubblico o privato
+             $table->string('visibilita')->nullable(); //mi serve per sapere se è pubblico o privato
             $table->string('livello')->default ('utente');  //mi serve per generare le corrette home private dopo i login
              $table->string('descrizione')->default ('descrizione nulla');
 
