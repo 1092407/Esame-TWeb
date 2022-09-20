@@ -93,7 +93,7 @@ DB::table('richieste')->insert([
 
             ['data_richiesta' => Carbon::create('2022','06','02'), 'data_risposta'=> Carbon::create('2022','06','04') ,  'stato'=> 0  , 'richiedente'=>  6, 'accettante'=>3],
             ['data_richiesta' => Carbon::create('2022','06','02'), 'data_risposta'=> Carbon::create('2022','06','04') ,  'stato'=> 0  , 'richiedente'=>  9, 'accettante'=>3],
-            ['data_richiesta' => Carbon::create('2022','06','02'), 'data_risposta'=> Carbon::create('2022','06','04') ,  'stato'=> 1  , 'richiedente'=>  13, 'accettante'=>3],
+            ['data_richiesta' => Carbon::create('2022','06','02'), 'data_risposta'=> Carbon::create('2022','06','04') ,  'stato'=> 0  , 'richiedente'=>  13, 'accettante'=>3],
 
      ]);
 
