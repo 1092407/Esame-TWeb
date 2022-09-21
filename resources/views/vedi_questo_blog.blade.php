@@ -67,13 +67,14 @@
     @endif
 
      @if (session('status'))
-      <div class="alert success" style="position:fixed; margin-top:200px;">
+      <div class="alert success" style="position: fixed; width: 100%; margin-top:15% ">
         {{ session('status') }}
       </div>
+      <meta http-equiv="refresh" content="3"/>
       @endif
 
 
-    <div class="leftcolumn" style ="margin-top:25%">
+    <div class="leftcolumn" style ="margin-top:22%">
 
   @foreach($posts as $post)
 
