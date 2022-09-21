@@ -89,7 +89,7 @@
     <form action="{{ route('adminpost.delete', $post->id)}}" method="post">
                 @csrf
                 @method('DELETE')
-                <button class="w3-button w3-red" type="submit" onclick= "return confirm('Sei sicuro di voler eliminare questo post?')">Elimina questo post</button>
+                <button class="w3-button-e w3-red" type="submit" onclick= "return confirm('Sei sicuro di voler eliminare questo post?')">Elimina questo post</button>
               </form>
 
     @endif
