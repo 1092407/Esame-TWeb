@@ -2466,4 +2466,11 @@ div.headerBlog{
   background-color: #e9faff;
     border-style: outset;
     border-color: #ffe497;
+    width: 45%;
+}
+
+
+div.posPost{
+    float: right;
+    width: 45%;
 }

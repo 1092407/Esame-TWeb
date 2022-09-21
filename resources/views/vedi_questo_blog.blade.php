@@ -74,7 +74,7 @@
       @endif
 
 
-    <div class="leftcolumn">
+    <div class="posPost" >
 
   @foreach($posts as $post)
 

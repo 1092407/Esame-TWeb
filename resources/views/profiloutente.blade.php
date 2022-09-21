@@ -63,7 +63,7 @@
       <p><b>Livello: </b>{{auth()->user()->livello}}</p>
 <p><b>Visibilità: </b>{{auth()->user()->visibilita}}</p>
 
-      <p><b>Descrizione: </b>{{auth()->user()->descrizione}}</p>
+      <p style ="margin-top:10px; overflow-wrap: break-word"><b>Descrizione: </b>{{auth()->user()->descrizione}}</p>
 
 
       <p><button id="modifica" class="btn btn-green">Modifica il tuo profilo </button></p>
