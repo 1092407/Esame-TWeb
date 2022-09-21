@@ -41,10 +41,10 @@
                     <li><a target="_blank" href="https://twitter.com/i/flow/login/"><img src="{{asset('img/social/twitter.png')}}" title="Twitter" alt="Twitter icon"></a></li>
                     <li><a target="_blank" href="https://www.instagram.com/accounts/login/"><img src="{{asset('img/social/instagram.png')}}" title="Instagram" alt="Instagram icon"></a></li>
             </ul>
-// da cambiare il download sotto con il nostro documento finale
+
             Scarica la documentazione<br>
             <div class="credits">
-                <a  href="{{asset('../resources/download/Progetto_TW.pdf')}}" download="Progetto_TW_GRP_06.pdf"><b>QUI!</b></a>
+                <a  href="{{asset('../resources/download/Documentazione_gruppo50.pdf')}}" download="Documentazione_gruppo50.pdf"><b>QUI!</b></a>
             </div>
         </footer>
     </body>
