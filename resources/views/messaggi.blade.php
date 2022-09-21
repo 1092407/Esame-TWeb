@@ -98,14 +98,14 @@
                 @foreach($messaggi["messaggi"] as $messaggio)
                 @if($messaggio["mittente"]==$id)
 
-                <div style="padding-left: 350px; padding-right: 15px; background-color:beige; padding-top:10px; padding-bottom:10px;">
+                <div style="padding-left: 350px; padding-right: 15px; background-color:beige; padding-top:10px; padding-bottom:10px; overflow-wrap: break-word">
                     <div>
                         <h5 align="right">{{$messaggio["contenuto"]}}</h5>
                         <h6 align="right">{{$messaggio["data"]}}</h6>
                     </div>
                 </div>
                 @else
-                <div style="padding-left: 15px; padding-right: 350px; padding-top:10px; padding-bottom:10px;">
+                <div style="padding-left: 15px; padding-right: 350px; padding-top:10px; padding-bottom:10px; overflow-wrap: break-word">
                     <div>
                         <h5 align="left">{{$messaggio["contenuto"]}}</h5>
                         <h6 align="left">{{$messaggio["data"]}}</h6>
