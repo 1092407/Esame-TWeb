@@ -2461,12 +2461,12 @@ div.headerBlog{
     padding-top:50px;
     padding-left: 20px;
     padding-right: 20px;
-    position: sticky;
+    position: fixed;
     top: 0;
   background-color: #e9faff;
     border-style: outset;
     border-color: #ffe497;
-    width: 45%;
+    width: 100%;
 }
 
 

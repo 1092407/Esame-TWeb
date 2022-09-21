@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -74,7 +73,7 @@
       @endif
 
 
-    <div class="posPost" >
+    <div class="leftcolumn" style ="margin-top:25%">
 
   @foreach($posts as $post)
 
