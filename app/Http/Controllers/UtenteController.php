@@ -48,14 +48,10 @@ public function __construct(){
         return view('homeutente');  // mi fa aprire home utente
     }
 
-
-
      public function showProfilo()
     {
         return view('profiloutente');    // mi apre il profilo utente
     }
-
-
 
      public function updateProfilo(Request $request)
     {
@@ -67,10 +63,9 @@ public function __construct(){
             'data_nascita' => 'required|date',
             'email' => 'required|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/',
             'password' => 'string|min:8',
+            'visibilita' => 'string',
             'descrizione' => 'string|max:2500'
         ]);
-
-
 
         if ($request->hasFile('foto_profilo')) {
             $image = $request->file('foto_profilo');
@@ -90,21 +85,11 @@ public function __construct(){
             ->with('status', 'Profilo aggiornato correttamente!');
     }
 
-
-
-
    // mi fa vedere i miei blog
      public function showmyblogs(){
 
      $id=auth()->user()->id;
      $blogs = $this->usersmodel->getmyblogs($id);
-
-
-
-
-
-
-
      return view('mioblog')
        ->with('blogs',$blogs);
      }
@@ -206,11 +191,8 @@ public function deletemyblog($id)
         ]);
 
         $messaggio->save();
-
         return  redirect()->route('amici')
                  ->with('status', 'amico eliminato correttamente!');
-
-
     }
 
 
@@ -233,9 +215,6 @@ public function deletemyblog($id)
         ]);
 
         $messaggio->save();
-
-
-
         return  redirect()->route('amici')
                  ->with('status', 'amico eliminato correttamente!');
     }
@@ -249,7 +228,6 @@ public function deletemyblog($id)
          ->with('blog',$blog)->with('posts',$posts);
      }
 
-
 //oltre a creare il post devo mandare un messaggio a tutti gli amici del proprietario del blog perchè sono tutti quelli che possono vedere il blog su cui sto attualmente postando
  public function storepost(NewPostRequest $request,$id){      // $id è del blog su cui posto
         $post= new Post;
@@ -258,7 +236,7 @@ public function deletemyblog($id)
 
         $usernameloggato=auth()->user()->username;
         $post['scrittore']=$usernameloggato;
-        $post['data']= Carbon::now();
+        $post['data']= Carbon::now()->addHours(2);
         $post->save();
 
          $nomeblog=Blog::where("id",$id)->value("titolo");
@@ -273,40 +251,29 @@ public function deletemyblog($id)
         $idamicileft= Amici::where('utente_riferimento','=',$app1)->select("amico_utente_riferimento")->get()->toArray();
         $idamiciright= Amici::where('amico_utente_riferimento','=',$app1)->select("utente_riferimento")->get()->toArray();
 
-
         $idleft=[];
         for($r=0;$r<count($idamicileft);$r++){
         $app=Users::where("id",$idamicileft[$r])->value("id");
         $idleft[$r]=$app;
         }
 
-
      //messaggi per amicileft
       for ($i=0;$i<count($idleft);$i++){
-
        $messaggioleft = new Messaggi([
             'contenuto' => "Ho appena postato sul blog ".$nomeblog." di ".$proprietarioblog.".Corri a vederlo! ",
             'data' => Carbon::now()->addHours(2),
             'mittente' => auth()->user()->id,
             'destinatario' => $idleft[$i]
-
         ]);
-
         $messaggioleft->save();
-
-
       }//fine for
 
-
         //ora identico ma per amiciright
-
        $idright=[];
         for($s=0;$s<count($idamiciright);$s++){
         $app2=Users::where("id",$idamiciright[$s])->value("id");
         $idright[$s]=$app2;
         }
-
-
 
       for ($j=0;$j<count($idright);$j++){
 
@@ -315,14 +282,9 @@ public function deletemyblog($id)
             'data' => Carbon::now()->addHours(2),
             'mittente' => auth()->user()->id,
             'destinatario' => $idright[$j]
-
         ]);
-
         $messaggioright->save();
-
-
       }//fine for
-
 
         return redirect()->route('questoblog',$id)
             ->with('status', 'Post aggiunto correttamente!');
@@ -351,9 +313,6 @@ public function listablogamico($idamico){  //è id amico
 
    }
 
-
-
-
 //parte per le richieste
 
  public function mostraRichieste(){   // mi mostra solo quelle in attesa di una risposta, poi nei messaggi rimane memorizzato quando ho risposto a chi mi ha chiesto
@@ -368,7 +327,7 @@ public function listablogamico($idamico){  //è id amico
     {
 
         $richiesta = $this->richiestemodel->getRichiesta($id);
-        $richiesta->data_risposta = Carbon::now();
+        $richiesta->data_risposta = Carbon::now()->addHours(2);
         $richiesta->stato = $risposta;
         $richiesta->update();
 
@@ -383,34 +342,30 @@ public function listablogamico($idamico){  //è id amico
             //qui creo il messaggio automatico di notifica
             $messaggio = new Messaggi([
             'contenuto' => "Ho appena accettato la tua richiesta di amicizia,benvenuto nel mio gruppo di amici! ",
-            'data' => Carbon::now(),
+            'data' => Carbon::now()->addHours(2),
             'mittente' => auth()->user()->id,
             'destinatario' =>$richiedente
             ]);
             $messaggio->save();
 
             //qui memorizzo nel db la nuova relazione di amicizia
-
             $amicizia = new Amici([
              'utente_riferimento' => auth()->user()->id,
             'amico_utente_riferimento' =>$richiedente
             ]);
             $amicizia->save();
-
             }
-
 
          if ($risposta == 0) {  //con un messaggio devo notificare che non ho accettato
 
          $messaggio = new Messaggi([
             'contenuto' => "Ho appena rifiutato la tua richiesta di amicizia ",
-            'data' => Carbon::now(),
+            'data' => Carbon::now()->addHours(2),
             'mittente' => auth()->user()->id,
             'destinatario' => $richiedente
             ]);
             $messaggio->save();
             }
-
 
             //torno alla rotta richieste :se ci sono altre a cui rispondere le vedrò, se ho già risposto a tutte le mie richieste allora non le vedrò
             return redirect()->route('vedirichieste')
@@ -418,7 +373,79 @@ public function listablogamico($idamico){  //è id amico
 
    }//chiude funzione
 
+//fin qui ok
 
+// devo creare la richiesta nel db e poi devo anche crare il messaggio di notifica
 
-// chiude il controller
+public function inviarichista($user){  //parametro è id dell'utente a cui chiuedo amicizia
+
+    $richiesta = new Richieste([
+             'richiedente' => auth()->user()->id,
+            'accettante' =>$user,
+            'data_richiesta' => Carbon::now()->addHours(2),
+           'stato' => 1
+            ]);
+            $richiesta->save();
+
+ $messaggio = new Messaggi([
+            'contenuto' => "Ti ho appena inviato una richiesta di amicizia,corri a vederla ",
+            'data' => Carbon::now()->addHours(2),
+            'mittente' => auth()->user()->id,
+            'destinatario' => $user
+            ]);
+            $messaggio->save();
+
+//potrebbe anche funzionare questa , ma è da provare
+return redirect()->back()->with('status', 'richiesta effettuata correttamente!');
+
 }
+
+
+ public function cercautenti(Request $ricerca)  {
+
+    $loggato=auth()->user()->id;  //mi serve per controlli in query successive
+    $nomeinserito=$ricerca->name; //prendo il nome che ho inserito per poi  confrontarlo con quelli nel db
+
+    if ( strpos($nomeinserito,"*") !== false) {        //se c'è il carattere jolly lo tolgo per fare confronto con dati presenti nel db
+    $nomeinserito=str_replace("*", "", $nomeinserito);
+    }
+
+// estraggo da tutti gli utenti che corrispondono alla ricerca
+$idutenti = Users::where(function($nome) use ($nomeinserito){
+            $nome->where('name','LIKE', $nomeinserito.'%');
+        })->select("id")->get()->toArray();
+
+    $trovati=[]; // vettore in cui salvo info dei soli utenti che corrisponodono ai requisiti della ricerca e che quindi voglio far comparire
+                 //nella view come risultati della ricerca
+    for($r=0;$r<count($idutenti);$r++){
+     $off0= Users:: where('id','=',$idutenti[$r])->value( "name");
+     $off1= Users:: where('id','=',$idutenti[$r])->value( "cognome");
+     $off2= Users:: where('id','=',$idutenti[$r])->value( "username");
+     $off3= Users:: where('id','=',$idutenti[$r])->value( "sesso");
+     $off4= Users:: where('id','=',$idutenti[$r])->value( "data_nascita");
+     $off5= Users:: where('id','=',$idutenti[$r])->value( "foto_profilo");
+     $off6= Users:: where('id','=',$idutenti[$r])->value( "descrizione");
+     $off7= Users:: where('id','=',$idutenti[$r])->value( "id");
+     $off8= Users:: where('id','=',$idutenti[$r])->value( "visibilita");  // mi serve per capire se mostro tutto o no
+
+     //questi dopo mi servono per dei controlli nella view
+     $app3=Richieste::where("richiedente",$loggato)->where("accettante",$idutenti[$r])->where("stato",1)->count();
+     $app4=Richieste::where("accettante",$loggato)->where("richiedente",$idutenti[$r])->where("stato",1)->count();
+     $off9=$app3+$app4;  // se c'è gia una richiesta in stato di attesa tra me e lui ,per cui risultato sarà >0, non devo inviare ancora richiesta
+
+     $app1=Amici::where("utente_riferimento",$loggato)->where("amico_utente_riferimento",$idutenti[$r])->count();
+     $app2=Amici::where("utente_riferimento",$idutenti[$r])->where("amico_utente_riferimento",$loggato)->count();
+     $off10=$app1+$app2; // se è >0 significa che il loggato è gia amico con  utente che ha id=$ridotto[$r]
+
+     $trovati[$r]=[$off0,$off1,$off2,$off3,$off4,$off5,$off6,$off7,$off8,$off9,$off10];
+    }
+
+        return view('cercapersone')
+           ->with('trovati',$trovati) ;
+
+    }//chiude funzione di ricerca utenti
+
+
+}
+// chiude il controller
+

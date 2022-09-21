@@ -3,12 +3,10 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 
-
-
  @section('links')
   <link rel="stylesheet" type="text/css" href= "{{ asset('css/blogpost.css') }}">
     <link rel="stylesheet" type="text/css" href= "{{ asset('css/w3-style.css') }}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <body>
 
@@ -45,13 +43,7 @@
 
 
     @if(auth()->user()->livello=='utente' )
-
-
-
-
             <div style="width:100%">
-
-
                                 <div id="messaggio" class="modal" style="z-index:4">
                                     <div class="w3-modal-content w3-animate-zoom">
                                         <div class="w3-container w3-padding w3-blue">
@@ -73,15 +65,7 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
     @endif
-
-
-
-
-
 
      @if (session('status'))
       <div class="alert success" style="position:fixed; margin-top:200px;">

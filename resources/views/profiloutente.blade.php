@@ -61,7 +61,7 @@
       <p><b>Email: </b>{{auth()->user()->email}}</p>
 
       <p><b>Livello: </b>{{auth()->user()->livello}}</p>
-
+<p><b>Visibilità: </b>{{auth()->user()->visibilita}}</p>
 
       <p><b>Descrizione: </b>{{auth()->user()->descrizione}}</p>
 
@@ -123,6 +123,7 @@
         </ul>
         @endif
       </div>
+
       <div class="wrap-input  rs1-wrap-input">
         {{ Form::label('','', ['class' => 'fa fa-envelope ']) }}
         {{ Form::label('email', ' Email', ['class' => 'label-input-card']) }}
@@ -135,6 +136,44 @@
         </ul>
         @endif
       </div>
+
+     @if( auth()->user()->visibilita=='privato')
+       <div class="wrap-input">
+                {{ Form::label('', '', ['class' => 'fa fa-cog']) }}
+                {{ Form::label('visibilita', 'Come vuoi rendere il tuo profilo?', ['class' => 'label-input']) }}<br>
+                <ul class='my-filter ruolo'>
+                    <li>{{ Form::radio('visibilita','privato', true ,['class' => 'input', 'id' => 'privato']) }} {{ Form::label('visibilita', 'privato ', ['class' => 'label-input']) }}</li>
+                    <li>{{ Form::radio('visibilita','pubblico', false ,['class' => 'input', 'id' => 'pubblico']) }} {{ Form::label('visibilita', 'pubblico', ['class' => 'label-input']) }}</li>
+                </ul>
+                @if ($errors->first('visibilita'))
+                <ul class="errors">
+                    @foreach ($errors->get('visibilita') as $message)
+                    <li>{{ $message }}</li>
+                    @endforeach
+                </ul>
+                @endif
+            </div>
+    @endif
+
+    @if( auth()->user()->visibilita=='pubblico')
+       <div class="wrap-input">
+                {{ Form::label('', '', ['class' => 'fa fa-cog']) }}
+                {{ Form::label('visibilita', 'Come vuoi rendere il tuo profilo?', ['class' => 'label-input']) }}<br>
+                <ul class='my-filter ruolo'>
+                    <li>{{ Form::radio('visibilita','privato', false ,['class' => 'input', 'id' => 'privato']) }} {{ Form::label('visibilita', 'privato ', ['class' => 'label-input']) }}</li>
+                    <li>{{ Form::radio('visibilita','pubblico', true ,['class' => 'input', 'id' => 'pubblico']) }} {{ Form::label('visibilita', 'pubblico', ['class' => 'label-input']) }}</li>
+                </ul>
+                @if ($errors->first('visibilita'))
+                <ul class="errors">
+                    @foreach ($errors->get('visibilita') as $message)
+                    <li>{{ $message }}</li>
+                    @endforeach
+                </ul>
+                @endif
+            </div>
+    @endif
+
+
 
 
 

@@ -5,7 +5,7 @@
 @section('content')
 <div class="static w3-center">
     <h2><b>Registrazione</b></h2>
-    <p>Utilizza questa form per registrarti nella nostra comunità online .</p>
+    <p>Utilizza questa form per registrarti nella nostra comunità online e se la registrazione avrà successo tronerai nella home pubblica </p>
     <hr>
     <div class="container-contact">
         <div class="wrap-contact1">
@@ -121,6 +121,24 @@
                 {{ Form::label('password-confirm', 'Conferma password', ['class' => 'label-input']) }}
                 {{ Form::password('password_confirmation', ['class' => 'input', 'id' => 'password-confirm']) }}
             </div>
+
+
+      <div class="wrap-input">
+                {{ Form::label('', '', ['class' => 'fa fa-cog']) }}
+                {{ Form::label('visibilita', 'Come vuoi rendere il tuo profilo?', ['class' => 'label-input']) }}<br>
+                <ul class='my-filter ruolo'>
+                    <li>{{ Form::radio('visibilita','privato', false ,['class' => 'input', 'id' => 'privato']) }} {{ Form::label('visibilita', 'privato ', ['class' => 'label-input']) }}</li>
+                    <li>{{ Form::radio('visibilita','pubblico', false ,['class' => 'input', 'id' => 'pubblico']) }} {{ Form::label('visibilita', 'pubblico', ['class' => 'label-input']) }}</li>
+                </ul>
+                @if ($errors->first('visibilita'))
+                <ul class="errors">
+                    @foreach ($errors->get('visibilita') as $message)
+                    <li>{{ $message }}</li>
+                    @endforeach
+                </ul>
+                @endif
+            </div>
+
 
 
 

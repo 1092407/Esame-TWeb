@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\User;
+use App\User;   //uso quello predefinito,non quello aggiunto manualmente sotto path app/models/resources/users
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-      // $this->middleware('guest'); //metodo che ci consente di attivare i gate
+      //
     }
 
     /**
@@ -60,6 +60,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             // livello non vada messo qui  perchè non è un campo che compare nella form di registrazione
             //infatti voglio mettere che livello=utente di default per chi si registra tramite la view registrazione
+             'visibilita' => ['required', 'string'],
             'descrizione' => ['required ','string','max:2500']
         ]);
     }
@@ -90,7 +91,7 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
             // 'livello' == 'utente',             // lo voglio per default per chi si registra tramite questa pagina: l'admin infatti lo preregistro nel db con i seeds e i membri dello staff li registro tramite la sezione riservata dell'admin
-
+              'visibilita' => $data['visibilita'],
             'descrizione' => $data['descrizione']
         ]);
 
