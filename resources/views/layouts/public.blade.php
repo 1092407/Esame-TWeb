@@ -44,7 +44,7 @@
 
             Scarica la documentazione<br>
             <div class="credits">
-                <a  href="{{asset('../resources/download/Documentazione_gruppo50.pdf')}}" download="Documentazione_gruppo50.pdf"><b>QUI!</b></a>
+                <a  href="{{asset('PROVAPROVA/resources/download/Documentazione_gruppo50.pdf')}}" download="Documentazione_gruppo50.pdf"><b>QUI!</b></a>
             </div>
         </footer>
     </body>
