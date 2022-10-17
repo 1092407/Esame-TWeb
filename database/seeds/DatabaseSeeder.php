@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder {
 
   DB::table('users')->insert([
             ['foto_profilo' => NULL, 'name' => 'Admin', 'cognome' => 'Admin', 'sesso' => 'Maschio', 'data_nascita' => Carbon::create('2000','01','01'), 'email' => 'admin.admin@blo.it', 'username' => 'adminadmin', 'password' => Hash::make('Drl3Sdk4'),  'livello' => 'admin','visibilita' => NULL,'descrizione'=>'Admin del sito', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')],
-            ['foto_profilo' => NULL, 'name' => 'Locatore', 'cognome' => 'Locatore', 'sesso' => 'Maschio', 'data_nascita' => Carbon::create('2000','02','01'), 'email' => 'lore.locre@blo.it', 'username' => ' staffstaff', 'password' => Hash::make('Drl3Sdk4'),  'livello' => 'staff','visibilita' => NULL,'descrizione'=>'membro staff', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')],
-            ['foto_profilo' => NULL, 'name' => 'Locatario', 'cognome' => 'Locatario', 'sesso' => 'Maschio', 'data_nascita' => Carbon::create('2000','03','01'), 'email' => 'lario.lario@blo.it', 'username' => 'blogblog', 'password' => Hash::make('Drl3Sdk4'),  'livello' => 'utente','visibilita' => 'pubblico','descrizione'=>'utente', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')],
+            ['foto_profilo' => NULL, 'name' => 'staff', 'cognome' => 'staff', 'sesso' => 'Maschio', 'data_nascita' => Carbon::create('2000','02','01'), 'email' => 'staff.staff@blo.it', 'username' => ' staffstaff', 'password' => Hash::make('Drl3Sdk4'),  'livello' => 'staff','visibilita' => NULL,'descrizione'=>'membro staff', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')],
+            ['foto_profilo' => NULL, 'name' => 'blog', 'cognome' => 'blog', 'sesso' => 'Maschio', 'data_nascita' => Carbon::create('2000','03','01'), 'email' => 'blog.blog@blo.it', 'username' => 'blogblog', 'password' => Hash::make('Drl3Sdk4'),  'livello' => 'utente','visibilita' => 'pubblico','descrizione'=>'utente', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')],
             ['foto_profilo' => NULL, 'name' => 'Luigi111', 'cognome' => 'Rossi', 'sesso' => 'Maschio', 'data_nascita' => Carbon::create('2000','03','01'), 'email' => 'luigi.luigi111@blo.it', 'username' => 'Luigi111', 'password' => Hash::make('Luigi111'), 'visibilita' => "pubblico", 'livello' => 'utente','descrizione'=>'ciao mondo del blog ', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')],
             ['foto_profilo' => NULL, 'name' => 'Luigi222', 'cognome' => 'Rossi', 'sesso' => 'Maschio', 'data_nascita' => Carbon::create('2000','03','01'), 'email' => 'luigi.luigi222@blo.it', 'username' => 'Luigi222', 'password' => Hash::make('Luigi222'), 'visibilita' => "pubblico", 'livello' => 'utente','descrizione'=>'ciao mondo del blog ', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')],
             ['foto_profilo' => NULL, 'name' => 'Luigi333', 'cognome' => 'Rossi', 'sesso' => 'Maschio', 'data_nascita' => Carbon::create('2000','03','01'), 'email' => 'luigi.luigi333@blo.it', 'username' => 'Luigi333', 'password' => Hash::make('Luigi333'), 'visibilita' => "pubblico", 'livello' => 'utente','descrizione'=>'ciao mondo del blog ', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')],
@@ -57,13 +57,13 @@ class DatabaseSeeder extends Seeder {
 
    DB::table('post')->insert([
 
-       ['blog'=>1,'scrittore'=>3,'contenuto' => 'ecco qui il mio post ','created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
-       ['blog'=>1,'scrittore'=>4,'contenuto' => 'ecco qui il mio post ','created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
-       ['blog'=>1,'scrittore'=>5,'contenuto' => 'ecco qui il mio post ','created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
-       ['blog'=>1,'scrittore'=>10,'contenuto' => 'ecco qui il mio post ','created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
-       ['blog'=>11,'scrittore'=>11,'contenuto' => 'ecco qui il mio post ','created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
-       ['blog'=>11,'scrittore'=>3,'contenuto' => 'ecco qui il mio post ','created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
-       ['blog'=>11,'scrittore'=>12,'contenuto' => 'ecco qui il mio post ','created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
+       ['blog'=>1,'scrittore'=>'blogblog','contenuto' => 'ecco qui il mio post ','data' => Carbon::create('2022','06','02'),'created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
+       ['blog'=>1,'scrittore'=>'Luigi111','contenuto' => 'ecco qui il mio post ','data' => Carbon::create('2022','06','02'),'created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
+       ['blog'=>1,'scrittore'=>'Luigi222','contenuto' => 'ecco qui il mio post ','data' => Carbon::create('2022','06','02'),'created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
+       ['blog'=>1,'scrittore'=>'pippo222','contenuto' => 'ecco qui il mio post ','data' => Carbon::create('2022','06','02'),'created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
+       ['blog'=>11,'scrittore'=>11,'contenuto' => 'ecco qui il mio post ','data' => Carbon::create('2022','06','02'),'created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
+       ['blog'=>11,'scrittore'=>3,'contenuto' => 'ecco qui il mio post ','data' => Carbon::create('2022','06','02'),'created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
+       ['blog'=>11,'scrittore'=>12,'contenuto' => 'ecco qui il mio post ','data' => Carbon::create('2022','06','02'),'created_at' => Carbon::create('2022','06','02'), 'updated_at' => Carbon::create('2022','06','02')],
      ]);
 
 
