@@ -2,7 +2,7 @@ function dropdown() {
     document.getElementById("myDropdown").classList.toggle("show");
     document.getElementById("profile-arrow").classList.toggle("rotate");
   }
-  
+
   // Close the dropdown if the user clicks outside of it
   window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
@@ -15,7 +15,7 @@ function dropdown() {
         }
       }
     }
-    
+
   }
 
 /*Responsive */
@@ -96,21 +96,10 @@ var openInbox = document.getElementById("myBtn");
         openTab.click();
 
         /**
-         * 
-         * 
+         *
+         *
          *
          */
 
-function mostraFiltriParticolari(oggetto){
-  if(oggetto==='appartamento'){
-    console.log("funzione chiamata");
-    if(document.getElementById('alloggio').classList.contains('show')){
-      document.getElementById('alloggio').classList.add('show');
-      console.log("mostra alloggio")
-      if(document.getElementById('posto_letto').classList.contains('show')){
-        document.getElementById('posto_letto').classList.remove('show');
-      }
-    }
-  }
 
-}
+

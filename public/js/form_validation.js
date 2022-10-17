@@ -25,14 +25,14 @@ function doElemValidation(id, actionUrl, formId) {
 
     function sendAjaxReq() {
         $.ajax({ //Attiviamo in jquery l'utility function ajax
-            type: 'POST', 
+            type: 'POST',
             url: actionUrl, //Url della risorsa da attivare sul server che sarebbe newHome.store
             data: formElems, //L'elemento che ha perso il focus più il csrf  token
             dataType: "json", //formato di risposta
             error: function (data) { //error definisce la funziona da attivare nel caso in cui la risposta sia un messaggio di errore
                 if (data.status === 422) { //se il codice di errore è quello che ci dice che il dato e unprocessable
                     var errMsgs = JSON.parse(data.responseText); //prendiamo il testo di errore e lo parsiamo in array associativo
-                    $("#" + id).parent().find('.errors').html(' '); //azzeriamo eventuali altri messaggi di errore nel DOM 
+                    $("#" + id).parent().find('.errors').html(' '); //azzeriamo eventuali altri messaggi di errore nel DOM
                     $("#" + id).after(getErrorHtml(errMsgs[id],id)); // aggiunge a valle dell'elemento che ha generato l'errore tutti gli
                                                                   // errori mediante una funzione alla quale apassa come parametro l'insieme
                                                                   // dei messaggi di errore ricevuti ma filtrando solo quelli associati all'elemento che stiamo testando
@@ -83,18 +83,14 @@ function doFormValidation(actionUrl, formId, tipo) {
             }
         },
         success: function (data) {
-            window.location.replace(data.redirect); 
+            window.location.replace(data.redirect);
         },
         contentType: false,
         processData: false
     });
 }
 
-function doModifiedSet(id){
-    alert('ciao');
-    return '{{$faqs['+id+']->domanda}}';
 
-}
 
 
 
