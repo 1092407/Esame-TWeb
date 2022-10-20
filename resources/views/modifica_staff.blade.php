@@ -78,7 +78,7 @@
 <div class="wrap-input">
                     {{ Form::label('', '', ['class' => 'fa fa-birthday-cake']) }}
                     {{ Form::label('data_nascita', 'Data di Nascita', ['class' => 'label-input']) }}
-                    {{Form::date('data_nascita', $staff[4],['class'=>'input','disable'=>'true'])}}
+                    {{Form::date('data_nascita', $staff[4],['class'=>'input'])}}
 
                     @if ($errors->first('data_nascita'))
                     <ul class="errors">

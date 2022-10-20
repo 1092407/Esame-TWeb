@@ -114,7 +114,7 @@
       <div class="wrap-input  rs1-wrap-input">
         {{ Form::label('','', ['class' => 'fa fa-birthday-cake']) }}
         {{ Form::label('data_nascita', ' Data di Nascita', ['class' => 'label-input-card']) }}
-        {{ Form::date('data_nascita', auth()->user()->data_nascita, ['class' => 'input-card', 'id' => 'data_nascita','disable'=>'true']) }}
+        {{ Form::date('data_nascita', auth()->user()->data_nascita, ['class' => 'input-card', 'id' => 'data_nascita']) }}
         @if ($errors->first('data_nascita'))
         <ul class="errors">
           @foreach ($errors->get('data_nascita') as $message)
